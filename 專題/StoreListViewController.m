@@ -1,23 +1,28 @@
 //
-//  ListTableViewController.m
+//  StoreListViewController.m
 //  專題
 //
-//  Created by user44 on 2017/9/28.
+//  Created by user44 on 2017/10/6.
 //  Copyright © 2017年 user44. All rights reserved.
 //
 
-#import "ListTableViewController.h"
-#import "Store.h"
+#import "StoreListViewController.h"
 
-@import AFNetworking;
+@interface StoreListViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@interface ListTableViewController ()
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic) NSMutableArray *stores;
 @end
 
-@implementation ListTableViewController
+@implementation StoreListViewController
 
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 //初始化 條件
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
@@ -28,7 +33,7 @@
         [self queryFromPHP];
         
         //self.navigationItem.title = @"附近餐廳";
-    } 
+    }
     return self;
 }
 -(void)queryFromPHP{
@@ -51,7 +56,7 @@
                     [self.stores addObject:store];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.tableView reloadData];
+                    [self.storelist reloadData];
                 });
             }
             
@@ -65,10 +70,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    self.tableView.estimatedRowHeight = 44;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.storelist.dataSource = self;
+    self.storelist.delegate = self;
+    self.storelist.estimatedRowHeight = 44;
+    self.storelist.rowHeight = UITableViewAutomaticDimension;
 }
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath{
     Store *store = self.stores[sourceIndexPath.row];
@@ -106,7 +111,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"note"]){
         Store *storeViewController = segue.destinationViewController;
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSIndexPath *indexPath = [self.storelist indexPathForSelectedRow];
         Store *store = self.stores[indexPath.row];
         //noteViewController.note = store;
         //noteViewController.delegate = self;
@@ -135,7 +140,7 @@
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                 
                 //reload
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self.storelist reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             });
         }
     }];
@@ -159,24 +164,24 @@
 
 #pragma mark - Search Bar Implementation
 /*
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    //Remove all objects first.
-    [_stores removeAllObjects];
-    
-    if([searchText length] != 0) {
-        [self searchTableList];
-    }
-    else {
-    }
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"Cancel clicked");
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    NSLog(@"Search Clicked");
-    [self searchTableList];
-}
-*/
+ - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+ //Remove all objects first.
+ [_stores removeAllObjects];
+ 
+ if([searchText length] != 0) {
+ [self searchTableList];
+ }
+ else {
+ }
+ }
+ 
+ - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+ NSLog(@"Cancel clicked");
+ }
+ 
+ - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+ NSLog(@"Search Clicked");
+ [self searchTableList];
+ }
+ */
 @end
