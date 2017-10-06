@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		13117D321F85CBE20066E08E /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 13117D311F85CBE20066E08E /* Store.m */; };
-		132BD5BF1F7CE5C0005B89E9 /* ListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 132BD5BE1F7CE5C0005B89E9 /* ListTableViewController.m */; };
 		136A92CD1F7B390800A5879F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92CC1F7B390800A5879F /* AppDelegate.m */; };
 		136A92D01F7B390800A5879F /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92CF1F7B390800A5879F /* FirstViewController.m */; };
 		136A92D61F7B390800A5879F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 136A92D41F7B390800A5879F /* Main.storyboard */; };
@@ -30,8 +29,6 @@
 /* Begin PBXFileReference section */
 		13117D301F85CBE20066E08E /* Store.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		13117D311F85CBE20066E08E /* Store.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
-		132BD5BD1F7CE5C0005B89E9 /* ListTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListTableViewController.h; sourceTree = "<group>"; };
-		132BD5BE1F7CE5C0005B89E9 /* ListTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListTableViewController.m; sourceTree = "<group>"; };
 		136A92C81F7B390800A5879F /* 專題.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "專題.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		136A92CB1F7B390800A5879F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		136A92CC1F7B390800A5879F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -120,8 +117,6 @@
 				136A92E51F7B396900A5879F /* no3ViewController.m */,
 				136A92E71F7B3D9900A5879F /* MoreViewController.h */,
 				136A92E81F7B3D9900A5879F /* MoreViewController.m */,
-				132BD5BD1F7CE5C0005B89E9 /* ListTableViewController.h */,
-				132BD5BE1F7CE5C0005B89E9 /* ListTableViewController.m */,
 				13117D301F85CBE20066E08E /* Store.h */,
 				13117D311F85CBE20066E08E /* Store.m */,
 				13CACE7D1F8780A5008B49F1 /* StoreListViewController.h */,
@@ -301,7 +296,6 @@
 			files = (
 				136A92E61F7B396900A5879F /* no3ViewController.m in Sources */,
 				136A92E91F7B3D9900A5879F /* MoreViewController.m in Sources */,
-				132BD5BF1F7CE5C0005B89E9 /* ListTableViewController.m in Sources */,
 				13117D321F85CBE20066E08E /* Store.m in Sources */,
 				13CACE7F1F8780A5008B49F1 /* StoreListViewController.m in Sources */,
 				136A92CD1F7B390800A5879F /* AppDelegate.m in Sources */,

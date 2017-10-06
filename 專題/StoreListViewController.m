@@ -7,7 +7,7 @@
 //
 
 #import "StoreListViewController.h"
-
+#import "Store.h"
 @interface StoreListViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -53,6 +53,8 @@
                 for (NSDictionary *item in StoreFromDB) {
                     Store  *store = [[Store alloc]init];
                     store.storename=item[@"name"];
+                    store.tel = item[@"tel"];
+                    store.adds =item[@"adds"];
                     [self.stores addObject:store];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -81,10 +83,20 @@
     [self.stores insertObject:store atIndex:destinationIndexPath.row];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+/*-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [UITableViewCell new];
     return cell;
+}*/
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    cell.showsReorderControl= YES;
+    Store *store = self.stores[indexPath.row];
+    cell.textLabel.text =store.storename;
+    cell.detailTextLabel.text = store.adds;
+    return cell;
 }
+
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if(editingStyle == UITableViewCellEditingStyleDelete){
