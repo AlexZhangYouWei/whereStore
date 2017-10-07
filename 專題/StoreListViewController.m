@@ -8,21 +8,13 @@
 
 #import "StoreListViewController.h"
 #import "Store.h"
-@interface StoreListViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface StoreListViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 
 @end
 
 @implementation StoreListViewController
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 //初始化 條件
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
@@ -30,14 +22,16 @@
     if (self) {
         
         self.stores = [NSMutableArray array];
+        
         [self queryFromPHP];
         
-        //self.navigationItem.title = @"附近餐廳";
+        self.navigationItem.title = @"附近餐廳";
     }
     return self;
 }
+
+//讀取php檔案
 -(void)queryFromPHP{
-    //讀取php檔案
     NSURL *url = [NSURL URLWithString:@"http://localhost:8888/note_json.php"];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -49,6 +43,7 @@
             if (err) {
                 NSLog(@"JSON err");
             }else{
+                //抓取 DB 的參數
                 [self.stores removeAllObjects];
                 for (NSDictionary *item in StoreFromDB) {
                     Store  *store = [[Store alloc]init];
@@ -74,20 +69,17 @@
     [super viewDidLoad];
     self.storelist.dataSource = self;
     self.storelist.delegate = self;
-    self.storelist.estimatedRowHeight = 44;
-    self.storelist.rowHeight = UITableViewAutomaticDimension;
+    self.searchListbar.delegate= self;
+    //self.storelist.rowHeight = UITableViewAutomaticDimension;
 }
+
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath{
     Store *store = self.stores[sourceIndexPath.row];
     [self.stores removeObject:store];
     [self.stores insertObject:store atIndex:destinationIndexPath.row];
 }
 
-/*-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [UITableViewCell new];
-    return cell;
-}*/
-
+// Store Cell 的 型式
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.showsReorderControl= YES;
@@ -98,15 +90,13 @@
 }
 
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(editingStyle == UITableViewCellEditingStyleDelete){
-        [self.stores removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-}
 
+
+// 選擇 path
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.view endEditing:YES];
+
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -119,81 +109,48 @@
 }
 
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"note"]){
-        Store *storeViewController = segue.destinationViewController;
-        NSIndexPath *indexPath = [self.storelist indexPathForSelectedRow];
-        Store *store = self.stores[indexPath.row];
-        //noteViewController.note = store;
-        //noteViewController.delegate = self;
-    }
-}
 
-- (void)didFinishUpdateNote:(Store *)store{
-    
-    NSURL *url = [NSURL URLWithString:@"http://localhost:8888/note_update.php"];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
-    NSString *param = [NSString stringWithFormat:@"StoreName=%@&adds=%@&tel=%@",store.storename,store.adds,store.tel];
-    NSData *body = [param dataUsingEncoding:NSUTF8StringEncoding];
-    request.HTTPBody = body;
-    NSURLSessionTask *task =  [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        if ( error ){
-            NSLog(@"error %@",error);
-        }else{
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //index
-                NSUInteger index = [self.stores indexOfObject:store];
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                
-                //reload
-                [self.storelist reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            });
+
+
+#pragma mark -searchController
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    if (searchText.length == 0) {
+        _isfillterd = NO;
+    }else{
+        _isfillterd  = YES;
+        _searchresults = [[NSMutableArray alloc]init];
+        for (NSDictionary *item in self.stores) {
+            NSString *name = [item objectForKey:@"name"];
+            NSString *name2 = [item objectForKey:@"adds"];
+            NSRange nameRange = [name rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            NSRange nameRange2 = [name2 rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            if (nameRange.location != NSNotFound|| nameRange2.location!= NSNotFound) {
+                [_stores addObject:item];
+            }
         }
-    }];
-    [task resume];
-    
+    }
+    [self.storelist reloadData];
     
     
 }
-#pragma mark - Search Function Responsible For Searching
 
-//- (void)searchTableList {
-//    //NSString *searchString = searchBar.text;
-//
-//    for (NSString *tempStr in _stores) {
-//        NSComparisonResult result = [tempStr compare:searchString options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchString length])];
-//        if (result == NSOrderedSame) {
-//            [_stores addObject:tempStr];
-//        }
-//    }
-//}
 
-#pragma mark - Search Bar Implementation
-/*
- - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
- //Remove all objects first.
- [_stores removeAllObjects];
- 
- if([searchText length] != 0) {
- [self searchTableList];
- }
- else {
- }
- }
- 
- - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
- NSLog(@"Cancel clicked");
- }
- 
- - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
- NSLog(@"Search Clicked");
- [self searchTableList];
- }
- */
-@end
+#pragma mark -dismissKeyboard
+
+// cancel鍵盤下收
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.view endEditing:YES];
+}
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+    //    [super touchesBegan:touches withEvent:event];
+}
+//滑動下拉 鍵盤下收
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.view endEditing:YES];
+}
+
+
+
+    @end
+    

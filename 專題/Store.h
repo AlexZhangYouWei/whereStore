@@ -12,7 +12,6 @@
 @import UIKit;
 
 @interface Store : NSObject
-//@property(nonatomic) NSString *noteID;
 @property(nonatomic) NSString *adds;
 @property(nonatomic) NSString *storename;
 @property(nonatomic) NSString *tel;
