@@ -8,8 +8,11 @@
 
 #import "StoreListViewController.h"
 #import "Store.h"
+#import "StorecontentViewController.h"
 @interface StoreListViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
-
+{
+    
+}
 @end
 
 @implementation StoreListViewController
@@ -57,13 +60,31 @@
                 });
             }
             
-            
         }
         
     }];
     [task resume];
 }
 
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    if (searchText == 0) {
+        _isfillterd = NO;
+    }else{
+        _isfillterd =YES;
+        _searchresults =[[NSMutableArray alloc]init];
+        for(NSString *str in _stores)
+        {
+            NSRange stringRange =[str rangeOfString:searchText options:NSCaseInsensitiveSearch];
+            
+            if(stringRange.location != NSNotFound){
+                [_searchresults addObject:str];
+                
+            }
+        
+        }
+    }
+        [_storelist reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -72,13 +93,19 @@
     self.searchListbar.delegate= self;
     //self.storelist.rowHeight = UITableViewAutomaticDimension;
 }
+#pragma mark -searchController
 
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [_storelist resignFirstResponder];
+}
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath{
     Store *store = self.stores[sourceIndexPath.row];
     [self.stores removeObject:store];
     [self.stores insertObject:store atIndex:destinationIndexPath.row];
 }
-
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
 // Store Cell 的 型式
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
@@ -86,6 +113,15 @@
     Store *store = self.stores[indexPath.row];
     cell.textLabel.text =store.storename;
     cell.detailTextLabel.text = store.adds;
+    /*if (!_isfillterd) {
+        cell.textLabel.text = [_stores objectAtIndex:indexPath.row];
+      
+    }
+    else
+    {
+        cell.textLabel.text =[_searchresults objectAtIndex:indexPath.row];
+    }*/
+    
     return cell;
 }
 
@@ -102,7 +138,20 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.stores.count;
 }
-
+#pragma mark -prepareForSegue
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"detail"]) {
+        
+         StorecontentViewController *next = segue.destinationViewController;
+        NSIndexPath *indexPath = self.storelist.indexPathForSelectedRow;
+        if (_isfillterd) {
+            next.content = _stores[indexPath.row];
+        }else {
+            next.content = self.stores[indexPath.row];
+        }
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -111,28 +160,6 @@
 
 
 
-
-#pragma mark -searchController
--(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    if (searchText.length == 0) {
-        _isfillterd = NO;
-    }else{
-        _isfillterd  = YES;
-        _searchresults = [[NSMutableArray alloc]init];
-        for (NSDictionary *item in self.stores) {
-            NSString *name = [item objectForKey:@"name"];
-            NSString *name2 = [item objectForKey:@"adds"];
-            NSRange nameRange = [name rangeOfString:searchText options:NSCaseInsensitiveSearch];
-            NSRange nameRange2 = [name2 rangeOfString:searchText options:NSCaseInsensitiveSearch];
-            if (nameRange.location != NSNotFound|| nameRange2.location!= NSNotFound) {
-                [_stores addObject:item];
-            }
-        }
-    }
-    [self.storelist reloadData];
-    
-    
-}
 
 
 #pragma mark -dismissKeyboard

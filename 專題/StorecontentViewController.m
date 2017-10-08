@@ -1,0 +1,61 @@
+//
+//  StorecontentViewController.m
+//  專題
+//
+//  Created by user44 on 2017/10/8.
+//  Copyright © 2017年 user44. All rights reserved.
+//
+
+#import "StorecontentViewController.h"
+#import "StorecontentTableViewCell.h"
+#import <CoreLocation/CoreLocation.h>
+@interface StorecontentViewController ()<UITableViewDelegate,UITableViewDataSource>
+
+@end
+
+@implementation StorecontentViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+#pragma mark -UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 4;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    StorecontentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    
+    switch (indexPath.row) {
+        case 0:
+            cell.nameLabel.text = @"店家名稱　　";
+            cell.valueTextView.text = self.content[@"storename"];
+            break;
+        case 1:
+            cell.nameLabel.text = @"地址";
+            cell.valueTextView.text = self.content[@"adds"];
+            break;
+        case 2:
+            cell.nameLabel.text = @"電話　　";
+            cell.valueTextView.text = self.content[@"tel"];
+            break;
+        //case 3:
+//            cell.nameLabel.text = @"地址　　";
+//            cell.valueTextView.text = self.content[@"機構地址"];
+        default:
+            break;
+    }
+    return cell;
+}
+
+#pragma mark -prepareForSegue
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    
+}
+@end
