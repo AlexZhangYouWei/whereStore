@@ -8,6 +8,7 @@
 
 #import "StorecontentViewController.h"
 #import "StorecontentTableViewCell.h"
+#import "StoreListViewController.h"
 #import <CoreLocation/CoreLocation.h>
 @interface StorecontentViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -17,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.navigationItem.title=@"店家資訊";
 }
 
 - (void)didReceiveMemoryWarning {

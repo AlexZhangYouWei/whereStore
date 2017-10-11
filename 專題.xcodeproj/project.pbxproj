@@ -16,7 +16,6 @@
 		136A92D81F7B390800A5879F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 136A92D71F7B390800A5879F /* Assets.xcassets */; };
 		136A92DB1F7B390800A5879F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 136A92D91F7B390800A5879F /* LaunchScreen.storyboard */; };
 		136A92DE1F7B390800A5879F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92DD1F7B390800A5879F /* main.m */; };
-		136A92E61F7B396900A5879F /* no3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92E51F7B396900A5879F /* no3ViewController.m */; };
 		136A92E91F7B3D9900A5879F /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92E81F7B3D9900A5879F /* MoreViewController.m */; };
 		1370B8DA1F825DB700EA4C0D /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1370B8DB1F825DB700EA4C0D /* AFNetworking.framework */; };
 		13C8D7A61F7B3F9F001A01D9 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8D7A11F7B3EC3001A01D9 /* FBSDKLoginKit.framework */; };
@@ -45,8 +44,6 @@
 		136A92DA1F7B390800A5879F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		136A92DC1F7B390800A5879F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		136A92DD1F7B390800A5879F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		136A92E41F7B396900A5879F /* no3ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = no3ViewController.h; sourceTree = "<group>"; };
-		136A92E51F7B396900A5879F /* no3ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = no3ViewController.m; sourceTree = "<group>"; };
 		136A92E71F7B3D9900A5879F /* MoreViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
 		136A92E81F7B3D9900A5879F /* MoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		1370B8AE1F82545000EA4C0D /* libAFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,8 +116,6 @@
 				136A92D91F7B390800A5879F /* LaunchScreen.storyboard */,
 				136A92DC1F7B390800A5879F /* Info.plist */,
 				136A92DD1F7B390800A5879F /* main.m */,
-				136A92E41F7B396900A5879F /* no3ViewController.h */,
-				136A92E51F7B396900A5879F /* no3ViewController.m */,
 				136A92E71F7B3D9900A5879F /* MoreViewController.h */,
 				136A92E81F7B3D9900A5879F /* MoreViewController.m */,
 				13117D301F85CBE20066E08E /* Store.h */,
@@ -304,7 +299,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				136A92E61F7B396900A5879F /* no3ViewController.m in Sources */,
 				132233D41F8A7966006F127B /* StorecontentTableViewCell.m in Sources */,
 				136A92E91F7B3D9900A5879F /* MoreViewController.m in Sources */,
 				13117D321F85CBE20066E08E /* Store.m in Sources */,

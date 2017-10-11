@@ -65,7 +65,7 @@
     }];
     [task resume];
 }
-
+#pragma mark searchbar 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     if (searchText == 0) {
         _isfillterd = NO;
@@ -141,17 +141,19 @@
 #pragma mark -prepareForSegue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([segue.identifier isEqualToString:@"detail"]) {
+    if ([segue.identifier isEqualToString:@"storecontent"]) {
         
-         StorecontentViewController *next = segue.destinationViewController;
+         StorecontentViewController *storecontentviewcontroller = segue.destinationViewController;
         NSIndexPath *indexPath = self.storelist.indexPathForSelectedRow;
         if (_isfillterd) {
-            next.content = _stores[indexPath.row];
+            storecontentviewcontroller.content = _stores[indexPath.row];
         }else {
-            next.content = self.stores[indexPath.row];
+            storecontentviewcontroller.content = self.stores[indexPath.row];
         }
     }
 }
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
