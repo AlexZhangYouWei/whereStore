@@ -78,9 +78,7 @@
             
             if(stringRange.location != NSNotFound){
                 [_searchresults addObject:str];
-                
             }
-        
         }
     }
         [_storelist reloadData];
@@ -91,7 +89,6 @@
     self.storelist.dataSource = self;
     self.storelist.delegate = self;
     self.searchListbar.delegate= self;
-    //self.storelist.rowHeight = UITableViewAutomaticDimension;
 }
 #pragma mark -searchController
 
@@ -113,14 +110,13 @@
     Store *store = self.stores[indexPath.row];
     cell.textLabel.text =store.storename;
     cell.detailTextLabel.text = store.adds;
-    /*if (!_isfillterd) {
+    if (!_isfillterd) {
         cell.textLabel.text = [_stores objectAtIndex:indexPath.row];
       
     }
-    else
-    {
+    else{
         cell.textLabel.text =[_searchresults objectAtIndex:indexPath.row];
-    }*/
+    }
     
     return cell;
 }
@@ -142,8 +138,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"storecontent"]) {
-        
-         StorecontentViewController *storecontentviewcontroller = segue.destinationViewController;
+   StorecontentViewController *storecontentviewcontroller = segue.destinationViewController;
         NSIndexPath *indexPath = self.storelist.indexPathForSelectedRow;
         if (_isfillterd) {
             storecontentviewcontroller.content = _stores[indexPath.row];
