@@ -15,6 +15,7 @@
 @property(nonatomic) NSString *adds;
 @property(nonatomic) NSString *storename;
 @property(nonatomic) NSString *tel;
+@property(nonatomic) NSString *Clickrate ;
 //@property(nonatomic) NSString *text;
 //- (UIImage *)image;//從檔案載入圖檔
 //- (UIImage *)thumbnailImage;//產生縮圖

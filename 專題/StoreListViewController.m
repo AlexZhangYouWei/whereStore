@@ -83,7 +83,7 @@
     }
         [_storelist reloadData];
 }
-
+    
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.storelist.dataSource = self;
@@ -91,7 +91,6 @@
     self.searchListbar.delegate= self;
 }
 #pragma mark -searchController
-
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [_storelist resignFirstResponder];
 }
@@ -110,27 +109,13 @@
     Store *store = self.stores[indexPath.row];
     cell.textLabel.text =store.storename;
     cell.detailTextLabel.text = store.adds;
-    if (!_isfillterd) {
-        cell.textLabel.text = [_stores objectAtIndex:indexPath.row];
-      
-    }
-    else{
-        cell.textLabel.text =[_searchresults objectAtIndex:indexPath.row];
-    }
-    
     return cell;
 }
 
-
-
-
-// 選擇 path
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.view endEditing:YES];
-
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.stores.count;
 }
@@ -143,22 +128,15 @@
         if (_isfillterd) {
             storecontentviewcontroller.content = _stores[indexPath.row];
         }else {
-            storecontentviewcontroller.content = self.stores[indexPath.row];
+            NSDictionary *dic = self.stores[indexPath.row];
+            storecontentviewcontroller.content = dic;
         }
     }
 }
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
-
-
-
 #pragma mark -dismissKeyboard
 
 // cancel鍵盤下收
@@ -174,7 +152,5 @@
     [self.view endEditing:YES];
 }
 
-
-
-    @end
+@end
     

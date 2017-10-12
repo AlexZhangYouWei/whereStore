@@ -19,8 +19,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title=@"店家資訊";
+    self.storecontentlist.delegate = self;
+    self.storecontentlist.dataSource = self;
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -34,22 +35,24 @@
     
     switch (indexPath.row) {
         case 0:
-            cell.nameLabel.text = @"店家名稱　　";
-            cell.valueTextView.text = self.content[@"storename"];
+            cell.nameLabel.text = @"店家名稱";
+            cell.valueTextView.text = self.content.storename;
             break;
         case 1:
             cell.nameLabel.text = @"地址";
-            cell.valueTextView.text = self.content[@"adds"];
+            cell.valueTextView.text = self.content.adds;
             break;
         case 2:
-            cell.nameLabel.text = @"電話　　";
-            cell.valueTextView.text = self.content[@"tel"];
+            cell.nameLabel.text = @"電話";
+            cell.valueTextView.text = self.content.tel;
             break;
-            
-        default:
-            break;
+      
     }
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50;
 }
 
 #pragma mark -prepareForSegue

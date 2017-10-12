@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Store.h"
 
 @interface StorecontentViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UITableView *storecontentlist;
-@property(nonatomic) NSDictionary *content;
+@property(nonatomic) Store *content;
 @end
