@@ -10,7 +10,9 @@
 #import "StorecontentTableViewCell.h"
 #import "StoreListViewController.h"
 #import <CoreLocation/CoreLocation.h>
-@interface StorecontentViewController ()<UITableViewDelegate,UITableViewDataSource>
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+@interface StorecontentViewController ()<UITableViewDelegate,UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate>
 
 @end
 
@@ -19,6 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title=@"店家資訊";
+    
     self.storecontentlist.delegate = self;
     self.storecontentlist.dataSource = self;
 }
@@ -28,7 +31,7 @@
 }
 #pragma mark -UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 3;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StorecontentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
@@ -52,7 +55,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
+    return 60;
 }
 
 #pragma mark -prepareForSegue

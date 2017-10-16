@@ -27,6 +27,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+//查詢所有的物件狀況
+/*[[NSNotificationCenter defaultCenter]addObserverForName:(nullable NSNotificationName) object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+    
+}];*/
 /*
 #pragma mark - Navigation
 

@@ -9,13 +9,20 @@
 #import "StoreListViewController.h"
 #import "Store.h"
 #import "StorecontentViewController.h"
-@interface StoreListViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
-{
+#import "StoreListTableViewCell.h"
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+@interface StoreListViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,MKMapViewDelegate,CLLocationManagerDelegate>{
+    CLLocation *locationManager; ;
+    BOOL *  firstLocationReceived;
     
 }
+
 @end
 
 @implementation StoreListViewController
+
+
 
 
 //初始化 條件
@@ -31,6 +38,9 @@
         self.navigationItem.title = @"附近餐廳";
     }
     return self;
+}
+
+- (void)encodeWithCoder:(nonnull NSCoder *)aCoder {
 }
 
 //讀取php檔案
@@ -53,6 +63,8 @@
                     store.storename=item[@"name"];
                     store.tel = item[@"tel"];
                     store.adds =item[@"adds"];
+                    store.latitude = item[@"latitude"];
+                    store.longitude = item[@"longitude"];
                     [self.stores addObject:store];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -89,6 +101,9 @@
     self.storelist.dataSource = self;
     self.storelist.delegate = self;
     self.searchListbar.delegate= self;
+
+    
+
 }
 #pragma mark -searchController
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
@@ -102,16 +117,22 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
+
 // Store Cell 的 型式
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+
+    StoreListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"storeCell" forIndexPath:indexPath];
     cell.showsReorderControl= YES;
     Store *store = self.stores[indexPath.row];
-    cell.textLabel.text =store.storename;
-    cell.detailTextLabel.text = store.adds;
+    cell.nameLabel.text =store.storename;
+    cell.addLabel.text = store.adds;
+   // cell.distanceLabel.text =store.longitude;
+    
     return cell;
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 60;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.view endEditing:YES];
@@ -151,6 +172,81 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self.view endEditing:YES];
 }
+
+/*
+#pragma mark updataPHP
+- (void)didFinishUpdateNote:(Store *)store{
+    
+    NSURL *url = [NSURL URLWithString:@"http://localhost:8888/note_update.php"];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    NSString *param = [NSString stringWithFormat:@"noteID=%@&text=%@&imageName=%@",
+                       store.storename,store.adds,store.tel,store.longitude,store.latitude
+                       (store.storename==nil? @"" : store.storename)];
+    NSData *body = [param dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = body;
+    
+    
+    NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        //若post失敗的處理
+        if ( error ){
+            NSLog(@"error %@",error);
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //main queue在主執行緒中執行 可以放UIKit
+                //post成功則修改tableView裡的cell 必須在主執行緒中執行
+                
+                //index
+                NSUInteger index = [self.stores indexOfObject:store];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                
+                //reload
+                [self.storelist reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                
+            });
+        }
+    }];
+    [task resume];
+    
+    
+   // if ( store.storename && store.adds.length > 0 ){
+        //copy from github
+       /// NSString *imagePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+      //  imagePath = [imagePath stringByAppendingPathComponent:note.imageName];
+        
+//        //"file" 必須對應到 $_FILES["file"]
+//        NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:@"http://localhost:8888/note_image_upload.php" parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+//            [formData appendPartWithFileURL:[NSURL fileURLWithPath:imagePath] name:@"file" fileName:note.imageName mimeType:@"image/jpeg" error:nil];
+//        } error:nil];
+//
+        
+        AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        
+        //add these lines
+        AFHTTPResponseSerializer *serializer =  manager.responseSerializer;
+        serializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        
+        NSURLSessionUploadTask *uploadTask;
+        uploadTask = [manager
+                      uploadTaskWithStreamedRequest:request
+                      progress:^(NSProgress *uploadProgress) {
+                      }
+                      completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+                          if (error) {
+                              NSLog(@"Error: %@", error);
+                          } else {
+                              NSLog(@"%@ %@", response, responseObject);
+                          }
+                      }];
+        
+        [uploadTask resume];
+    }
+
+}*/
+
 
 @end
     

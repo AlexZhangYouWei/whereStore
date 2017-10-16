@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		130299521F90B91E001F63DA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130299511F90B91D001F63DA /* MapKit.framework */; };
+		130299541F90B92F001F63DA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130299531F90B92F001F63DA /* CoreLocation.framework */; };
+		13078B111F8F65BF00A81318 /* Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 13078B101F8F65BF00A81318 /* Data.m */; };
 		13117D321F85CBE20066E08E /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 13117D311F85CBE20066E08E /* Store.m */; };
 		132233D11F8A768F006F127B /* StorecontentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 132233D01F8A768F006F127B /* StorecontentViewController.m */; };
 		132233D41F8A7966006F127B /* StorecontentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 132233D31F8A7966006F127B /* StorecontentTableViewCell.m */; };
@@ -24,10 +27,15 @@
 		13C8D7AB1F7B3FA0001A01D9 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8D7A91F7B3FA0001A01D9 /* Bolts.framework */; };
 		13C8D7DC1F7B934C001A01D9 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8D7DA1F7B934C001A01D9 /* libsqlite3.tbd */; };
 		13CACE7F1F8780A5008B49F1 /* StoreListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CACE7E1F8780A5008B49F1 /* StoreListViewController.m */; };
+		13D506AF1F94C7660082B485 /* StoreListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D506AE1F94C7660082B485 /* StoreListTableViewCell.m */; };
 		24D9B58A49843AD9D21E0B57 /* Pods___.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBFCD7E9853EECC0B3320549 /* Pods___.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		130299511F90B91D001F63DA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		130299531F90B92F001F63DA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		13078B0F1F8F65BF00A81318 /* Data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
+		13078B101F8F65BF00A81318 /* Data.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Data.m; sourceTree = "<group>"; };
 		13117D301F85CBE20066E08E /* Store.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		13117D311F85CBE20066E08E /* Store.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		132233CF1F8A768F006F127B /* StorecontentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorecontentViewController.h; sourceTree = "<group>"; };
@@ -62,6 +70,8 @@
 		13C8D7E21F7B992C001A01D9 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		13CACE7D1F8780A5008B49F1 /* StoreListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoreListViewController.h; sourceTree = "<group>"; };
 		13CACE7E1F8780A5008B49F1 /* StoreListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreListViewController.m; sourceTree = "<group>"; };
+		13D506AD1F94C7660082B485 /* StoreListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoreListTableViewCell.h; sourceTree = "<group>"; };
+		13D506AE1F94C7660082B485 /* StoreListTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoreListTableViewCell.m; sourceTree = "<group>"; };
 		90087EB4E3624F15A226EB6F /* Pods-專題.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-專題.release.xcconfig"; path = "Pods/Target Support Files/Pods-專題/Pods-專題.release.xcconfig"; sourceTree = "<group>"; };
 		DBFCD7E9853EECC0B3320549 /* Pods___.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods___.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F65A0028C18B5F53F021D86A /* Pods-專題.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-專題.debug.xcconfig"; path = "Pods/Target Support Files/Pods-專題/Pods-專題.debug.xcconfig"; sourceTree = "<group>"; };
@@ -72,6 +82,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				130299541F90B92F001F63DA /* CoreLocation.framework in Frameworks */,
+				130299521F90B91E001F63DA /* MapKit.framework in Frameworks */,
 				1370B8DA1F825DB700EA4C0D /* AFNetworking.framework in Frameworks */,
 				13C8D7DC1F7B934C001A01D9 /* libsqlite3.tbd in Frameworks */,
 				13C8D7AA1F7B3FA0001A01D9 /* FBSDKCoreKit.framework in Frameworks */,
@@ -126,6 +138,10 @@
 				132233D01F8A768F006F127B /* StorecontentViewController.m */,
 				132233D21F8A7966006F127B /* StorecontentTableViewCell.h */,
 				132233D31F8A7966006F127B /* StorecontentTableViewCell.m */,
+				13078B0F1F8F65BF00A81318 /* Data.h */,
+				13078B101F8F65BF00A81318 /* Data.m */,
+				13D506AD1F94C7660082B485 /* StoreListTableViewCell.h */,
+				13D506AE1F94C7660082B485 /* StoreListTableViewCell.m */,
 			);
 			path = "專題";
 			sourceTree = "<group>";
@@ -144,6 +160,8 @@
 		13C8D7A51F7B3F9F001A01D9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				130299531F90B92F001F63DA /* CoreLocation.framework */,
+				130299511F90B91D001F63DA /* MapKit.framework */,
 				1370B8DB1F825DB700EA4C0D /* AFNetworking.framework */,
 				1370B8AE1F82545000EA4C0D /* libAFNetworking.a */,
 				13C8D7DE1F7B992C001A01D9 /* Framework */,
@@ -306,7 +324,9 @@
 				136A92CD1F7B390800A5879F /* AppDelegate.m in Sources */,
 				136A92DE1F7B390800A5879F /* main.m in Sources */,
 				132233D11F8A768F006F127B /* StorecontentViewController.m in Sources */,
+				13D506AF1F94C7660082B485 /* StoreListTableViewCell.m in Sources */,
 				136A92D01F7B390800A5879F /* FirstViewController.m in Sources */,
+				13078B111F8F65BF00A81318 /* Data.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

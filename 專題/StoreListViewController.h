@@ -13,7 +13,6 @@
 @interface StoreListViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UITableView *storelist;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchListbar;
-
 @property(nonatomic) NSMutableArray *stores;
 @property(nonatomic) NSMutableArray *searchresults;
 
