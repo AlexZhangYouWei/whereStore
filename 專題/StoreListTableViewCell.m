@@ -12,7 +12,10 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+
+    _nameLabel.numberOfLines=2;
+    _addLabel.numberOfLines=2;
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
