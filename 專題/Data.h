@@ -11,5 +11,4 @@
 @interface Data : NSObject
 @property NSArray *stors;
 @property NSString *store;
-
 @end

@@ -17,6 +17,12 @@
     CLLocationManager *locationManager; ; //定位控制器
     CLLocation *mylocation; //目前所在位置
     CLLocation *endlocation; //每個商家的位置
+//    CLLocation *locA = [[CLLocation alloc] initWithLatitude:lat1 longitude:long1];
+    
+//    CLLocation *locB = [[CLLocation alloc] initWithLatitude:lat2 longitude:long2];
+    
+    //CLLocationDistance distance = [mylocation distanceFromLocation:endlocation];
+  //  - (CLLocationDistance)distanceFromLocation:(const CLLocation *)location;
     BOOL *  firstLocationReceived;
     
 }

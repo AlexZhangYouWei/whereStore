@@ -9,6 +9,7 @@
 #import "Data.h"
 
 @implementation Data
+
 /*-(void)queryFromPHP{
     NSURL *url = [NSURL URLWithString:@"http://localhost:8888/note_jsonhot.php"];
     NSURLSession *session = [NSURLSession sharedSession];
@@ -41,4 +42,5 @@
     }];
     [task resume];
 }*/
+
 @end
