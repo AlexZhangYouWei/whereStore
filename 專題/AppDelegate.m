@@ -16,7 +16,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+ [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.000 green:0.251 blue:1.000 alpha:1.000]];
     return YES;
 }
 

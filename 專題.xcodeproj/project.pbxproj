@@ -21,6 +21,7 @@
 		136A92DE1F7B390800A5879F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92DD1F7B390800A5879F /* main.m */; };
 		136A92E91F7B3D9900A5879F /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92E81F7B3D9900A5879F /* MoreViewController.m */; };
 		1370B8DA1F825DB700EA4C0D /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1370B8DB1F825DB700EA4C0D /* AFNetworking.framework */; };
+		13AE18251F98878F0087CF79 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AE18241F98878F0087CF79 /* MapViewController.m */; };
 		13C8D7A61F7B3F9F001A01D9 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8D7A11F7B3EC3001A01D9 /* FBSDKLoginKit.framework */; };
 		13C8D7A71F7B3F9F001A01D9 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8D7A21F7B3EC3001A01D9 /* FBSDKShareKit.framework */; };
 		13C8D7AA1F7B3FA0001A01D9 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8D7A81F7B3FA0001A01D9 /* FBSDKCoreKit.framework */; };
@@ -56,6 +57,8 @@
 		136A92E81F7B3D9900A5879F /* MoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		1370B8AE1F82545000EA4C0D /* libAFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1370B8DB1F825DB700EA4C0D /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		13AE18231F98878F0087CF79 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		13AE18241F98878F0087CF79 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		13C8D7A11F7B3EC3001A01D9 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		13C8D7A21F7B3EC3001A01D9 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		13C8D7A31F7B3EC3001A01D9 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../../../Downloads/FacebookSDKs-iOS-4-2/Bolts.framework"; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 				13078B101F8F65BF00A81318 /* Data.m */,
 				13D506AD1F94C7660082B485 /* StoreListTableViewCell.h */,
 				13D506AE1F94C7660082B485 /* StoreListTableViewCell.m */,
+				13AE18231F98878F0087CF79 /* MapViewController.h */,
+				13AE18241F98878F0087CF79 /* MapViewController.m */,
 			);
 			path = "專題";
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 				13D506AF1F94C7660082B485 /* StoreListTableViewCell.m in Sources */,
 				136A92D01F7B390800A5879F /* FirstViewController.m in Sources */,
 				13078B111F8F65BF00A81318 /* Data.m in Sources */,
+				13AE18251F98878F0087CF79 /* MapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

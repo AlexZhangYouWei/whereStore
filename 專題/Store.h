@@ -15,8 +15,8 @@
 @property(nonatomic) NSString *adds;
 @property(nonatomic) NSString *storename;
 @property(nonatomic) NSString *tel;
-@property(nonatomic) NSNumber *latitude ;
-@property(nonatomic) NSNumber *longitude ;
+@property(nonatomic) NSString *latitude ;
+//@property(nonatomic) NSNumber *longitude ;
 @property(nonatomic) NSString *image;
 //@property(nonatomic) NSString *text;
 //-(UIImage *)image;//從檔案載入圖檔
