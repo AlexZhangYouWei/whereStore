@@ -9,15 +9,22 @@
 #import "FirstViewController.h"
 #import "StoreListViewController.h"
 #import "StorecontentViewController.h"
-@interface FirstViewController ()<UIPickerViewDataSource, UIPickerViewDelegate> {
-    NSArray *filter;//地區
-    NSArray *style; //餐廳類型
-    NSArray *sorting;//距離或是人氣排序
+@interface FirstViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UITextFieldDelegate> {
+    UIPickerView *mypickerView;
+    NSMutableArray *seacherList; //篩選條件
+    NSArray *textlist;
+    NSString *str ;
+    UIToolbar *toolBar;//確認
+    UIToolbar *toolBar1;//取消
+    UITextField *contentTextField;
 }
-@property (strong, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) IBOutlet UILabel *regionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *classLabel;
 @property (strong, nonatomic) IBOutlet UILabel *sortingLabel;
+@property (strong, nonatomic) IBOutlet UITextField *regionTextField;
+@property (strong, nonatomic) IBOutlet UITextField *classTextFiled;
+@property (strong, nonatomic) IBOutlet UITextField *sortingTextField;
+
 
 
 @end
@@ -27,69 +34,107 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _pickerView.delegate=self;
-    _pickerView.dataSource=self;
-    filter =[[NSArray alloc]initWithObjects:@"請選擇",@"台北",@"新北",@"桃園",@"新竹",@"苗栗",@"台中",@"彰化",@"雲林",@"嘉義",@"台南",@"高雄",@"屏東",@"台東",@"花蓮",@"宜蘭",@"南投",@"金門",@"馬祖",@"連江", nil];
-    style=[[NSArray alloc]initWithObjects:@"請選擇"@"台式",@"韓式",@"日式",@"美式",@"點心",@"其他", nil];
-    sorting=[[NSArray alloc]initWithObjects:@"請選擇",@"依距離",@"人氣" ,nil];
-    // Do any additional setup after loading the view, typically from a nib.
+ 
+    mypickerView.delegate=self;
+    mypickerView.dataSource=self;
+    mypickerView =[[UIPickerView alloc]init];
+    seacherList =[NSMutableArray new];
+     //地區
+     NSArray *filter=[[NSArray alloc]initWithObjects:@"請選擇",@"台北",@"新北",@"桃園",@"新竹",@"苗栗",@"台中",@"彰化",
+             @"雲林",@"嘉義",@"台南",@"高雄",@"屏東",@"台東",@"花蓮",@"宜蘭",@"南投",@"金門",@"馬祖",@"連江", nil];
+    //餐廳類型
+    NSArray* style=[[NSArray alloc]initWithObjects:@"請選擇"@"台式",@"韓式",@"日式",@"美式",@"點心",@"其他", nil];
+    
+    //距離或是人氣排序
+    NSArray *sorting=[[NSArray alloc]initWithObjects:@"請選擇",@"依距離",@"人氣" ,nil];
+    
+    [seacherList addObject:filter];
+    [seacherList addObject:style];
+    [seacherList addObject:sorting];
+    
+    
+    self.regionLabel.text = @"地區";
+    self.classLabel.text = @"類型";
+    self.sortingLabel.text = @"排序";
+    
+    //創建UItoolbar(工具栏)以及设置属性，设置工具栏的frame
+    toolBar= [[UIToolbar alloc] initWithFrame:CGRectMake(0,0,320,44)];
+    [toolBar setBarStyle:UIBarStyleDefault];
+    
+    UIBarButtonItem *barButtonCancel = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(toolBarCanelClick:)];
+    toolBar1.items = @[barButtonCancel];
+    barButtonCancel.tintColor=[UIColor blackColor];
+    
+    //添加弹簧按钮
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    
+    UIBarButtonItem *barButtonDone = [[UIBarButtonItem alloc] initWithTitle:@"確定" style:UIBarButtonItemStyleDone target:self action:@selector(toolBarDoneClick:)];
+    toolBar.items = @[barButtonDone];
+    barButtonDone.tintColor=[UIColor blackColor];
+    
+    
+    toolBar.items = @[barButtonCancel, flexSpace, barButtonDone];
+    
+    _regionTextField .inputView = mypickerView;
+    _regionTextField.inputAccessoryView = toolBar;
+    
+    _classTextFiled.inputView = mypickerView;
+    _classTextFiled.inputAccessoryView = toolBar;
+    
+    _sortingTextField.inputView = mypickerView;
+    _sortingTextField.inputAccessoryView = toolBar;
+
+    
+    
+    
+}
+//選到某個textField，觸發
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    contentTextField = textField;
+    textlist = seacherList[textField.tag];
+    UIPickerView *pick = textField.inputView;
+    [pick reloadAllComponents];
 }
 
 //內建的函式回傳UIPicker共有幾組選項
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 1;
 }
-//內建的函式回傳UIPicker每組選項的項目數目
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    //第一組選項由0開始
-    switch (component) {
-        case 0:
-            return [filter count];
-            break;
-        case 1:
-            return [style count];
-            break;
-        case 2:
-            return [sorting count];
-            break;
-            //如果有一組以上的選項就在這裡以component的值來區分（以本程式碼為例default:永遠不可能被執行
-        default:
-            return 0;
-            break;
-    }
+//內建的函式回傳UIPicker的內容
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    
+    return textlist.count;
 }
 //內建函式印出字串在Picker上以免出現"?"
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    switch (component) {
-        case 0:
-            return [filter objectAtIndex:row];
-            break;
-        case 1:
-            return [style objectAtIndex:row];
-            break;
-        case 2:
-            return [sorting objectAtIndex:row];
-            break;
-            //如果有一組以上的選項就在這裡以component的值來區分（以本程式碼為例default:永遠不可能被執行）
-        default:
-            return @"Error";
-            break;
-    }
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    NSString *title = [textlist objectAtIndex:row];
+    return title;
 }
+
 //選擇UIPickView中的項目時會出發的內建函式
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.regionLabel.text = [NSString stringWithFormat:@"%@ :", [filter objectAtIndex:row]];
-    self.classLabel.text =  [NSString stringWithFormat:@"%@ :", [style objectAtIndex:row]];
-    self.sortingLabel.text=[NSString stringWithFormat:@"%@ :", [sorting objectAtIndex:row]];
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    str = [textlist objectAtIndex:row];
 }
 
 
+- (void)toolBarDoneClick:(id)sender{
+    NSLog(@"DONE");
+    contentTextField.text = str;
+    [contentTextField resignFirstResponder];
 
+}
+-(void)toolBarCanelClick:(id)sender {
+    [self.view endEditing:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)searchButton:(id)sender {
+
+}
+
 
 
 

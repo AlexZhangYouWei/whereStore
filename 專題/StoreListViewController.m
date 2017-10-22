@@ -17,12 +17,12 @@
     CLLocationManager *locationManager; ; //定位控制器
     CLLocation *mylocation; //目前所在位置
     CLLocation *endlocation; //每個商家的位置
-//    CLLocation *locA = [[CLLocation alloc] initWithLatitude:lat1 longitude:long1];
+    //    CLLocation *locA = [[CLLocation alloc] initWithLatitude:lat1 longitude:long1];
     
-//    CLLocation *locB = [[CLLocation alloc] initWithLatitude:lat2 longitude:long2];
+    //    CLLocation *locB = [[CLLocation alloc] initWithLatitude:lat2 longitude:long2];
     
     //CLLocationDistance distance = [mylocation distanceFromLocation:endlocation];
-  //  - (CLLocationDistance)distanceFromLocation:(const CLLocation *)location;
+    //  - (CLLocationDistance)distanceFromLocation:(const CLLocation *)location;
     BOOL *  firstLocationReceived;
     
 }
@@ -45,12 +45,12 @@
         [self queryFromPHP];
         
         self.navigationItem.title = @"附近餐廳";
+        
     }
     return self;
 }
 
-- (void)encodeWithCoder:(nonnull NSCoder *)aCoder {
-}
+
 
 //讀取php檔案
 -(void)queryFromPHP{
@@ -94,6 +94,7 @@
     _searchbar.delegate=self;
     
     
+    
     //詢問定位授權
     locationManager=[CLLocationManager new];
     if([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
@@ -111,7 +112,7 @@
     locationManager.delegate = self;
     //開始更新定位資訊
     [locationManager startUpdatingLocation];
-  
+    
     
 }
 
@@ -145,7 +146,6 @@
     StoreListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"storeCell" forIndexPath:indexPath];
     //设置背景颜色
     cell.contentView.backgroundColor=[UIColor colorWithRed:0.957 green:0.957 blue:0.957 alpha:0];
-    
     cell.showsReorderControl= YES;
     Store * store;
     //如果是尚未搜尋 列出全部資料
@@ -168,6 +168,9 @@
 //cell的高度
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 80;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 4;
 }
 /* table 的頂端離天的距離(放廣告）
  - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface FirstViewController : UIViewController
-@property NSMutableArray *hotstores;
 
 @end
 
