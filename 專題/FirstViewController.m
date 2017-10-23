@@ -34,10 +34,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
- 
+ mypickerView =[[UIPickerView alloc]init];
     mypickerView.delegate=self;
     mypickerView.dataSource=self;
-    mypickerView =[[UIPickerView alloc]init];
+    
     seacherList =[NSMutableArray new];
      //地區
      NSArray *filter=[[NSArray alloc]initWithObjects:@"請選擇",@"台北",@"新北",@"桃園",@"新竹",@"苗栗",@"台中",@"彰化",
@@ -83,19 +83,23 @@
     
     _sortingTextField.inputView = mypickerView;
     _sortingTextField.inputAccessoryView = toolBar;
-
-    
-    
-    
+    _regionTextField.placeholder = @"請點選";
+    _sortingTextField.placeholder=@"請點選";
+    _classTextFiled.placeholder=@"請點選";
 }
 //選到某個textField，觸發
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
     contentTextField = textField;
     textlist = seacherList[textField.tag];
+//    if (contentTextField != 0) {
+//        seacherList
+//    }
+    
     UIPickerView *pick = textField.inputView;
     [pick reloadAllComponents];
 }
+
 
 //內建的函式回傳UIPicker共有幾組選項
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -124,6 +128,8 @@
     [contentTextField resignFirstResponder];
 
 }
+
+//PickView Click
 -(void)toolBarCanelClick:(id)sender {
     [self.view endEditing:YES];
 }

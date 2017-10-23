@@ -114,8 +114,12 @@
     [locationManager startUpdatingLocation];
     
     
+    
 }
-
+//當GPS位置更新觸發事件
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
+    
+}
 //計算距離
 
 -(void)locationChange:(CLLocation *)newLocation:(CLLocation *)oldLocation
@@ -127,6 +131,7 @@
         NSString *latitude = data.latitude;
         [latitudeArray addObject:latitude];
         NSLog(@"%@",latitude);
+        NSLog(@"%@",locationManager);
     }
     
     for(Store *latiud in latitudeArray){
