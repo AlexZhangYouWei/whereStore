@@ -16,7 +16,7 @@
 @property (strong, nonatomic) IBOutlet UISearchBar *searchListbar;
 
 
-@property(nonatomic) NSMutableArray *stores;
+@property(nonatomic) NSMutableArray<NSMutableDictionary *> *stores;
 @property(nonatomic) NSMutableArray *searchresults;
 
 

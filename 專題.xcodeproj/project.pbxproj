@@ -10,11 +10,12 @@
 		130299521F90B91E001F63DA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130299511F90B91D001F63DA /* MapKit.framework */; };
 		130299541F90B92F001F63DA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130299531F90B92F001F63DA /* CoreLocation.framework */; };
 		13078B111F8F65BF00A81318 /* Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 13078B101F8F65BF00A81318 /* Data.m */; };
+		130BFFDF1FA1EC1200FA3A2E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 130BFFDE1FA1E5A900FA3A2E /* GoogleService-Info.plist */; };
 		13117D321F85CBE20066E08E /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 13117D311F85CBE20066E08E /* Store.m */; };
 		132233D11F8A768F006F127B /* StorecontentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 132233D01F8A768F006F127B /* StorecontentViewController.m */; };
 		132233D41F8A7966006F127B /* StorecontentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 132233D31F8A7966006F127B /* StorecontentTableViewCell.m */; };
 		136A92CD1F7B390800A5879F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92CC1F7B390800A5879F /* AppDelegate.m */; };
-		136A92D01F7B390800A5879F /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92CF1F7B390800A5879F /* FirstViewController.m */; };
+		136A92D01F7B390800A5879F /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92CF1F7B390800A5879F /* SearchViewController.m */; };
 		136A92D61F7B390800A5879F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 136A92D41F7B390800A5879F /* Main.storyboard */; };
 		136A92D81F7B390800A5879F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 136A92D71F7B390800A5879F /* Assets.xcassets */; };
 		136A92DB1F7B390800A5879F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 136A92D91F7B390800A5879F /* LaunchScreen.storyboard */; };
@@ -37,6 +38,7 @@
 		130299531F90B92F001F63DA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		13078B0F1F8F65BF00A81318 /* Data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
 		13078B101F8F65BF00A81318 /* Data.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Data.m; sourceTree = "<group>"; };
+		130BFFDE1FA1E5A900FA3A2E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		13117D301F85CBE20066E08E /* Store.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		13117D311F85CBE20066E08E /* Store.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		132233CF1F8A768F006F127B /* StorecontentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorecontentViewController.h; sourceTree = "<group>"; };
@@ -46,8 +48,8 @@
 		136A92C81F7B390800A5879F /* 專題.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "專題.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		136A92CB1F7B390800A5879F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		136A92CC1F7B390800A5879F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		136A92CE1F7B390800A5879F /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		136A92CF1F7B390800A5879F /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		136A92CE1F7B390800A5879F /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		136A92CF1F7B390800A5879F /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		136A92D51F7B390800A5879F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		136A92D71F7B390800A5879F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		136A92DA1F7B390800A5879F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -124,8 +126,8 @@
 			children = (
 				136A92CB1F7B390800A5879F /* AppDelegate.h */,
 				136A92CC1F7B390800A5879F /* AppDelegate.m */,
-				136A92CE1F7B390800A5879F /* FirstViewController.h */,
-				136A92CF1F7B390800A5879F /* FirstViewController.m */,
+				136A92CE1F7B390800A5879F /* SearchViewController.h */,
+				136A92CF1F7B390800A5879F /* SearchViewController.m */,
 				136A92D41F7B390800A5879F /* Main.storyboard */,
 				136A92D71F7B390800A5879F /* Assets.xcassets */,
 				136A92D91F7B390800A5879F /* LaunchScreen.storyboard */,
@@ -147,6 +149,7 @@
 				13D506AE1F94C7660082B485 /* StoreListTableViewCell.m */,
 				13AE18231F98878F0087CF79 /* MapViewController.h */,
 				13AE18241F98878F0087CF79 /* MapViewController.m */,
+				130BFFDE1FA1E5A900FA3A2E /* GoogleService-Info.plist */,
 			);
 			path = "專題";
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				136A92DB1F7B390800A5879F /* LaunchScreen.storyboard in Resources */,
+				130BFFDF1FA1EC1200FA3A2E /* GoogleService-Info.plist in Resources */,
 				136A92D81F7B390800A5879F /* Assets.xcassets in Resources */,
 				136A92D61F7B390800A5879F /* Main.storyboard in Resources */,
 			);
@@ -330,7 +334,7 @@
 				136A92DE1F7B390800A5879F /* main.m in Sources */,
 				132233D11F8A768F006F127B /* StorecontentViewController.m in Sources */,
 				13D506AF1F94C7660082B485 /* StoreListTableViewCell.m in Sources */,
-				136A92D01F7B390800A5879F /* FirstViewController.m in Sources */,
+				136A92D01F7B390800A5879F /* SearchViewController.m in Sources */,
 				13078B111F8F65BF00A81318 /* Data.m in Sources */,
 				13AE18251F98878F0087CF79 /* MapViewController.m in Sources */,
 			);
@@ -476,11 +480,11 @@
 				);
 				INFOPLIST_FILE = "專題/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.www.--";
+				PRODUCT_BUNDLE_IDENTIFIER = com.www.one;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -498,10 +502,10 @@
 				);
 				INFOPLIST_FILE = "專題/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.www.--";
+				PRODUCT_BUNDLE_IDENTIFIER = com.www.one;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

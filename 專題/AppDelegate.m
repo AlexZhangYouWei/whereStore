@@ -7,15 +7,16 @@
 //
 
 #import "AppDelegate.h"
+@import Firebase;
 
 @interface AppDelegate ()
-
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [FIRApp configure];
  [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.000 green:0.251 blue:1.000 alpha:1.000]];
     return YES;
 }

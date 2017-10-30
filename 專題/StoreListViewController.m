@@ -12,25 +12,29 @@
 #import "StoreListTableViewCell.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+@import Firebase;
+@import FirebaseDatabase;
 @interface StoreListViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,MKMapViewDelegate,CLLocationManagerDelegate>
 {
     CLLocationManager *locationManager; ; //定位控制器
     CLLocation *mylocation; //目前所在位置
     CLLocation *endlocation; //每個商家的位置
-    //    CLLocation *locA = [[CLLocation alloc] initWithLatitude:lat1 longitude:long1];
     
-    //    CLLocation *locB = [[CLLocation alloc] initWithLatitude:lat2 longitude:long2];
     
-    //CLLocationDistance distance = [mylocation distanceFromLocation:endlocation];
-    //  - (CLLocationDistance)distanceFromLocation:(const CLLocation *)location;
     BOOL *  firstLocationReceived;
     
 }
 @property (strong, nonatomic) IBOutlet UISearchBar *searchbar;
 
+
+
 @end
 
-@implementation StoreListViewController
+@implementation StoreListViewController{
+    FIRDatabaseReference * ref;
+    FIRDatabaseHandle channelRefHandle;
+    
+}
 
 
 
@@ -42,7 +46,7 @@
     if (self) {
         self.stores = [NSMutableArray new];
         
-        [self queryFromPHP];
+        [self firebasedatafrom];
         
         self.navigationItem.title = @"附近餐廳";
         
@@ -50,41 +54,7 @@
     return self;
 }
 
-
-
-//讀取php檔案
--(void)queryFromPHP{
-    NSURL *url = [NSURL URLWithString:@"http://localhost:8888/note_json.php"];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (!error) {
-            NSError *err = nil;
-            //ＤＢ用陣列的類別
-            NSArray *StoreFromDB = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
-            if (err) {
-                NSLog(@"JSON err");
-            }else{
-                //抓取 DB 的資料
-                [self.stores removeAllObjects];
-                for (NSDictionary *item in StoreFromDB) {
-                    Store  *store = [[Store alloc]init];
-                    store.storename=item[@"name"];
-                    store.tel = item[@"tel"];
-                    store.adds =item[@"adds"];
-                    store.latitude = item[@"latitude"];
-                    store.image =item[@"image"];
-                    [self.stores addObject:store];
-                }
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.storelisttableview reloadData];
-                });
-            }
-            
-        }
-        
-    }];
-    [task resume];
+-(void)firebasedatafrom{
 }
 
 - (void)viewDidLoad {
@@ -92,6 +62,34 @@
     self.storelisttableview.dataSource = self;
     self.storelisttableview.delegate = self;
     _searchbar.delegate=self;
+    ref = [[[[FIRDatabase database] reference] child:@"2"]child:@"data"];//查詢資料庫資料
+    NSLog(@"database :%@" , ref);
+    
+    channelRefHandle =[ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
+        NSMutableDictionary *storeData =[NSMutableDictionary new];
+        storeData = snapshot.value;
+        _stores = [NSMutableArray new];
+        [self.stores removeAllObjects];
+        for (NSDictionary *item in storeData){
+            Store *store = [[Store alloc]init];
+            store.storename=[item objectForKey:@"name"];
+            store.tel = [item objectForKey:@"tel"];
+            store.adds =[item objectForKey:@"adds"];
+            store.latitude =[item objectForKey:@"latitude"];
+            store.clickrate =[item objectForKey:@"clickrate"];
+            store.longitude=[item objectForKey:@"longitude"];
+            store.storeclass=[item objectForKey:@"storeclass"];
+            store.evaluate = [item objectForKey:@"evaluate"];
+            store.time = [item objectForKey:@"time"];
+            store.storeid = [item objectForKey:@"storeid"];
+            [self.stores addObject:store];
+            NSLog(@"stores :%@" , store);
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.storelisttableview reloadData];
+        });
+    }];
     
     
     
@@ -113,36 +111,18 @@
     //開始更新定位資訊
     [locationManager startUpdatingLocation];
     
+    //初始化 所在的位置
+    mylocation =[[CLLocation alloc]init];
     
+    
+    NSLog(@" %@" ,_stores);
     
 }
+
 //當GPS位置更新觸發事件
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
-    
-}
-//計算距離
-
--(void)locationChange:(CLLocation *)newLocation:(CLLocation *)oldLocation
-{
-    //產生一個Array
-    NSMutableArray *latitudeArray = [NSMutableArray new];
-    //從Store抓取 商店經緯度
-    for (Store *data in _stores) {
-        NSString *latitude = data.latitude;
-        [latitudeArray addObject:latitude];
-        NSLog(@"%@",latitude);
-        NSLog(@"%@",locationManager);
-    }
-    
-    for(Store *latiud in latitudeArray){
-        
-    }
-    // Configure the new event with information from the location.
-    CLLocationCoordinate2D newCoordinate = [newLocation coordinate];
-    CLLocationCoordinate2D oldCoordinate = [oldLocation coordinate];
-    
-    CLLocationDistance kilometers = [mylocation distanceFromLocation:latitudeArray] / 1000; // Error ocurring here.
-    CLLocationDistance meters = [mylocation distanceFromLocation:latitudeArray]; // Error ocurring here.
+    mylocation = locations.lastObject;
+    NSLog(@"我的經緯度%@",locations.description);
 }
 
 //table cell的樣式
@@ -153,21 +133,52 @@
     cell.contentView.backgroundColor=[UIColor colorWithRed:0.957 green:0.957 blue:0.957 alpha:0];
     cell.showsReorderControl= YES;
     Store * store;
+    //兩點距離的計算
+    //產生一個Array
+    NSMutableArray *latitudeArray = [NSMutableArray new];
+    NSMutableArray *longitudeArray=[NSMutableArray new];
+    //從Store抓取 商店經緯度
+    for (Store *data in _stores) {
+        NSString *latitude = data.latitude;//查詢地經緯度
+        NSString *longitude =data.longitude;
+        [latitudeArray addObject:latitude];
+        [longitudeArray addObject:longitude];
+        NSLog(@"latitude:%@",latitudeArray);
+        NSLog(@"longitudeArray %@",longitudeArray);
+        NSLog(@"locationManager:%@",locationManager);
+    }
+    //抓取商家經緯度
+    NSNumber *latitude = [NSDictionary valueForKeyPath:@"latitude"];
+    NSNumber *longitude = [NSDictionary valueForKeyPath:@"longitude"];
+    endlocation = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
+    CLLocation *first = [[CLLocation alloc]initWithLatitude:mylocation.coordinate.latitude longitude:mylocation.coordinate.longitude];
+    CLLocationDistance distance = [first distanceFromLocation:endlocation];
+    
+    
+    
     //如果是尚未搜尋 列出全部資料
     if (!_isfillterd) {
         store = self.stores[indexPath.row];
         cell.nameLabel.text =store.storename;
         cell.addLabel.text = store.adds;
-        //  cell.distanceLabel.text = store.longitude;
+                if (distance >= 1000) {
+                    cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", distance/1000];
+                }else{
+                    cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", distance];
+                }
+        
         
     } else {
         //如果是以搜尋 列出對應的資料
         store = self.searchresults[indexPath.row];
         cell.nameLabel.text =store.storename;
         cell.addLabel.text = store.adds;
-        //  cell.distanceLabel.text = store.longitude;
+                if (distance >= 1000) {
+                    cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", distance/1000];
+                }else{
+                    cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", distance];
+                }
     }
-    
     return cell;
 }
 //cell的高度
@@ -228,12 +239,12 @@
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
-
 #pragma mark -prepareForSegue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
     if ([segue.identifier isEqualToString:@"storecontent"]) {
         StorecontentViewController *storecontentviewcontroller = segue.destinationViewController;
+        //storecontentviewcontroller.x = y;
+        
         NSIndexPath *indexPath = self.storelisttableview.indexPathForSelectedRow;
         if (_isfillterd) {
             storecontentviewcontroller.content = _stores[indexPath.row];
@@ -261,7 +272,6 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self.view endEditing:YES];
 }
-
 
 
 

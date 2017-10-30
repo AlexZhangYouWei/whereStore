@@ -49,6 +49,9 @@
             cell.nameLabel.text = @"電話";
             cell.valueTextView.text = self.content.tel;
             break;
+            case 3:
+            cell.nameLabel.text= @"營業時間";
+            cell.valueTextView.text=self.content.time;
       
     }
     return cell;

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface MoreViewController : UIViewController
+@property(nonatomic) NSString *fbnameID;
 
 @end
