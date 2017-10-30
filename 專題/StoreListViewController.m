@@ -19,7 +19,7 @@
     CLLocationManager *locationManager; ; //定位控制器
     CLLocation *mylocation; //目前所在位置
     CLLocation *endlocation; //每個商家的位置
-    
+    CLLocationDistance *distance;//距離
     
     BOOL *  firstLocationReceived;
     
@@ -83,6 +83,7 @@
             store.time = [item objectForKey:@"time"];
             store.storeid = [item objectForKey:@"storeid"];
             [self.stores addObject:store];
+         
             NSLog(@"stores :%@" , store);
         }
         
@@ -115,7 +116,6 @@
     mylocation =[[CLLocation alloc]init];
     
     
-    NSLog(@" %@" ,_stores);
     
 }
 
@@ -135,23 +135,20 @@
     Store * store;
     //兩點距離的計算
     //產生一個Array
-    NSMutableArray *latitudeArray = [NSMutableArray new];
-    NSMutableArray *longitudeArray=[NSMutableArray new];
+  //  NSMutableArray *latitudeArray = [NSMutableArray new];
+   // NSMutableArray *longitudeArray=[NSMutableArray new];
     //從Store抓取 商店經緯度
-    for (Store *data in _stores) {
-        NSString *latitude = data.latitude;//查詢地經緯度
-        NSString *longitude =data.longitude;
-        [latitudeArray addObject:latitude];
-        [longitudeArray addObject:longitude];
-        NSLog(@"latitude:%@",latitudeArray);
-        NSLog(@"longitudeArray %@",longitudeArray);
-        NSLog(@"locationManager:%@",locationManager);
-    }
-    //抓取商家經緯度
-    NSNumber *latitude = [NSDictionary valueForKeyPath:@"latitude"];
-    NSNumber *longitude = [NSDictionary valueForKeyPath:@"longitude"];
-    endlocation = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
+//    for (Store *data in _stores) {
+//        NSString *latitude = data.latitude;//查詢地經緯度
+//        NSString *longitude =data.longitude;
+//        [latitudeArray addObject:latitude];
+//        [longitudeArray addObject:longitude];
+//        NSLog(@"latitude:%@",latitudeArray);
+//        NSLog(@"longitudeArray %@",longitudeArray);
+//
+//    }
     CLLocation *first = [[CLLocation alloc]initWithLatitude:mylocation.coordinate.latitude longitude:mylocation.coordinate.longitude];
+    endlocation = [[CLLocation alloc] initWithLatitude:[store.latitude doubleValue] longitude:[store.longitude doubleValue]];
     CLLocationDistance distance = [first distanceFromLocation:endlocation];
     
     
@@ -161,11 +158,11 @@
         store = self.stores[indexPath.row];
         cell.nameLabel.text =store.storename;
         cell.addLabel.text = store.adds;
-                if (distance >= 1000) {
-                    cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", distance/1000];
-                }else{
-                    cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", distance];
-                }
+        if (distance >= 1000) {
+            cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", distance/1000];
+        }else{
+            cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", distance];
+        }
         
         
     } else {
@@ -173,11 +170,11 @@
         store = self.searchresults[indexPath.row];
         cell.nameLabel.text =store.storename;
         cell.addLabel.text = store.adds;
-                if (distance >= 1000) {
-                    cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", distance/1000];
-                }else{
-                    cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", distance];
-                }
+        if (distance >= 1000) {
+            cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", distance/1000];
+        }else{
+            cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", distance];
+        }
     }
     return cell;
 }
