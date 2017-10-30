@@ -18,8 +18,8 @@
 @property(nonatomic) NSString *tel;//電話
 @property(nonatomic) NSString *storeclass ;//餐廳類別
 @property(nonatomic) NSString *time;//營業時間
-@property(nonatomic) NSString *latitude ;//經度
-@property(nonatomic) NSString *longitude ;//緯度
+@property(nonatomic) NSNumber *latitude ;//經度
+@property(nonatomic) NSNumber *longitude ;//緯度
 @property(nonatomic) NSString *image;//照片
 @property(nonatomic) NSNumber *distance;//距離
 @property(nonatomic) NSNumber *clickrate;//點擊數

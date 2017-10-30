@@ -19,7 +19,7 @@
     CLLocationManager *locationManager; ; //定位控制器
     CLLocation *mylocation; //目前所在位置
     CLLocation *endlocation; //每個商家的位置
-    CLLocationDistance *distance;//距離
+    CLLocationDistance distance;//距離
     
     BOOL *  firstLocationReceived;
     
@@ -37,32 +37,14 @@
 }
 
 
-
-
-//初始化 條件
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
-    self = [super initWithCoder:coder];
-    if (self) {
-        self.stores = [NSMutableArray new];
-        
-        [self firebasedatafrom];
-        
-        self.navigationItem.title = @"附近餐廳";
-        
-    }
-    return self;
-}
-
--(void)firebasedatafrom{
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.storelisttableview.dataSource = self;
     self.storelisttableview.delegate = self;
+    //self.navigationItem.leftBarButtonItem= [[UIBarButtonItem alloc] initw]
     _searchbar.delegate=self;
-    ref = [[[[FIRDatabase database] reference] child:@"2"]child:@"data"];//查詢資料庫資料
+    // "2/data"
+    ref = [[[FIRDatabase database] reference] child:@"2/data"];//查詢資料庫資料child:@"data"]
     NSLog(@"database :%@" , ref);
     
     channelRefHandle =[ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
@@ -83,8 +65,6 @@
             store.time = [item objectForKey:@"time"];
             store.storeid = [item objectForKey:@"storeid"];
             [self.stores addObject:store];
-         
-            NSLog(@"stores :%@" , store);
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -123,8 +103,18 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
     mylocation = locations.lastObject;
     NSLog(@"我的經緯度%@",locations.description);
+    //從Store抓取 商店經緯度
+    for (Store *data in _stores) {
+        NSNumber *latitude = data.latitude;//查詢地經緯度
+        NSNumber *longitude =data.longitude;
+        endlocation = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
+        CLLocation *first = [[CLLocation alloc]initWithLatitude:mylocation.coordinate.latitude longitude:mylocation.coordinate.longitude];
+        
+        distance = [first distanceFromLocation:endlocation];
+        NSLog(@"起點:%@ 到 終點:%f = 距離: ％@ ",mylocation,endlocation,distance);
+    }
+    [self.storelisttableview reloadData];
 }
-
 //table cell的樣式
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -134,24 +124,6 @@
     cell.showsReorderControl= YES;
     Store * store;
     //兩點距離的計算
-    //產生一個Array
-  //  NSMutableArray *latitudeArray = [NSMutableArray new];
-   // NSMutableArray *longitudeArray=[NSMutableArray new];
-    //從Store抓取 商店經緯度
-//    for (Store *data in _stores) {
-//        NSString *latitude = data.latitude;//查詢地經緯度
-//        NSString *longitude =data.longitude;
-//        [latitudeArray addObject:latitude];
-//        [longitudeArray addObject:longitude];
-//        NSLog(@"latitude:%@",latitudeArray);
-//        NSLog(@"longitudeArray %@",longitudeArray);
-//
-//    }
-    CLLocation *first = [[CLLocation alloc]initWithLatitude:mylocation.coordinate.latitude longitude:mylocation.coordinate.longitude];
-    endlocation = [[CLLocation alloc] initWithLatitude:[store.latitude doubleValue] longitude:[store.longitude doubleValue]];
-    CLLocationDistance distance = [first distanceFromLocation:endlocation];
-    
-    
     
     //如果是尚未搜尋 列出全部資料
     if (!_isfillterd) {
@@ -159,7 +131,7 @@
         cell.nameLabel.text =store.storename;
         cell.addLabel.text = store.adds;
         if (distance >= 1000) {
-            cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", distance/1000];
+            cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", distance /1000];
         }else{
             cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", distance];
         }
@@ -171,10 +143,11 @@
         cell.nameLabel.text =store.storename;
         cell.addLabel.text = store.adds;
         if (distance >= 1000) {
-            cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", distance/1000];
+            cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", distance /1000];
         }else{
             cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", distance];
         }
+        
     }
     return cell;
 }

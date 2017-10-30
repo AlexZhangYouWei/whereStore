@@ -21,5 +21,53 @@
             stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x5c08;&#x984c;/StoreListViewController.m"
+            timestampString = "531054830.748037"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "-locationManager:didUpdateLocations:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[StoreListViewController locationManager:didUpdateLocations:]"
+                  moduleName = "&#x5c08;&#x984c;"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user44/Desktop/Alex/%E5%B0%88%E9%A1%8C%E6%96%87%E4%BB%B6%E5%8D%80/END/%E5%B0%88%E9%A1%8C/StoreListViewController.m"
+                  timestampString = "531054830.901151"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "115"
+                  endingLineNumber = "115"
+                  offsetFromSymbolStart = "1073">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[StoreListViewController locationManager:didUpdateLocations:]"
+                  moduleName = "&#x5c08;&#x984c;"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user44/Desktop/Alex/%E5%B0%88%E9%A1%8C%E6%96%87%E4%BB%B6%E5%8D%80/END/%E5%B0%88%E9%A1%8C/StoreListViewController.m"
+                  timestampString = "531054830.904761"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "115"
+                  endingLineNumber = "115"
+                  offsetFromSymbolStart = "1123">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

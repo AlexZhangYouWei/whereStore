@@ -33,7 +33,6 @@
     {
         [locationManager requestWhenInUseAuthorization];
     }
-    
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     locationManager.activityType =CLActivityTypeFitness;
     locationManager.delegate = self;

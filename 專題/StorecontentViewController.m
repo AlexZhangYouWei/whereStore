@@ -31,7 +31,7 @@
 }
 #pragma mark -UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StorecontentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
@@ -49,7 +49,7 @@
             cell.nameLabel.text = @"電話";
             cell.valueTextView.text = self.content.tel;
             break;
-            case 3:
+        case 3:
             cell.nameLabel.text= @"營業時間";
             cell.valueTextView.text=self.content.time;
       
