@@ -19,6 +19,8 @@
     UITextField *contentTextField;
     NSInteger userSelect;
     NSMutableArray *searchcondition; //搜尋結果
+    
+    
 }
 @property (strong, nonatomic) IBOutlet UILabel *regionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *classLabel;
@@ -48,7 +50,7 @@
     NSArray* style=[[NSArray alloc]initWithObjects:@"請選擇",@"台式",@"韓式",@"日式",@"美式",@"點心",@"其他", nil];
     
     //距離或是人氣排序
-    NSArray *sorting=[[NSArray alloc]initWithObjects:@"請選擇",@"依距離",@"人氣" ,nil];
+    NSArray *sorting=[[NSArray alloc]initWithObjects:@"依距離",@"人氣" ,nil];
     
     [seacherList addObject:filter];
     [seacherList addObject:style];
@@ -121,7 +123,6 @@
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
 //    str = [textlist objectAtIndex:row];
     userSelect = row;
-    
 }
 
 
@@ -129,7 +130,9 @@
     NSLog(@"DONE");
     contentTextField.text = textlist[userSelect];
     [contentTextField resignFirstResponder];
-
+    searchone = [NSString stringWithFormat:@"%@",self.regionTextField.text];
+    searchtwo = [NSString stringWithFormat:@"%@",self.classTextFiled.text];
+    searchthree = [NSString stringWithFormat:@"%@",self.sortingTextField.text];
 }
 
 //PickView Click
@@ -144,7 +147,10 @@
 
     
 }
-
+#pragma mark -prepareForSegue
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+}
 
 
 

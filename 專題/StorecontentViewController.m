@@ -52,7 +52,6 @@
         case 3:
             cell.nameLabel.text= @"營業時間";
             cell.valueTextView.text=self.content.time;
-      
     }
     return cell;
 }

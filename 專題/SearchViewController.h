@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SearchViewController : UIViewController
-
+@interface SearchViewController : UIViewController{
+NSString *searchone;
+NSString *searchtwo;
+NSString *searchthree;
+}
 @end
 

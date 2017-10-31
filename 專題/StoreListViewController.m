@@ -21,6 +21,7 @@
     CLLocation *endlocation; //每個商家的位置
     CLLocationDistance distance;//距離
     
+    
     BOOL *  firstLocationReceived;
     
 }
@@ -65,6 +66,7 @@
             store.time = [item objectForKey:@"time"];
             store.storeid = [item objectForKey:@"storeid"];
             [self.stores addObject:store];
+  
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -109,9 +111,8 @@
         NSNumber *longitude =data.longitude;
         endlocation = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
         CLLocation *first = [[CLLocation alloc]initWithLatitude:mylocation.coordinate.latitude longitude:mylocation.coordinate.longitude];
-        
-        distance = [first distanceFromLocation:endlocation];
-        NSLog(@"起點:%@ 到 終點:%f = 距離: ％@ ",mylocation,endlocation,distance);
+                distance = [first distanceFromLocation:endlocation];
+        NSLog(@"起點:%@ 到 終點:%@ = 距離:％@ ",first,endlocation,distance);
     }
     [self.storelisttableview reloadData];
 }
@@ -124,8 +125,7 @@
     cell.showsReorderControl= YES;
     Store * store;
     //兩點距離的計算
-    
-    //如果是尚未搜尋 列出全部資料
+        //如果是尚未搜尋 列出全部資料
     if (!_isfillterd) {
         store = self.stores[indexPath.row];
         cell.nameLabel.text =store.storename;

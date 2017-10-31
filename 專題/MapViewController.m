@@ -13,6 +13,7 @@
 #import <MapKit/MapKit.h>
 @interface MapViewController ()<MKMapViewDelegate,CLLocationManagerDelegate>{
     CLLocationManager *locationManager;
+    CLLocation *mylocation;
     CLLocation *storelocation;
     BOOL firstLocationReceived;
 
@@ -40,23 +41,24 @@
 
 
 }
+
 - (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     //偵測自己的經緯物
-    CLLocation *newLocation = locations.lastObject;
+    mylocation = locations.lastObject;
     
-    NSLog(@"Current Location: %.6f,%.6f",newLocation.coordinate.latitude,newLocation.coordinate.longitude);
+    NSLog(@"Current Location: %.6f,%.6f",mylocation.coordinate.latitude,mylocation.coordinate.longitude);
     
     if(firstLocationReceived == NO)
     {
         MKCoordinateRegion region = _theMapView.region;
-        region.center = newLocation.coordinate;
+        region.center = mylocation.coordinate;
         region.span.latitudeDelta=0.01;
         region.span.longitudeDelta=0.01;
         [_theMapView setRegion:region animated:YES];
         firstLocationReceived = YES;
         
         // Add Annotation
-        CLLocationCoordinate2D annoationCoordinate = newLocation.coordinate;
+        CLLocationCoordinate2D annoationCoordinate = mylocation.coordinate;
         annoationCoordinate.latitude += 0.0005;
         annoationCoordinate.longitude += 0.0005;
         
@@ -93,5 +95,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
 
 @end

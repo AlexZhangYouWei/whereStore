@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString *Fblogin =[[NSString alloc]initWithFormat:Fblogin locale:Fblogin];
+    //NSString *Fblogin =[[NSString alloc]initWithFormat:Fblogin locale:Fblogin];
     
 
 

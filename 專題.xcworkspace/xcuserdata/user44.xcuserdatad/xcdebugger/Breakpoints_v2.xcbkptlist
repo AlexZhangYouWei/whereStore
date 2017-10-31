@@ -28,11 +28,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5c08;&#x984c;/StoreListViewController.m"
-            timestampString = "531054830.748037"
+            timestampString = "531110597.774816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
             landmarkName = "-locationManager:didUpdateLocations:"
             landmarkType = "7">
             <Locations>
@@ -44,12 +44,12 @@
                   moduleName = "&#x5c08;&#x984c;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/user44/Desktop/Alex/%E5%B0%88%E9%A1%8C%E6%96%87%E4%BB%B6%E5%8D%80/END/%E5%B0%88%E9%A1%8C/StoreListViewController.m"
-                  timestampString = "531054830.901151"
+                  timestampString = "531110598.065073"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "115"
-                  endingLineNumber = "115"
-                  offsetFromSymbolStart = "1073">
+                  startingLineNumber = "116"
+                  endingLineNumber = "116"
+                  offsetFromSymbolStart = "1062">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -59,12 +59,12 @@
                   moduleName = "&#x5c08;&#x984c;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/user44/Desktop/Alex/%E5%B0%88%E9%A1%8C%E6%96%87%E4%BB%B6%E5%8D%80/END/%E5%B0%88%E9%A1%8C/StoreListViewController.m"
-                  timestampString = "531054830.904761"
+                  timestampString = "531110598.067962"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "115"
-                  endingLineNumber = "115"
-                  offsetFromSymbolStart = "1123">
+                  startingLineNumber = "116"
+                  endingLineNumber = "116"
+                  offsetFromSymbolStart = "1112">
                </Location>
             </Locations>
          </BreakpointContent>
