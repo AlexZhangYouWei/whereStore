@@ -19,7 +19,8 @@
 @property(nonatomic) NSMutableArray<NSMutableDictionary *> *stores;
 @property(nonatomic) NSMutableArray *searchresults;
 
-
+@property(nonatomic) NSMutableArray *latitudearray;
+@property(nonatomic)NSMutableArray *longitudearray;
 @property bool isfillterd;
 
 @end
