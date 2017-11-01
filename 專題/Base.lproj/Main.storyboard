@@ -101,7 +101,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="eHE-ig-mxq">
                             <connections>
                                 <action selector="seacher:" destination="gSo-bM-Kus" id="Y7R-ay-WfC"/>
-                                <segue destination="chP-qI-qOm" kind="show" id="qA2-hU-Zml"/>
+                                <segue destination="chP-qI-qOm" kind="show" identifier="allmap" id="qA2-hU-Zml"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

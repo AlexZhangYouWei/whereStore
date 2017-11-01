@@ -9,13 +9,16 @@
 #import "MapViewController.h"
 #import "Store.h"
 #import "StoreListTableViewCell.h"
+#import "StoreListViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
-@interface MapViewController ()<MKMapViewDelegate,CLLocationManagerDelegate>{
+@interface MapViewController ()<MKMapViewDelegate,CLLocationManagerDelegate,storesDelegate>{
     CLLocationManager *locationManager;
     CLLocation *mylocation;
     CLLocation *storelocation;
     BOOL firstLocationReceived;
+    NSMutableArray *allstores ;
+
 
     
 }
@@ -24,7 +27,11 @@
 @end
 
 @implementation MapViewController
-
+-(void)passValue:(Store *)value{
+    allstores = [NSMutableArray new];
+    allstores =(NSMutableArray *) value;
+    NSLog(@"ALLstores %@",allstores);
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title =@"地圖";
@@ -39,8 +46,8 @@
     locationManager.delegate = self;
     [locationManager startUpdatingLocation];
 
-
 }
+
 
 - (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     //偵測自己的經緯物

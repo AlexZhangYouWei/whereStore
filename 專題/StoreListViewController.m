@@ -10,6 +10,7 @@
 #import "Store.h"
 #import "StorecontentViewController.h"
 #import "StoreListTableViewCell.h"
+#import "MapViewController.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 @import Firebase;
@@ -237,6 +238,14 @@
             NSDictionary *dic =(NSDictionary *) self.stores[indexPath.row];
             storecontentviewcontroller.content =(Store *) dic;
         }
+    }else if ([segue.identifier isEqualToString:@"allmap"]){
+     MapViewController *mapViewController = segue.destinationViewController;
+        //將值透過Storyboard Segue帶給頁面2的string變數
+        [_stores setValue:_stores forKey:@"Store"];
+        
+        //將delegate設成自己（指定自己為代理）
+        [_stores setValue:self forKey:@"delegate"];
+        
     }
 }
 - (void)didReceiveMemoryWarning {
@@ -273,7 +282,6 @@
 - (IBAction)seacher:(id)sender {
     [_allstoreDelegate passValue:(Store *)_stores];
 
-    
 }
     
     @end
