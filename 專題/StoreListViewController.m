@@ -41,12 +41,8 @@
     [super viewDidLoad];
     self.storelisttableview.dataSource = self;
     self.storelisttableview.delegate = self;
-    //self.navigationItem.leftBarButtonItem= [[UIBarButtonItem alloc] initw]
     _searchbar.delegate=self;
-    // "2/data"
     ref = [[[FIRDatabase database] reference] child:@"2/data"];//查詢資料庫資料child:@"data"]
-    NSLog(@"database :%@" , ref);
-    
     channelRefHandle =[ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
         NSMutableDictionary *storeData =[NSMutableDictionary new];
         storeData = snapshot.value;
@@ -64,17 +60,13 @@
             store.evaluate = [item objectForKey:@"evaluate"];
             store.time = [item objectForKey:@"time"];
             store.storeid = [item objectForKey:@"storeid"];
-            [self.stores addObject:(NSMutableDictionary *)store];
-            
+            [self.stores addObject:store];
         }
-        
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self distanceFromLocation];
             [self.storelisttableview reloadData];
         });
     }];
-    
-    
-    
     //詢問定位授權
     locationManager=[CLLocationManager new];
     if([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
@@ -85,63 +77,79 @@
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     //定位判斷速度(走路)
     locationManager.activityType =CLActivityTypeFitness;
-    
-    //多少距離更新(100M)
-    locationManager.distanceFilter=100.0f;
-    
+    //多少距離更新(40M)
+    locationManager.distanceFilter=40.0f;
     locationManager.delegate = self;
-    //開始更新定位資訊
-    [locationManager startUpdatingLocation];
-    
     //初始化 所在的位置
     mylocation =[[CLLocation alloc]init];
+    //開始更新定位資訊
+    [locationManager startUpdatingLocation];
+    _latitudearray =[NSMutableArray new];
+    _longitudearray=[NSMutableArray new];
+
+    // 實作重新撈資料
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [_storelisttableview addSubview:refreshControl];
     
-    
+}
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    // 重新撈資料
+    [refreshControl endRefreshing];
+    [self.storelisttableview reloadData];
+    [self distanceFromLocation];
     
 }
 
 //當GPS位置更新觸發事件
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
     mylocation = locations.lastObject;
-    //從Store抓取 商店經緯度
+    if (mylocation != nil) {
+    }
     [self.storelisttableview reloadData];
+    [self distanceFromLocation];
+    
 }
+//兩點距離的計算 並重新排序
+-(void)distanceFromLocation{
+    Store *data;
+    for (data in _stores) {
+        //    data =(Store *)_stores;//[indexPath.row];
+        endlocation = [[CLLocation alloc] initWithLatitude:[data.latitude doubleValue] longitude:[data.longitude doubleValue]];
+        CLLocation *first = [[CLLocation alloc]initWithLatitude:mylocation.coordinate.latitude longitude:mylocation.coordinate.longitude];
+        distance = [first distanceFromLocation:endlocation];
+        data.distance = distance;
+    }
+    //快速排序
+    [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
+        return obj1.distance > obj2.distance ? NSOrderedDescending : NSOrderedAscending;
+    }];
+    
+    
+}
+
 //table cell的樣式
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    Store * data ;
-    Store * store;
-    CLLocationDistance distance;
+    
     StoreListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"storeCell" forIndexPath:indexPath];
     //设置背景颜色
     cell.contentView.backgroundColor=[UIColor colorWithRed:0.957 green:0.957 blue:0.957 alpha:0];
     cell.showsReorderControl= YES;
-    _latitudearray =[NSMutableArray new];
-    _longitudearray=[NSMutableArray new];
-    //兩點距離的計算
-    //for (data in _stores) {
-    data =(Store *)_stores[indexPath.row];
-    NSString *latitude = data.latitude;
-    NSString *longitude =data.longitude;
-    //        [_latitudearray addObject:latitude];
-    //        [_longitudearray addObject:longitude];
-    endlocation = [[CLLocation alloc] initWithLatitude:[data.latitude doubleValue] longitude:[data.longitude doubleValue]];
-    CLLocation *first = [[CLLocation alloc]initWithLatitude:mylocation.coordinate.latitude longitude:mylocation.coordinate.longitude];
-    distance = [first distanceFromLocation:endlocation];
-    NSLog(@"distance=%f",distance);
-    // }
     
     
+    //如果是尚未搜尋 列出全部資料
+    Store *store;
+    store =(Store *) self.stores[indexPath.row];
     
-    //        //如果是尚未搜尋 列出全部資料
     if (!_isfillterd) {
         store =(Store *)self.stores[indexPath.row];
         cell.nameLabel.text =store.storename;
         cell.addLabel.text = store.adds;
         NSLog(@"=======storename:%@",store);
-        if (distance >= 1000) {
-            cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", distance /1000];
+        if (store.distance >=1000) {
+            cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里",store.distance/1000];
         }else{
-            cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", distance];
+            cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", store.distance];
         }
         
         
@@ -150,10 +158,10 @@
         store = self.searchresults[indexPath.row];
         cell.nameLabel.text =store.storename;
         cell.addLabel.text = store.adds;
-        if (distance >= 1000) {
-            cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", distance /1000];
+        if (store.distance >= 1000) {
+            cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", store.distance/1000];
         }else{
-            cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", distance];
+            cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", store.distance];
         }
         
     }
@@ -221,13 +229,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"storecontent"]) {
         StorecontentViewController *storecontentviewcontroller = segue.destinationViewController;
-        //storecontentviewcontroller.x = y;
         
         NSIndexPath *indexPath = self.storelisttableview.indexPathForSelectedRow;
         if (_isfillterd) {
             storecontentviewcontroller.content =(Store *)_stores[indexPath.row];
         }else {
-            NSDictionary *dic = self.stores[indexPath.row];
+            NSDictionary *dic =(NSDictionary *) self.stores[indexPath.row];
             storecontentviewcontroller.content =(Store *) dic;
         }
     }
@@ -250,19 +257,22 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self.view endEditing:YES];
 }
-
-
-
-- (IBAction)seacher:(id)sender {
+-(void)aaa{
+    //從Store抓取 商店經緯度
     Store *data;
     for (data in _stores) {
-        
         NSString *latitude = data.latitude;
         NSString *longitude =data.longitude;
         [_latitudearray addObject:latitude];
         [_longitudearray addObject:longitude];
         endlocation = [[CLLocation alloc] initWithLatitude:[data.latitude doubleValue] longitude:[data.longitude doubleValue]];
     }
+}
+
+
+- (IBAction)seacher:(id)sender {
+    [_allstoreDelegate passValue:(Store *)_stores];
+
     
 }
     

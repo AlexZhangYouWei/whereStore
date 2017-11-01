@@ -21,7 +21,7 @@
 @property(nonatomic) NSString *latitude ;//經度
 @property(nonatomic) NSString *longitude ;//緯度
 @property(nonatomic) NSString *image;//照片
-@property(nonatomic) NSNumber *distance;//距離
+@property(nonatomic) double distance;//距離
 @property(nonatomic) NSNumber *clickrate;//點擊數
 @property(nonatomic) NSNumber *evaluate;// 評價
 @property(nonatomic) NSDate *massagetime;//留言時間
