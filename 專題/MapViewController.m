@@ -10,16 +10,18 @@
 #import "Store.h"
 #import "StoreListTableViewCell.h"
 #import "StoreListViewController.h"
+#import "myMKAnnotationView.h"
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
-@interface MapViewController ()<MKMapViewDelegate,CLLocationManagerDelegate,storesDelegate>{
+@interface MapViewController ()<MKMapViewDelegate,CLLocationManagerDelegate>{
     CLLocationManager *locationManager;
-    CLLocation *mylocation;
     CLLocation *storelocation;
+    CLLocation *mylocation;
+    CLLocationCoordinate2D pinCenter;
     BOOL firstLocationReceived;
-    NSMutableArray *allstores ;
-
-
+    NSMutableArray *arry ;
+    
+    
     
 }
 @property (strong, nonatomic) IBOutlet MKMapView *theMapView;
@@ -27,11 +29,7 @@
 @end
 
 @implementation MapViewController
--(void)passValue:(Store *)value{
-    allstores = [NSMutableArray new];
-    allstores =(NSMutableArray *) value;
-    NSLog(@"ALLstores %@",allstores);
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title =@"地圖";
@@ -45,42 +43,65 @@
     locationManager.activityType =CLActivityTypeFitness;
     locationManager.delegate = self;
     [locationManager startUpdatingLocation];
+    [self runinformation];
+    [self setupMapView];
+
 
 }
-
-
-- (void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    //偵測自己的經緯物
-    mylocation = locations.lastObject;
+-(void)setupMapView{
+    // 顯示目前位置（藍色白框的圓點）
+    _theMapView.showsUserLocation = YES;
+    // MapView的環境設置
+    _theMapView.mapType = MKMapTypeStandard;
+    _theMapView.scrollEnabled = YES;
+    _theMapView.zoomEnabled = YES;
     
-    NSLog(@"Current Location: %.6f,%.6f",mylocation.coordinate.latitude,mylocation.coordinate.longitude);
-    
-    if(firstLocationReceived == NO)
-    {
-        MKCoordinateRegion region = _theMapView.region;
-        region.center = mylocation.coordinate;
-        region.span.latitudeDelta=0.01;
-        region.span.longitudeDelta=0.01;
-        [_theMapView setRegion:region animated:YES];
-        firstLocationReceived = YES;
-        
-        // Add Annotation
-        CLLocationCoordinate2D annoationCoordinate = mylocation.coordinate;
-        annoationCoordinate.latitude += 0.0005;
-        annoationCoordinate.longitude += 0.0005;
-        
-        MKPointAnnotation *annotation = [MKPointAnnotation new];
-        annotation.coordinate=annoationCoordinate;
-        annotation.title=@"肯德基";
-        annotation.subtitle=@"真好吃🍗";
-        
-        [_theMapView addAnnotation:annotation];
+    [self maplabel];
+}
+-(void)runinformation{
+    _mapnames=[NSMutableArray new];
+    _mapaddies = [NSMutableArray new];
+    for (Store* store in _mapstores){
+        NSLog(@"店名 : %@ == 地址 : %@  ",store.storename , store.adds);
+        _mapname =[NSString stringWithFormat:@"%@",store.storename];
+        _mapadds =[NSString stringWithFormat:@"%@",store.adds];
+        NSLog(@"店名 : %@ == 地址 : %@  ",_mapname , _mapadds);
+        [self.mapnames addObject:_mapname];
+       
+          NSLog(@"_mapnames:%@ , _mapaddies:%@",_mapnames,_mapaddies);
+         [self.mapaddies addObject:_mapadds];
     }
+    NSLog(@"_mapnames:%@ , _mapaddies:%@",_mapnames,_mapaddies);
+    
 }
+// 自行定義設定地圖標籤的函式
 
+-(void)maplabel{
+    // 宣告陣列來存放標籤
+//    Store *annotationArr = [[NSMutableArray alloc] init];
+    arry =[NSMutableArray new];
+    for (Store *annotationArr in _mapstores) {
+        
+        // 設定標籤的緯度
+        CLLocationCoordinate2D pinCenter;
+        pinCenter.latitude  = [annotationArr.latitude doubleValue];
+        pinCenter.longitude = [annotationArr.longitude doubleValue];
+        // 建立一個地圖標籤並設定內文
+        myMKAnnotationView *annotation = [[myMKAnnotationView alloc] init];
+        annotation.title =[NSString stringWithFormat:@"%@", _mapnames];
+        annotation.subtitle = [NSString stringWithFormat:@"%@", _mapaddies];
+        NSLog(@"%@" , annotation);
 
+        // 將製作好的標籤放入陣列中
+        [arry addObject:annotation];
+    }    // 將陣列中所有的標籤顯示在地圖上
+    NSLog(@"%@" , arry);
+    [_theMapView addAnnotations:arry];
+
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    
     // Dispose of any resources that can be recreated.
 }
 
@@ -92,17 +113,5 @@
         [_theMapView removeAnnotation:annotation];
     }
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-
 
 @end

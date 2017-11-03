@@ -12,4 +12,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *addLabel;
 @property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *evaluatelabel;
+@property (strong, nonatomic) IBOutlet UILabel *statusLabel;
 @end

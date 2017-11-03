@@ -22,10 +22,13 @@
     CLLocation *endlocation; //每個商家的位置
     CLLocationDistance distance;//距離
     
+    
+    
     BOOL *  firstLocationReceived;
     
 }
 @property (strong, nonatomic) IBOutlet UISearchBar *searchbar;
+
 
 
 
@@ -59,9 +62,10 @@
             store.longitude=[item objectForKey:@"longitude"];
             store.storeclass=[item objectForKey:@"storeclass"];
             store.evaluate = [item objectForKey:@"evaluate"];
-            store.time = [item objectForKey:@"time"];
+            store.offday = [item objectForKey:@"storetime"];
             store.storeid = [item objectForKey:@"storeid"];
             [self.stores addObject:store];
+
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self distanceFromLocation];
@@ -87,6 +91,7 @@
     [locationManager startUpdatingLocation];
     _latitudearray =[NSMutableArray new];
     _longitudearray=[NSMutableArray new];
+    
 
     // 實作重新撈資料
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -113,9 +118,9 @@
 }
 //兩點距離的計算 並重新排序
 -(void)distanceFromLocation{
+    
     Store *data;
     for (data in _stores) {
-        //    data =(Store *)_stores;//[indexPath.row];
         endlocation = [[CLLocation alloc] initWithLatitude:[data.latitude doubleValue] longitude:[data.longitude doubleValue]];
         CLLocation *first = [[CLLocation alloc]initWithLatitude:mylocation.coordinate.latitude longitude:mylocation.coordinate.longitude];
         distance = [first distanceFromLocation:endlocation];
@@ -136,8 +141,12 @@
     //设置背景颜色
     cell.contentView.backgroundColor=[UIColor colorWithRed:0.957 green:0.957 blue:0.957 alpha:0];
     cell.showsReorderControl= YES;
+    //判斷今日是禮拜幾，1代表星期日，2代表星期一，后面依次
+    NSDateComponents *componets = [[NSCalendar autoupdatingCurrentCalendar] components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+    NSInteger weekday = [componets weekday];
     
-    
+    NSNumber *nsnum = [NSNumber numberWithInt:weekday];
+
     //如果是尚未搜尋 列出全部資料
     Store *store;
     store =(Store *) self.stores[indexPath.row];
@@ -146,7 +155,21 @@
         store =(Store *)self.stores[indexPath.row];
         cell.nameLabel.text =store.storename;
         cell.addLabel.text = store.adds;
-        NSLog(@"=======storename:%@",store);
+        
+        cell.evaluatelabel.text= [NSString stringWithFormat:@"評價: %@ 星", store.evaluate];
+        NSString *string = [NSString stringWithFormat:@"%@", store.offday];
+        NSInteger tmp = [string integerValue];
+        if ([nsnum integerValue] == tmp) {
+          
+            cell.statusLabel.text =@"今日公休";
+            // 休業顏色
+            [cell.statusLabel setTextColor:[UIColor redColor]];
+        }else{
+ 
+            [cell.statusLabel setTextColor:[UIColor greenColor]];
+            cell.statusLabel.text =@"營業中";
+        }
+        
         if (store.distance >=1000) {
             cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里",store.distance/1000];
         }else{
@@ -154,11 +177,23 @@
         }
         
         
+        
     } else {
         //如果是以搜尋 列出對應的資料
         store = self.searchresults[indexPath.row];
         cell.nameLabel.text =store.storename;
         cell.addLabel.text = store.adds;
+        NSString *string = [NSString stringWithFormat:@"%@", store.offday];
+        NSInteger tmp = [string integerValue];
+        if ([nsnum integerValue] == tmp) {
+            cell.statusLabel.text =@"今日公休";
+            // 休業顏色
+            [cell.statusLabel setTextColor:[UIColor redColor]];
+        }else{
+            [cell.statusLabel setTextColor:[UIColor greenColor]];
+            cell.statusLabel.text =@"營業中";
+        }
+        cell.evaluatelabel.text= [NSString stringWithFormat:@"評價: %@ 星", store.evaluate];
         if (store.distance >= 1000) {
             cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", store.distance/1000];
         }else{
@@ -170,7 +205,7 @@
 }
 //cell的高度
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
+    return 120;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 4;
@@ -240,12 +275,7 @@
         }
     }else if ([segue.identifier isEqualToString:@"allmap"]){
      MapViewController *mapViewController = segue.destinationViewController;
-        //將值透過Storyboard Segue帶給頁面2的string變數
-        [_stores setValue:_stores forKey:@"Store"];
-        
-        //將delegate設成自己（指定自己為代理）
-        [_stores setValue:self forKey:@"delegate"];
-        
+        mapViewController.mapstores =self.stores;
     }
 }
 - (void)didReceiveMemoryWarning {
@@ -280,7 +310,6 @@
 
 
 - (IBAction)seacher:(id)sender {
-    [_allstoreDelegate passValue:(Store *)_stores];
 
 }
     

@@ -51,7 +51,7 @@
             break;
         case 3:
             cell.nameLabel.text= @"營業時間";
-            cell.valueTextView.text=self.content.time;
+            cell.valueTextView.text=@"週一到週五";
     }
     return cell;
 }
