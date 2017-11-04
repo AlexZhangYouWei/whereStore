@@ -9,29 +9,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5c08;&#x984c;/SearchViewController.m"
-            timestampString = "531470859.771835"
+            filePath = "&#x5c08;&#x984c;/StoreListViewController.m"
+            timestampString = "531494990.318162"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
-            landmarkName = "-prepareForSegue:sender:"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
+            landmarkName = "-aaaa"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "&#x5c08;&#x984c;/SearchViewController.m"
-            timestampString = "531470859.772953"
+            filePath = "&#x5c08;&#x984c;/StoreListViewController.m"
+            timestampString = "531494990.319116"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
-            landmarkName = "-prepareForSegue:sender:"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
+            landmarkName = "-aaaa"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

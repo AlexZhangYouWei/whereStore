@@ -65,7 +65,6 @@
             store.offday = [item objectForKey:@"storetime"];
             store.storeid = [item objectForKey:@"storeid"];
             [self.stores addObject:store];
-            
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self distanceFromLocation];
@@ -91,13 +90,12 @@
     [locationManager startUpdatingLocation];
     _latitudearray =[NSMutableArray new];
     _longitudearray=[NSMutableArray new];
-    
-    if (_searchadds !=nil) {
-    }
     // 實作重新撈資料
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [_storelisttableview addSubview:refreshControl];
+    
+    
     
 }
 - (void)refresh:(UIRefreshControl *)refreshControl {
@@ -119,7 +117,6 @@
 }
 //兩點距離的計算 並重新排序
 -(void)distanceFromLocation{
-    
     Store *data;
     for (data in _stores) {
         endlocation = [[CLLocation alloc] initWithLatitude:[data.latitude doubleValue] longitude:[data.longitude doubleValue]];
@@ -127,14 +124,14 @@
         distance = [first distanceFromLocation:endlocation];
         data.distance = distance;
     }
+    [self sortUsingComparator];
+}
+-(void)sortUsingComparator{
     //快速排序
     [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
         return obj1.distance > obj2.distance ? NSOrderedDescending : NSOrderedAscending;
     }];
-    
-    
 }
-
 //table cell的樣式
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -152,26 +149,23 @@
     Store *store;
     store =(Store *) self.stores[indexPath.row];
     
-    if (!_isfillterd) {
+    if(!_isfillterd)
+    {
         store =(Store *)self.stores[indexPath.row];
         cell.nameLabel.text =store.storename;
         cell.addLabel.text = store.adds;
-        
         cell.evaluatelabel.text= [NSString stringWithFormat:@"評價: %@ 星", store.evaluate];
         NSString *string = [NSString stringWithFormat:@"%@", store.offday];
         NSInteger tmp = [string integerValue];
         if ([nsnum integerValue] == tmp) {
-            
             cell.statusLabel.text =@"今日公休";
             // 休業顏色
             [cell.statusLabel setTextColor:[UIColor redColor]];
         }else{
-            
             [cell.statusLabel setTextColor:[UIColor greenColor]];
             cell.statusLabel.text =@"營業中";
         }
-        
-        if (store.distance >=1000) {
+                if (store.distance >=1000) {
             cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里",store.distance/1000];
         }else{
             cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", store.distance];
@@ -220,7 +214,7 @@
  return 30.0f;
  }*/
 
-//如果選擇裡面的
+//確認選擇的資料
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.view endEditing:YES];
@@ -296,27 +290,20 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self.view endEditing:YES];
 }
--(void)aaa{
-    //從Store抓取 商店經緯度
-    Store *data;
-    for (data in _stores) {
-        NSString *latitude = data.latitude;
-        NSString *longitude =data.longitude;
-        [_latitudearray addObject:latitude];
-        [_longitudearray addObject:longitude];
-        endlocation = [[CLLocation alloc] initWithLatitude:[data.latitude doubleValue] longitude:[data.longitude doubleValue]];
-    }
-}
--(void)setSearchadds:(NSString *)searchadds{
-    _searchviewresults =[[NSMutableArray alloc]init];
-    for(Store *item in self.stores) {
-        NSString *name = item.adds;
-        NSString *name2 = item.storeclass;
-        NSRange nameRange = [name rangeOfString:_searchadds options:NSCaseInsensitiveSearch];
-        NSRange nameRange2 = [name2 rangeOfString:_searchclass options:NSCaseInsensitiveSearch];
-        if (nameRange.location != NSNotFound && nameRange2.location != NSNotFound) {
-            [_searchviewresults addObject:item];
-            NSLog(@" %@" , _searchviewresults);
+//進階搜尋
+-(void)aaaa{
+    {
+        _searchviewresults =[[NSMutableArray alloc]init];
+        for(Store *item in self.stores) {
+            NSString *name = item.adds;
+            NSString *name2 = item.storeclass;
+            NSLog(@" 地區:%@   ==  類別:%@   " ,_searchadds,_searchclass);
+            NSRange nameRange = [name rangeOfString:_searchadds options:NSCaseInsensitiveSearch];
+            NSRange nameRange2 = [name2 rangeOfString:_searchclass options:NSCaseInsensitiveSearch];
+            if (nameRange.location != NSNotFound && nameRange2.location != NSNotFound) {
+                [_searchviewresults addObject:item];
+                NSLog(@" %@" , _searchviewresults);
+            }
         }
         
         [_storelisttableview reloadData];

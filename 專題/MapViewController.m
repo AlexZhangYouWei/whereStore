@@ -96,8 +96,8 @@
         NSLog(@"%@" , annotation);
         // 將製作好的標籤放入陣列中
         [arry addObject:annotation];
+        NSLog(@" 圖標有幾筆 %@",arry);
     }    // 將陣列中所有的標籤顯示在地圖上
-    
     [_theMapView addAnnotations:arry];
     
 }

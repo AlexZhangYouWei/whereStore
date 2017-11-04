@@ -38,16 +38,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
- mypickerView =[[UIPickerView alloc]init];
+    mypickerView =[[UIPickerView alloc]init];
     mypickerView.delegate=self;
     mypickerView.dataSource=self;
     userSelect = 0;
     seacherList =[NSMutableArray new];
-     //地區
-     NSArray *filter=[[NSArray alloc]initWithObjects:@"台北",@"新北",@"桃園",@"新竹",@"苗栗",@"台中",@"彰化",
-             @"雲林",@"嘉義",@"台南",@"高雄",@"屏東",@"台東",@"花蓮",@"宜蘭",@"南投",@"金門",@"馬祖",@"連江", nil];
+    //地區
+    NSArray *filter=[[NSArray alloc]initWithObjects:@"全部",@"台北",@"新北",@"桃園",@"新竹",@"苗栗",@"台中",@"彰化",
+                     @"雲林",@"嘉義",@"台南",@"高雄",@"屏東",@"台東",@"花蓮",@"宜蘭",@"南投",@"金門",@"馬祖",@"連江", nil];
     //餐廳類型
-    NSArray* style=[[NSArray alloc]initWithObjects:@"台式",@"韓式",@"日式",@"美式",@"點心",@"其他", nil];
+    NSArray* style=[[NSArray alloc]initWithObjects:@"全部",@"台式",@"韓式",@"日式",@"美式",@"點心",@"其他", nil];
     
     //距離或是人氣排序
     NSArray *sorting=[[NSArray alloc]initWithObjects:@"依距離",@"人氣" ,nil];
@@ -80,16 +80,19 @@
     toolBar.items = @[barButtonCancel, flexSpace, barButtonDone];
     
     _regionTextField .inputView = mypickerView;
+    _regionTextField.clearButtonMode = UITextFieldViewModeAlways;
     _regionTextField.inputAccessoryView = toolBar;
     
     _classTextFiled.inputView = mypickerView;
+    _classTextFiled.clearButtonMode = UITextFieldViewModeAlways;
     _classTextFiled.inputAccessoryView = toolBar;
     
     _sortingTextField.inputView = mypickerView;
+    _sortingTextField.clearButtonMode = UITextFieldViewModeAlways;
     _sortingTextField.inputAccessoryView = toolBar;
-    _regionTextField.placeholder = @"請點選";
-    _sortingTextField.placeholder=@"請點選";
-    _classTextFiled.placeholder=@"請點選";
+    _regionTextField.placeholder = @"預設全部";
+    _sortingTextField.placeholder=@"預設距離";
+    _classTextFiled.placeholder=@"預設全部";
 }
 //選到某個textField，觸發選擇
 
@@ -126,14 +129,12 @@
 
 
 - (void)toolBarDoneClick:(id)sender{
-    NSLog(@"DONE");
     contentTextField.text = textlist[userSelect];
     [contentTextField resignFirstResponder];
     searchone = [NSString stringWithFormat:@"%@",self.regionTextField.text];
     searchtwo = [NSString stringWithFormat:@"%@",self.classTextFiled.text];
     searchthree = [NSString stringWithFormat:@"%@",self.sortingTextField.text];
 }
-
 //PickView Click
 -(void)toolBarCanelClick:(id)sender {
     [self.view endEditing:YES];
@@ -143,24 +144,35 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)searchButton:(id)sender {
-
+    if (searchone ==nil) {
+        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"請設定搜尋條件" message:@"搜尋條件至少設定一項" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alertview show];
+        
+    }
     
 }
 #pragma mark -prepareForSegue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"searchview"]) {
         StoreListViewController *storeListViewController = segue.destinationViewController;
-        storeListViewController.searchadds = searchone;
-        storeListViewController.searchclass = searchtwo;
-        storeListViewController.searchsequence = searchthree;
-        if (searchthree == nil) {
-            NSLog(@"沒有資料");
-        }else{
-            NSLog(@"空字串");
+        if ([searchone isEqualToString:@""] ) {
+            searchone = @"全部";
         }
-        NSLog(@" 地區 %@   == 類別%@    == 排序%@" ,searchone,searchtwo,searchthree);
-       
-
+        storeListViewController.searchadds = searchone;
+        if ([searchtwo isEqualToString:@""] ) {
+            searchtwo = @"全部";
+        }
+        storeListViewController.searchclass = searchtwo;
+        
+        if ([searchthree isEqualToString:@"人氣"] ) {
+            searchthree = @"2";
+        }else{
+            searchthree = @"1";
+        }
+        storeListViewController.searchsequence = searchthree;
+        NSLog(@" 地區:%@   == 類別:%@    == 排序%@" ,searchone,searchtwo,searchthree);
+        
+        
     }
 }
 
