@@ -127,11 +127,26 @@
     [self sortUsingComparator];
 }
 -(void)sortUsingComparator{
-    //快速排序
-    [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
-        return obj1.distance > obj2.distance ? NSOrderedDescending : NSOrderedAscending;
-    }];
+    
+    if ([_searchsequence isEqualToString:@"2"]) {
+        //快速排序(評價)   bug 無法判斷double
+        [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
+            return obj1.evaluate > obj2.evaluate ? NSOrderedDescending : NSOrderedAscending;
+        }];
+    }else{
+        //快速排序(距離)
+        [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
+            return obj1.distance > obj2.distance ? NSOrderedDescending : NSOrderedAscending;
+        }];
+        
+    }
 }
+
+
+
+
+
+
 //table cell的樣式
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -165,7 +180,7 @@
             [cell.statusLabel setTextColor:[UIColor greenColor]];
             cell.statusLabel.text =@"營業中";
         }
-                if (store.distance >=1000) {
+        if (store.distance >=1000) {
             cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里",store.distance/1000];
         }else{
             cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", store.distance];
@@ -291,24 +306,26 @@
     [self.view endEditing:YES];
 }
 //進階搜尋
--(void)aaaa{
-    {
-        _searchviewresults =[[NSMutableArray alloc]init];
-        for(Store *item in self.stores) {
-            NSString *name = item.adds;
-            NSString *name2 = item.storeclass;
-            NSLog(@" 地區:%@   ==  類別:%@   " ,_searchadds,_searchclass);
-            NSRange nameRange = [name rangeOfString:_searchadds options:NSCaseInsensitiveSearch];
-            NSRange nameRange2 = [name2 rangeOfString:_searchclass options:NSCaseInsensitiveSearch];
-            if (nameRange.location != NSNotFound && nameRange2.location != NSNotFound) {
+-(void)searchview{
+    _searchviewresults =[[NSMutableArray alloc]init];
+    for(Store *item in self.stores) {
+        NSString *name = item.adds;
+        NSString *name2 = item.storeclass;
+        NSRange nameRange = [name rangeOfString:_searchadds options:NSCaseInsensitiveSearch];
+        NSRange nameRange2 = [name2 rangeOfString:_searchclass options:NSCaseInsensitiveSearch];
+        if  ([_searchadds isEqualToString:@"全部"]||[_searchclass isEqualToString:@"全部"]) {
+            if (nameRange.location != NSNotFound || nameRange2.location != NSNotFound) {
                 [_searchviewresults addObject:item];
-                NSLog(@" %@" , _searchviewresults);
+            }else {
+                if (nameRange.location != NSNotFound && nameRange2.location != NSNotFound) {
+                    [_searchviewresults addObject:item];
+                    
+                }
             }
+            
         }
-        
-        [_storelisttableview reloadData];
-        
     }
+    [_storelisttableview reloadData];
 }
 - (IBAction)seacher:(id)sender {
     

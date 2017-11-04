@@ -21,7 +21,6 @@
 		136A92DB1F7B390800A5879F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 136A92D91F7B390800A5879F /* LaunchScreen.storyboard */; };
 		136A92DE1F7B390800A5879F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92DD1F7B390800A5879F /* main.m */; };
 		136A92E91F7B3D9900A5879F /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92E81F7B3D9900A5879F /* MoreViewController.m */; };
-		1370B8DA1F825DB700EA4C0D /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1370B8DB1F825DB700EA4C0D /* AFNetworking.framework */; };
 		13AE18251F98878F0087CF79 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AE18241F98878F0087CF79 /* MapViewController.m */; };
 		13BBB9DC1FAB272A00895AA0 /* myMKAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BBB9DB1FAB272A00895AA0 /* myMKAnnotationView.m */; };
 		13C8D7A61F7B3F9F001A01D9 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8D7A11F7B3EC3001A01D9 /* FBSDKLoginKit.framework */; };
@@ -93,7 +92,6 @@
 			files = (
 				130299541F90B92F001F63DA /* CoreLocation.framework in Frameworks */,
 				130299521F90B91E001F63DA /* MapKit.framework in Frameworks */,
-				1370B8DA1F825DB700EA4C0D /* AFNetworking.framework in Frameworks */,
 				13C8D7DC1F7B934C001A01D9 /* libsqlite3.tbd in Frameworks */,
 				13C8D7AA1F7B3FA0001A01D9 /* FBSDKCoreKit.framework in Frameworks */,
 				13C8D7AB1F7B3FA0001A01D9 /* Bolts.framework in Frameworks */,
