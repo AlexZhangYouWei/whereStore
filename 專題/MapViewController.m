@@ -45,9 +45,14 @@
     [locationManager startUpdatingLocation];
     [self runinformation];
     [self setupMapView];
-
-
+    [self maplabel];
+    
+    
+    
 }
+
+
+
 -(void)setupMapView{
     // 顯示目前位置（藍色白框的圓點）
     _theMapView.showsUserLocation = YES;
@@ -55,54 +60,52 @@
     _theMapView.mapType = MKMapTypeStandard;
     _theMapView.scrollEnabled = YES;
     _theMapView.zoomEnabled = YES;
-    
-    [self maplabel];
 }
+
 -(void)runinformation{
     _mapnames=[NSMutableArray new];
     _mapaddies = [NSMutableArray new];
     for (Store* store in _mapstores){
-        NSLog(@"店名 : %@ == 地址 : %@  ",store.storename , store.adds);
         _mapname =[NSString stringWithFormat:@"%@",store.storename];
         _mapadds =[NSString stringWithFormat:@"%@",store.adds];
-        NSLog(@"店名 : %@ == 地址 : %@  ",_mapname , _mapadds);
-        [self.mapnames addObject:_mapname];
-       
-          NSLog(@"_mapnames:%@ , _mapaddies:%@",_mapnames,_mapaddies);
-         [self.mapaddies addObject:_mapadds];
+        _maplatitude = [NSString stringWithString:store.latitude];
+        _maplongitude = [NSString stringWithString:store.longitude];
+//        [self.mapnames addObject:_mapname];
+//        [self.mapaddies addObject:_mapadds];
+//        [self.maplatitudes addObject:_maplatitude];
+//        [self.maplongitudes addObject:_maplongitude];
     }
-    NSLog(@"_mapnames:%@ , _mapaddies:%@",_mapnames,_mapaddies);
     
 }
 // 自行定義設定地圖標籤的函式
 
 -(void)maplabel{
     // 宣告陣列來存放標籤
-//    Store *annotationArr = [[NSMutableArray alloc] init];
     arry =[NSMutableArray new];
-    for (Store *annotationArr in _mapstores) {
-        
+    
+    for (Store *annotation in _mapstores) {
         // 設定標籤的緯度
+        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
         CLLocationCoordinate2D pinCenter;
-        pinCenter.latitude  = [annotationArr.latitude doubleValue];
-        pinCenter.longitude = [annotationArr.longitude doubleValue];
+        pinCenter.latitude  = [_maplatitude doubleValue];
+        pinCenter.longitude = [_maplongitude doubleValue];
         // 建立一個地圖標籤並設定內文
-        myMKAnnotationView *annotation = [[myMKAnnotationView alloc] init];
-        annotation.title =[NSString stringWithFormat:@"%@", _mapnames];
-        annotation.subtitle = [NSString stringWithFormat:@"%@", _mapaddies];
+        annotation.coordinate=pinCenter;
+        annotation.title =[NSString stringWithFormat:@"%@", _mapname];
+        annotation.subtitle = [NSString stringWithFormat:@"%@", _mapadds];
         NSLog(@"%@" , annotation);
-
         // 將製作好的標籤放入陣列中
         [arry addObject:annotation];
     }    // 將陣列中所有的標籤顯示在地圖上
-    NSLog(@"%@" , arry);
+    
     [_theMapView addAnnotations:arry];
-
+    
 }
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
-    // Dispose of any resources that can be recreated.
 }
 
 //清除地圖上的標籤 離開頁面回收RAM

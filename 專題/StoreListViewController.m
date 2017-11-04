@@ -65,7 +65,7 @@
             store.offday = [item objectForKey:@"storetime"];
             store.storeid = [item objectForKey:@"storeid"];
             [self.stores addObject:store];
-
+            
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self distanceFromLocation];
@@ -92,7 +92,8 @@
     _latitudearray =[NSMutableArray new];
     _longitudearray=[NSMutableArray new];
     
-
+    if (_searchadds !=nil) {
+    }
     // 實作重新撈資料
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
@@ -146,7 +147,7 @@
     NSInteger weekday = [componets weekday];
     
     NSNumber *nsnum = [NSNumber numberWithInt:weekday];
-
+    
     //如果是尚未搜尋 列出全部資料
     Store *store;
     store =(Store *) self.stores[indexPath.row];
@@ -160,12 +161,12 @@
         NSString *string = [NSString stringWithFormat:@"%@", store.offday];
         NSInteger tmp = [string integerValue];
         if ([nsnum integerValue] == tmp) {
-          
+            
             cell.statusLabel.text =@"今日公休";
             // 休業顏色
             [cell.statusLabel setTextColor:[UIColor redColor]];
         }else{
- 
+            
             [cell.statusLabel setTextColor:[UIColor greenColor]];
             cell.statusLabel.text =@"營業中";
         }
@@ -231,12 +232,11 @@
     {
         //有搜尋秀出搜尋的內容
         return self.searchresults.count;
+    }else{
+        //沒搜尋秀出全部內容
+        return self.stores.count;
     }
-    //沒搜尋秀出全部內容
-    return self.stores.count;
-    
 }
-
 
 #pragma mark searchbar
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
@@ -274,7 +274,7 @@
             storecontentviewcontroller.content =(Store *) dic;
         }
     }else if ([segue.identifier isEqualToString:@"allmap"]){
-     MapViewController *mapViewController = segue.destinationViewController;
+        MapViewController *mapViewController = segue.destinationViewController;
         mapViewController.mapstores =self.stores;
     }
 }
@@ -307,11 +307,26 @@
         endlocation = [[CLLocation alloc] initWithLatitude:[data.latitude doubleValue] longitude:[data.longitude doubleValue]];
     }
 }
-
-
-- (IBAction)seacher:(id)sender {
-
+-(void)setSearchadds:(NSString *)searchadds{
+    _searchviewresults =[[NSMutableArray alloc]init];
+    for(Store *item in self.stores) {
+        NSString *name = item.adds;
+        NSString *name2 = item.storeclass;
+        NSRange nameRange = [name rangeOfString:_searchadds options:NSCaseInsensitiveSearch];
+        NSRange nameRange2 = [name2 rangeOfString:_searchclass options:NSCaseInsensitiveSearch];
+        if (nameRange.location != NSNotFound && nameRange2.location != NSNotFound) {
+            [_searchviewresults addObject:item];
+            NSLog(@" %@" , _searchviewresults);
+        }
+        
+        [_storelisttableview reloadData];
+        
+    }
 }
+- (IBAction)seacher:(id)sender {
     
-    @end
-    
+}
+
+
+@end
+

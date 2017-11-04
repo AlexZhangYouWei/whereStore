@@ -18,9 +18,12 @@
 
 @property(nonatomic) NSMutableArray<Store *> *stores;
 @property(nonatomic) NSMutableArray *searchresults;
-
+@property(nonatomic) NSMutableArray *searchviewresults;
 @property(nonatomic) NSMutableArray *latitudearray;
 @property(nonatomic)NSMutableArray *longitudearray;
+@property(nonatomic)NSString *searchadds;
+@property(nonatomic)NSString *searchclass;
+@property(nonatomic)NSString *searchsequence;
 
 @property bool isfillterd;
 

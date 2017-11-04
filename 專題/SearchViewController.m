@@ -44,10 +44,10 @@
     userSelect = 0;
     seacherList =[NSMutableArray new];
      //地區
-     NSArray *filter=[[NSArray alloc]initWithObjects:@"請選擇",@"台北",@"新北",@"桃園",@"新竹",@"苗栗",@"台中",@"彰化",
+     NSArray *filter=[[NSArray alloc]initWithObjects:@"台北",@"新北",@"桃園",@"新竹",@"苗栗",@"台中",@"彰化",
              @"雲林",@"嘉義",@"台南",@"高雄",@"屏東",@"台東",@"花蓮",@"宜蘭",@"南投",@"金門",@"馬祖",@"連江", nil];
     //餐廳類型
-    NSArray* style=[[NSArray alloc]initWithObjects:@"請選擇",@"台式",@"韓式",@"日式",@"美式",@"點心",@"其他", nil];
+    NSArray* style=[[NSArray alloc]initWithObjects:@"台式",@"韓式",@"日式",@"美式",@"點心",@"其他", nil];
     
     //距離或是人氣排序
     NSArray *sorting=[[NSArray alloc]initWithObjects:@"依距離",@"人氣" ,nil];
@@ -121,7 +121,6 @@
 
 //選擇UIPickView中的項目時會出發的內建函式
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-//    str = [textlist objectAtIndex:row];
     userSelect = row;
 }
 
@@ -149,7 +148,20 @@
 }
 #pragma mark -prepareForSegue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
+    if ([segue.identifier isEqualToString:@"searchview"]) {
+        StoreListViewController *storeListViewController = segue.destinationViewController;
+        storeListViewController.searchadds = searchone;
+        storeListViewController.searchclass = searchtwo;
+        storeListViewController.searchsequence = searchthree;
+        if (searchthree == nil) {
+            NSLog(@"沒有資料");
+        }else{
+            NSLog(@"空字串");
+        }
+        NSLog(@" 地區 %@   == 類別%@    == 排序%@" ,searchone,searchtwo,searchthree);
+       
+
+    }
 }
 
 

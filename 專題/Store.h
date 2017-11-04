@@ -17,7 +17,7 @@
 @property(nonatomic) NSString *adds; //地址
 @property(nonatomic) NSString *tel;//電話
 @property(nonatomic) NSString *storeclass ;//餐廳類別
-@property(nonatomic) NSNumber *offday;//營業時間
+@property(nonatomic) NSNumber *offday;//公休日
 @property(nonatomic) NSString *latitude ;//經度
 @property(nonatomic) NSString *longitude ;//緯度
 @property(nonatomic) NSString *image;//照片
