@@ -59,7 +59,21 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 60;
 }
-
+- (IBAction)changed:(UISegmentedControl *)sender {
+    if (sender.selectedSegmentIndex==0) {
+        [UIView animateWithDuration:0.5 animations:^{
+            _StorecontentableView.alpha =0.0;
+            _StorecontentimageView.alpha =1.0;
+        }];
+    }
+    else{
+        [UIView animateWithDuration:0.5 animations:^{
+            _StorecontentableView.alpha =1.0;
+            _StorecontentimageView.alpha =0.0;
+        }];
+        
+}
+}
 #pragma mark -prepareForSegue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     

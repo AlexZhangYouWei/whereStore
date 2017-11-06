@@ -21,7 +21,7 @@
     CLLocation *mylocation; //目前所在位置
     CLLocation *endlocation; //每個商家的位置
     CLLocationDistance distance;//距離
-    
+    NSInteger  select;
     
     
     BOOL *  firstLocationReceived;
@@ -46,6 +46,7 @@
     self.storelisttableview.dataSource = self;
     self.storelisttableview.delegate = self;
     _searchbar.delegate=self;
+    select = 1;
     ref = [[[FIRDatabase database] reference] child:@"2/data"];//查詢資料庫資料child:@"data"]
     channelRefHandle =[ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
         NSMutableDictionary *storeData =[NSMutableDictionary new];
@@ -129,9 +130,9 @@
 -(void)sortUsingComparator{
     
     if ([_searchsequence isEqualToString:@"2"]) {
-        //快速排序(評價)   bug 無法判斷double
+        //快速排序(評價)
         [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
-            return obj1.evaluate > obj2.evaluate ? NSOrderedDescending : NSOrderedAscending;
+            return [obj1.evaluate doubleValue] < [obj2.evaluate doubleValue]  ? NSOrderedDescending : NSOrderedAscending;
         }];
     }else{
         //快速排序(距離)
@@ -149,7 +150,6 @@
 
 //table cell的樣式
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     StoreListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"storeCell" forIndexPath:indexPath];
     //设置背景颜色
     cell.contentView.backgroundColor=[UIColor colorWithRed:0.957 green:0.957 blue:0.957 alpha:0];
@@ -157,65 +157,54 @@
     //判斷今日是禮拜幾，1代表星期日，2代表星期一，后面依次
     NSDateComponents *componets = [[NSCalendar autoupdatingCurrentCalendar] components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
     NSInteger weekday = [componets weekday];
-    
     NSNumber *nsnum = [NSNumber numberWithInt:weekday];
-    
     //如果是尚未搜尋 列出全部資料
     Store *store;
-    store =(Store *) self.stores[indexPath.row];
-    
-    if(!_isfillterd)
-    {
-        store =(Store *)self.stores[indexPath.row];
-        cell.nameLabel.text =store.storename;
-        cell.addLabel.text = store.adds;
-        cell.evaluatelabel.text= [NSString stringWithFormat:@"評價: %@ 星", store.evaluate];
-        NSString *string = [NSString stringWithFormat:@"%@", store.offday];
-        NSInteger tmp = [string integerValue];
-        if ([nsnum integerValue] == tmp) {
-            cell.statusLabel.text =@"今日公休";
-            // 休業顏色
-            [cell.statusLabel setTextColor:[UIColor redColor]];
-        }else{
-            [cell.statusLabel setTextColor:[UIColor greenColor]];
-            cell.statusLabel.text =@"營業中";
+    switch (select) {
+        case 1:
+        {
+            store =(Store *)self.stores[indexPath.row];
+            break;
         }
-        if (store.distance >=1000) {
-            cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里",store.distance/1000];
-        }else{
-            cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", store.distance];
+        case 2:
+        {
+            store = self.searchresults[indexPath.row];
+            break;
         }
-        
-        
-        
-    } else {
-        //如果是以搜尋 列出對應的資料
-        store = self.searchresults[indexPath.row];
-        cell.nameLabel.text =store.storename;
-        cell.addLabel.text = store.adds;
-        NSString *string = [NSString stringWithFormat:@"%@", store.offday];
-        NSInteger tmp = [string integerValue];
-        if ([nsnum integerValue] == tmp) {
-            cell.statusLabel.text =@"今日公休";
-            // 休業顏色
-            [cell.statusLabel setTextColor:[UIColor redColor]];
-        }else{
-            [cell.statusLabel setTextColor:[UIColor greenColor]];
-            cell.statusLabel.text =@"營業中";
+        case 3:
+        {
+            store = self.searchviewresults[indexPath.row];
+            break;
         }
-        cell.evaluatelabel.text= [NSString stringWithFormat:@"評價: %@ 星", store.evaluate];
-        if (store.distance >= 1000) {
-            cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里", store.distance/1000];
-        }else{
-            cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", store.distance];
-        }
-        
+        default:
+            break;
     }
+    
+    cell.nameLabel.text =store.storename;
+    cell.addLabel.text = store.adds;
+    cell.evaluatelabel.text= [NSString stringWithFormat:@"評價: %@ 星", store.evaluate];
+    NSString *string = [NSString stringWithFormat:@"%@", store.offday];
+    NSInteger tmp = [string integerValue];
+    if ([nsnum integerValue] == tmp) {
+        cell.statusLabel.text =@"今日公休";
+        // 休業顏色
+        [cell.statusLabel setTextColor:[UIColor redColor]];
+    }else{
+        [cell.statusLabel setTextColor:[UIColor greenColor]];
+        cell.statusLabel.text =@"營業中";
+    }
+    if (store.distance >=1000) {
+        cell.distanceLabel.text =[NSString stringWithFormat:@"%.1f公里",store.distance/1000];
+    }else{
+        cell.distanceLabel.text =[NSString stringWithFormat:@"%.0f公尺", store.distance];
+    }
+    
+    
     return cell;
 }
 //cell的高度
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
+    return 90;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 4;
@@ -237,22 +226,27 @@
 //table 裡面需要多少資料
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if(_isfillterd)
-    {
-        //有搜尋秀出搜尋的內容
-        return self.searchresults.count;
-    }else{
-        //沒搜尋秀出全部內容
-        return self.stores.count;
+    switch (select) {
+        case 1:
+            return self.stores.count;
+            break;
+        case 2:
+            return self.searchresults.count;
+            break;
+        case 3:
+            return self.searchviewresults.count;
+            break;
+        default:
+            ;
     }
+    return 0;
 }
-
 #pragma mark searchbar
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     if (searchText.length ==0) {
-        _isfillterd = NO;
+        select = 1;
     }else{
-        _isfillterd = YES;
+        select = 2;
         _searchresults =[[NSMutableArray alloc]init];
         for(Store *item in self.stores) {
             NSString *name = item.storename;
@@ -276,7 +270,7 @@
         StorecontentViewController *storecontentviewcontroller = segue.destinationViewController;
         
         NSIndexPath *indexPath = self.storelisttableview.indexPathForSelectedRow;
-        if (_isfillterd) {
+        if (select ==1) {
             storecontentviewcontroller.content =(Store *)_stores[indexPath.row];
         }else {
             NSDictionary *dic =(NSDictionary *) self.stores[indexPath.row];
@@ -307,6 +301,7 @@
 }
 //進階搜尋
 -(void)searchview{
+    select = 3;
     _searchviewresults =[[NSMutableArray alloc]init];
     for(Store *item in self.stores) {
         NSString *name = item.adds;

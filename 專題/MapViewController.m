@@ -67,6 +67,9 @@
     _theMapView.scrollEnabled = YES;
     _theMapView.zoomEnabled = YES;
     
+    _theMapView.showsTraffic=YES;
+    _theMapView.showsScale=YES;
+    _theMapView.showsCompass=YES;
 
 }
 
@@ -114,8 +117,40 @@
     [_theMapView addAnnotations:arry];
 }
 
-
-
+//MKAnnotationView Button
+- (MKAnnotationView*) mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    if(annotation == mapView.userLocation)
+        return nil;
+    
+    //    MKPinAnnotationView *resultView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Store"];
+    myMKAnnotationView *resultView = (myMKAnnotationView*)[_theMapView dequeueReusableAnnotationViewWithIdentifier:@"Store"];
+    
+    if(resultView==nil)
+    {
+        //        resultView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Store"];
+        resultView = [[myMKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Store"];
+    }
+    else
+    {
+        resultView.annotation = annotation;
+    }
+    
+    resultView.canShowCallout = YES;
+    
+    UIButton *rightButton=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    
+    [rightButton addTarget:self action:@selector(buttonPrssed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    resultView.rightCalloutAccessoryView=rightButton;
+    
+    //    resultView.animatesDrop = YES;
+    //    resultView.pinColor=MKPinAnnotationColorGreen;
+    
+    
+    return resultView;
+    
+    
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -128,5 +163,7 @@
         [_theMapView removeAnnotation:annotation];
     }
 }
+
+
 
 @end

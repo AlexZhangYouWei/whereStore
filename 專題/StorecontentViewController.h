@@ -10,6 +10,8 @@
 #import "Store.h"
 
 @interface StorecontentViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIView *StorecontentableView;
 @property (strong, nonatomic) IBOutlet UITableView *storecontentlist;
+@property (weak, nonatomic) IBOutlet UIView *StorecontentimageView;
 @property(nonatomic) Store *content;
 @end
