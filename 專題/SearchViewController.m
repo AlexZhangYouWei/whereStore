@@ -147,6 +147,7 @@
     if (searchone ==nil) {
         UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"請設定搜尋條件" message:@"搜尋條件至少設定一項" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alertview show];
+    }else{
         
     }
     

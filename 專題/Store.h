@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "myMKAnnotationView.h"
 @import CoreData;
 @import UIKit;
 
-@interface Store : NSObject
+@interface Store : NSObject<UIWebViewDelegate,NSLayoutManagerDelegate>
 @property(nonatomic) NSNumber *storeid;//商店ID
 @property(nonatomic) NSString *storename;//店名
 @property(nonatomic) NSString *adds; //地址
@@ -26,6 +27,7 @@
 @property(nonatomic) NSNumber *evaluate;// 評價
 @property(nonatomic) NSDate *massagetime;//留言時間
 @property(nonatomic) NSString*massage;//留言訊息
+@property(nonatomic) MKAnnotationView* annotation;
 //-(UIImage *)image;//從檔案載入圖檔
 //- (UIImage *)thumbnailImage;//產生縮圖
 
