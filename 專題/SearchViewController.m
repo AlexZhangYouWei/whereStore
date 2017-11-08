@@ -143,19 +143,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)searchButton:(id)sender {
-    if (searchone ==nil) {
-        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"請設定搜尋條件" message:@"搜尋條件至少設定一項" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-        [alertview show];
-    }else{
-        
-    }
-    
-}
 #pragma mark -prepareForSegue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"searchview"]) {
         StoreListViewController *storeListViewController = segue.destinationViewController;
+
+        searchcondition = [NSMutableArray new];
         if ([searchone isEqualToString:@""] ) {
             searchone = @"全部";
         }
@@ -172,11 +165,28 @@
         }
         storeListViewController.searchsequence = searchthree;
         NSLog(@" 地區:%@   == 類別:%@    == 排序%@" ,searchone,searchtwo,searchthree);
-        
+        [searchcondition addObject:searchone];
+        [searchcondition addObject:searchtwo];
+        [searchcondition addObject:searchthree];
         
     }
 }
 
+
+- (IBAction)searchButton:(id)sender {
+    if (searchone ==nil) {
+        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"請設定搜尋條件" message:@"搜尋條件至少設定一項" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alertview show];
+        
+    }else{
+        [self dismissViewControllerAnimated:YES completion:^{}];
+        //呼叫協定中的方法並帶入數值
+        [self.delegate setSearchviewresults:searchcondition];
+        
+
+    }
+    
+}
 
 
 @end

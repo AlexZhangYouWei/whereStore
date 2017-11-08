@@ -21,6 +21,8 @@
 		136A92DB1F7B390800A5879F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 136A92D91F7B390800A5879F /* LaunchScreen.storyboard */; };
 		136A92DE1F7B390800A5879F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92DD1F7B390800A5879F /* main.m */; };
 		136A92E91F7B3D9900A5879F /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92E81F7B3D9900A5879F /* MoreViewController.m */; };
+		1397865F1FB2F06D00D8379A /* StorecontentimageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1397865E1FB2F06D00D8379A /* StorecontentimageViewController.m */; };
+		139786621FB2F20200D8379A /* imageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 139786611FB2F20200D8379A /* imageTableViewController.m */; };
 		13AE18251F98878F0087CF79 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AE18241F98878F0087CF79 /* MapViewController.m */; };
 		13BBB9DC1FAB272A00895AA0 /* myMKAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BBB9DB1FAB272A00895AA0 /* myMKAnnotationView.m */; };
 		13C8D7A61F7B3F9F001A01D9 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8D7A11F7B3EC3001A01D9 /* FBSDKLoginKit.framework */; };
@@ -59,6 +61,10 @@
 		136A92E81F7B3D9900A5879F /* MoreViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		1370B8AE1F82545000EA4C0D /* libAFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libAFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		1370B8DB1F825DB700EA4C0D /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1397865D1FB2F06D00D8379A /* StorecontentimageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorecontentimageViewController.h; sourceTree = "<group>"; };
+		1397865E1FB2F06D00D8379A /* StorecontentimageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StorecontentimageViewController.m; sourceTree = "<group>"; };
+		139786601FB2F20200D8379A /* imageTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imageTableViewController.h; sourceTree = "<group>"; };
+		139786611FB2F20200D8379A /* imageTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = imageTableViewController.m; sourceTree = "<group>"; };
 		13AE18231F98878F0087CF79 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		13AE18241F98878F0087CF79 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		13BBB9D91FAB193100895AA0 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
@@ -155,6 +161,10 @@
 				13AE18241F98878F0087CF79 /* MapViewController.m */,
 				13BBB9DA1FAB272A00895AA0 /* myMKAnnotationView.h */,
 				13BBB9DB1FAB272A00895AA0 /* myMKAnnotationView.m */,
+				1397865D1FB2F06D00D8379A /* StorecontentimageViewController.h */,
+				1397865E1FB2F06D00D8379A /* StorecontentimageViewController.m */,
+				139786601FB2F20200D8379A /* imageTableViewController.h */,
+				139786611FB2F20200D8379A /* imageTableViewController.m */,
 			);
 			path = "專題";
 			sourceTree = "<group>";
@@ -332,9 +342,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				132233D41F8A7966006F127B /* StorecontentTableViewCell.m in Sources */,
+				1397865F1FB2F06D00D8379A /* StorecontentimageViewController.m in Sources */,
 				136A92E91F7B3D9900A5879F /* MoreViewController.m in Sources */,
 				13117D321F85CBE20066E08E /* Store.m in Sources */,
 				13CACE7F1F8780A5008B49F1 /* StoreListViewController.m in Sources */,
+				139786621FB2F20200D8379A /* imageTableViewController.m in Sources */,
 				136A92CD1F7B390800A5879F /* AppDelegate.m in Sources */,
 				136A92DE1F7B390800A5879F /* main.m in Sources */,
 				132233D11F8A768F006F127B /* StorecontentViewController.m in Sources */,

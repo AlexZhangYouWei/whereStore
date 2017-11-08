@@ -94,7 +94,36 @@
     [self setupMapView];
 
 }
-
+//MKAnnotationView Button
+- (MKAnnotationView*) mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    if(annotation == mapView.userLocation)
+        return nil;
+        myMKAnnotationView *resultView = (myMKAnnotationView*)[_theMapView dequeueReusableAnnotationViewWithIdentifier:@"Store"];
+    
+    if(resultView==nil)
+    {
+        resultView = [[myMKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Store"];
+    }
+    else
+    {
+        resultView.annotation = annotation;
+    }
+    
+    resultView.canShowCallout = YES;
+    
+    UIButton *rightButton=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    
+    [rightButton addTarget:self action:@selector(buttonPrssed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    resultView.rightCalloutAccessoryView=rightButton;
+    
+    //    resultView.animatesDrop = YES;
+    //    resultView.pinColor=MKPinAnnotationColorGreen;
+    
+    
+    return resultView;
+    
+}
 // 自行定義設定地圖標籤的函式
 
 -(void)maplabel{
@@ -117,44 +146,11 @@
     [_theMapView addAnnotations:arry];
 }
 
-//MKAnnotationView Button
-- (MKAnnotationView*) mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-    if(annotation == mapView.userLocation)
-        return nil;
-    
-    //    MKPinAnnotationView *resultView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Store"];
-    myMKAnnotationView *resultView = (myMKAnnotationView*)[_theMapView dequeueReusableAnnotationViewWithIdentifier:@"Store"];
-    
-    if(resultView==nil)
-    {
-        //        resultView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Store"];
-        resultView = [[myMKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Store"];
-    }
-    else
-    {
-        resultView.annotation = annotation;
-    }
-    
-    resultView.canShowCallout = YES;
-    
-    UIButton *rightButton=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    
-    [rightButton addTarget:self action:@selector(buttonPrssed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    resultView.rightCalloutAccessoryView=rightButton;
-    
-    //    resultView.animatesDrop = YES;
-    //    resultView.pinColor=MKPinAnnotationColorGreen;
-    
-    
-    return resultView;
-    
-    
-}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
 //清除地圖上的標籤 離開頁面回收RAM
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];

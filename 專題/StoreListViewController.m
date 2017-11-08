@@ -11,11 +11,12 @@
 #import "StorecontentViewController.h"
 #import "StoreListTableViewCell.h"
 #import "MapViewController.h"
+#import "SearchViewController.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 @import Firebase;
 @import FirebaseDatabase;
-@interface StoreListViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,MKMapViewDelegate,CLLocationManagerDelegate>
+@interface StoreListViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,MKMapViewDelegate,CLLocationManagerDelegate,searchDelegate>
 {
     CLLocationManager *locationManager; ; //定位控制器
     CLLocation *mylocation; //目前所在位置
@@ -43,6 +44,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.storelisttableview.dataSource = self;
     self.storelisttableview.delegate = self;
     _searchbar.delegate=self;
@@ -59,7 +61,7 @@
             store.tel = [item objectForKey:@"tel"];
             store.adds =[item objectForKey:@"adds"];
             store.latitude =[item objectForKey:@"latitude"];
-            store.clickrate =[item objectForKey:@"clickrate"];
+            store.clickrate =[item objectForKey:@"Clickrate"];
             store.longitude=[item objectForKey:@"longitude"];
             store.storeclass=[item objectForKey:@"storeclass"];
             store.evaluate = [item objectForKey:@"evaluate"];
@@ -89,15 +91,17 @@
     mylocation =[[CLLocation alloc]init];
     //開始更新定位資訊
     [locationManager startUpdatingLocation];
-    _latitudearray =[NSMutableArray new];
-    _longitudearray=[NSMutableArray new];
     // 實作重新撈資料
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [_storelisttableview addSubview:refreshControl];
-    
-    
-    
+    [_storelisttableview setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    UIButton *button =  [UIButton buttonWithType:UIButtonTypeCustom];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    //[button setImage:[UIImage imageNamed:@"sort-arrows-couple-pointing-up-and-down"] forState:UIControlStateNormal];
+        [button setTitle:@"排序" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(chang) forControlEvents:UIControlEventTouchUpInside];
+    [button setFrame:CGRectMake(0, 0, 30, 30)];
 }
 - (void)refresh:(UIRefreshControl *)refreshControl {
     // 重新撈資料
@@ -268,7 +272,6 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"storecontent"]) {
         StorecontentViewController *storecontentviewcontroller = segue.destinationViewController;
-        
         NSIndexPath *indexPath = self.storelisttableview.indexPathForSelectedRow;
         if (select ==1) {
             storecontentviewcontroller.content =(Store *)_stores[indexPath.row];
@@ -279,6 +282,10 @@
     }else if ([segue.identifier isEqualToString:@"allmap"]){
         MapViewController *mapViewController = segue.destinationViewController;
         mapViewController.mapstores =self.stores;
+    }else if ([segue.identifier isEqualToString:@""]) {
+        SearchViewController *searchview =  segue.destinationViewController;
+        
+
     }
 }
 - (void)didReceiveMemoryWarning {
@@ -300,7 +307,7 @@
     [self.view endEditing:YES];
 }
 //進階搜尋
--(void)searchview{
+-(void)setSearchviewresults:(NSMutableArray *)value{
     select = 3;
     _searchviewresults =[[NSMutableArray alloc]init];
     for(Store *item in self.stores) {
@@ -322,10 +329,27 @@
     }
     [_storelisttableview reloadData];
 }
+-(void)chang{
+    if ([_searchsequence isEqualToString:@"2"]) {
+        [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
+            return [obj1.evaluate doubleValue] < [obj2.evaluate doubleValue]  ? NSOrderedDescending : NSOrderedAscending;
+
+        }];
+        _searchsequence = @"1";
+        
+    }else {
+        [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
+            return obj1.distance > obj2.distance ? NSOrderedDescending : NSOrderedAscending;
+        }];
+        _searchsequence = @"2";
+    }
+
+    [self.storelisttableview reloadData];
+    
+}
 - (IBAction)seacher:(id)sender {
     
 }
-
 
 @end
 

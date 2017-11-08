@@ -23,7 +23,7 @@
 //    UITableViewCell.appearance.backgroundColor = [UIColor blackColor];
     UITableViewCell.appearance.tintColor=[UIColor whiteColor];
     
-    UITabBar.appearance.barTintColor =[UIColor colorWithRed:0/255.0 green:70/255.0 blue:120/255.0 alpha:0.3];
+  //  UITabBar.appearance.barTintColor =[UIColor colorWithRed:0/255.0 green:70/255.0 blue:120/255.0 alpha:0.3];
     
 // [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:207/255.0 green:11/255.0 blue:8/255.0 alpha:1.000];
     return YES;

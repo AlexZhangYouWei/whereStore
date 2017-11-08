@@ -13,9 +13,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
 
-    _nameLabel.numberOfLines=2;
-    _addLabel.numberOfLines=2;
-    
+    _nameLabel.numberOfLines=0;
+    _addLabel.numberOfLines=0;
+    _distanceLabel.numberOfLines =0;
+    _evaluatelabel.numberOfLines =0;
+    _statusLabel.numberOfLines =0;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

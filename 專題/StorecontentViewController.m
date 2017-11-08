@@ -13,6 +13,7 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 @interface StorecontentViewController ()<UITableViewDelegate,UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate,UIScrollViewDelegate >
+@property (weak, nonatomic) IBOutlet UIView *imageView;
 
 @end
 
@@ -22,8 +23,9 @@
     [super viewDidLoad];
     self.navigationItem.title=@"店家資訊";
     
-    self.storecontentlist.delegate = self;
-    self.storecontentlist.dataSource = self;
+    self.storecontentlistTableView.delegate = self;
+    self.storecontentlistTableView.dataSource = self;
+    [_storecontentlistTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -31,11 +33,10 @@
 }
 #pragma mark -UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 5;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StorecontentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    
     switch (indexPath.row) {
         case 0:
             cell.nameLabel.text = @"店家名稱";
@@ -43,15 +44,22 @@
             break;
         case 1:
             cell.nameLabel.text = @"地址";
+            cell.tintColor=[UIColor blueColor];
             cell.valueTextView.text = self.content.adds;
             break;
         case 2:
             cell.nameLabel.text = @"電話";
+            cell.tintColor=[UIColor blueColor];
             cell.valueTextView.text = self.content.tel;
             break;
         case 3:
             cell.nameLabel.text= @"營業時間";
             cell.valueTextView.text=@"週一到週五";
+            break;
+        case 4:
+            cell.nameLabel.text=@"瀏覽次數";
+            cell.valueTextView.text= [NSString stringWithFormat:@"%@", self.content.clickrate];
+            break;
     }
     return cell;
 }
@@ -62,16 +70,15 @@
 - (IBAction)changed:(UISegmentedControl *)sender {
     if (sender.selectedSegmentIndex==0) {
         [UIView animateWithDuration:0.5 animations:^{
-            _StorecontentableView.alpha =0.0;
-            _StorecontentimageView.alpha =1.0;
+            _imageView.alpha =0.0;
+            _storecontentlistTableView.alpha =1.0;
         }];
     }
     else{
         [UIView animateWithDuration:0.5 animations:^{
-            _StorecontentableView.alpha =1.0;
-            _StorecontentimageView.alpha =0.0;
+            _imageView.alpha =1.0;
+            _storecontentlistTableView.alpha =0.0;
         }];
-        
 }
 }
 #pragma mark -prepareForSegue

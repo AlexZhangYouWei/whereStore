@@ -20,12 +20,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5c08;&#x984c;/StoreListViewController.m"
-            timestampString = "531653781.457595"
+            timestampString = "531828026.850924"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "303"
-            endingLineNumber = "303"
-            landmarkName = "-searchview"
+            startingLineNumber = "310"
+            endingLineNumber = "310"
+            landmarkName = "-setSearchviewresults:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x5c08;&#x984c;/SearchViewController.m"
+            timestampString = "531828026.851722"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "-searchButton:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[SearchViewController searchButton:]"
+                  moduleName = "&#x5c08;&#x984c;"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user44/Desktop/Alex/%E5%B0%88%E9%A1%8C%E6%96%87%E4%BB%B6%E5%8D%80/END/%E5%B0%88%E9%A1%8C/SearchViewController.m"
+                  timestampString = "531828027.058612"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "182"
+                  endingLineNumber = "182"
+                  offsetFromSymbolStart = "231">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__37-[SearchViewController searchButton:]_block_invoke"
+                  moduleName = "&#x5c08;&#x984c;"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user44/Desktop/Alex/%E5%B0%88%E9%A1%8C%E6%96%87%E4%BB%B6%E5%8D%80/END/%E5%B0%88%E9%A1%8C/SearchViewController.m"
+                  timestampString = "531828027.063014"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "182"
+                  endingLineNumber = "182"
+                  offsetFromSymbolStart = "12">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x5c08;&#x984c;/SearchViewController.m"
+            timestampString = "531828026.851878"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "-prepareForSegue:sender:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
