@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface StorecontentimageViewController : UIViewController
-
+@property (nonatomic) NSString *imageurl;//照片網址
+@property (nonatomic) NSMutableArray *imageArray;//所有照片
 @end

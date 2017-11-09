@@ -117,8 +117,6 @@
     
     resultView.rightCalloutAccessoryView=rightButton;
     
-    //    resultView.animatesDrop = YES;
-    //    resultView.pinColor=MKPinAnnotationColorGreen;
     
     
     return resultView;

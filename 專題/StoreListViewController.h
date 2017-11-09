@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Store.h"
-@import AFNetworking;
 
 @interface StoreListViewController : UIViewController
 

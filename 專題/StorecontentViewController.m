@@ -9,6 +9,7 @@
 #import "StorecontentViewController.h"
 #import "StorecontentTableViewCell.h"
 #import "StoreListViewController.h"
+#import "StorecontentimageViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
@@ -83,7 +84,10 @@
 }
 #pragma mark -prepareForSegue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    
+    if ([segue.identifier isEqualToString:@"imageView"]){
+        StorecontentimageViewController *imageViewController = segue.destinationViewController;
+        imageViewController.imageurl =self.content.image;
+        NSLog(@"imageurl:%@",self.content.image);
+}
 }
 @end

@@ -61,6 +61,7 @@
             store.tel = [item objectForKey:@"tel"];
             store.adds =[item objectForKey:@"adds"];
             store.latitude =[item objectForKey:@"latitude"];
+            store.image = [item objectForKey:@"image"];
             store.clickrate =[item objectForKey:@"Clickrate"];
             store.longitude=[item objectForKey:@"longitude"];
             store.storeclass=[item objectForKey:@"storeclass"];
@@ -96,11 +97,17 @@
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [_storelisttableview addSubview:refreshControl];
     [_storelisttableview setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    
     UIButton *button =  [UIButton buttonWithType:UIButtonTypeCustom];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    //[button setImage:[UIImage imageNamed:@"sort-arrows-couple-pointing-up-and-down"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(chang) forControlEvents:UIControlEventTouchUpInside];
+
+    if ([_searchsequence isEqualToString:@"1"]) {
         [button setTitle:@"排序" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(chang) forControlEvents:UIControlEventTouchUpInside];
+        
+    }else{
+        [button setTitle:@"排序" forState:UIControlStateNormal];
+    }
     [button setFrame:CGRectMake(0, 0, 30, 30)];
 }
 - (void)refresh:(UIRefreshControl *)refreshControl {
