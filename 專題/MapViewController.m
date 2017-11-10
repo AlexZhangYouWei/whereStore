@@ -95,33 +95,33 @@
 
 }
 //MKAnnotationView Button
-- (MKAnnotationView*) mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-    if(annotation == mapView.userLocation)
-        return nil;
-        myMKAnnotationView *resultView = (myMKAnnotationView*)[_theMapView dequeueReusableAnnotationViewWithIdentifier:@"Store"];
-    
-    if(resultView==nil)
-    {
-        resultView = [[myMKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Store"];
-    }
-    
-    //resultView.image
-    resultView.annotation = annotation;
-    
-    
-    resultView.canShowCallout = YES;
-    
-    UIButton *rightButton=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    
-    [rightButton addTarget:self action:@selector(buttonPrssed:) forControlEvents:UIControlEventTouchUpInside];
-    
-         resultView.rightCalloutAccessoryView=rightButton;
-    
-    
-    
-    return resultView;
-    
-}
+//- (MKAnnotationView*) mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+//    if(annotation == mapView.userLocation)
+//        return nil;
+//        myMKAnnotationView *resultView = (myMKAnnotationView*)[_theMapView dequeueReusableAnnotationViewWithIdentifier:@"Store"];
+//    
+//    if(resultView==nil)
+//    {
+//        resultView = [[myMKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Store"];
+//    }
+//    
+//    //resultView.image
+//    resultView.annotation = annotation;
+//    
+//    
+//    resultView.canShowCallout = YES;
+//    
+//    UIButton *rightButton=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+//    
+//    [rightButton addTarget:self action:@selector(buttonPrssed:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//         resultView.rightCalloutAccessoryView=rightButton;
+//    
+//    
+//    
+//    return resultView;
+//    
+//}
 // 自行定義設定地圖標籤的函式
 
 -(void)maplabel{

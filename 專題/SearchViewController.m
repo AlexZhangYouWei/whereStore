@@ -143,65 +143,42 @@
     // Dispose of any resources that can be recreated.
 }
 #pragma mark -prepareForSegue
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"searchview"]) {
-        StoreListViewController *storeListViewController = segue.destinationViewController;
-        
-        searchcondition = [NSMutableArray new];
-        if ([searchone isEqualToString:@""] ) {
-            searchone = @"全部";
-        }
-        storeListViewController.searchadds = searchone;
-        if ([searchtwo isEqualToString:@""] ) {
-            searchtwo = @"全部";
-        }
-        storeListViewController.searchclass = searchtwo;
-        
-        if ([searchthree isEqualToString:@"人氣"] ) {
-            searchthree = @"2";
-        }else{
-            searchthree = @"1";
-        }
-        storeListViewController.searchsequence = searchthree;
-        NSLog(@" 地區:%@   == 類別:%@    == 排序%@" ,searchone,searchtwo,searchthree);
-        [storeListViewController setSearchviewresults];
-    }
-}
-
-
 - (IBAction)searchButton:(id)sender {
-    if (searchone ==nil||searchone) {
+    UINavigationController *naviControler = self.tabBarController.viewControllers[0];
+    StoreListViewController *storeList =  naviControler.viewControllers[0];
+    searchcondition = [NSMutableArray new];
+    if ([searchone isEqualToString:@""] ) {
+        searchone = @"全部";
+    }
+    storeList.searchadds = searchone;
+    if ([searchtwo isEqualToString:@""] ) {
+        searchtwo = @"全部";
+    }
+    storeList.searchclass = searchtwo;
+    
+    if ([searchthree isEqualToString:@"人氣"] ) {
+        searchthree = @"2";
+    }else{
+        searchthree = @"1";
+    }
+    storeList.searchsequence = searchthree;
+    NSLog(@" 地區:%@   == 類別:%@    == 排序%@" ,searchone,searchtwo,searchthree);
+    if (searchone ==nil) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"請設定搜尋條件" message:@"搜尋條件至少設定一項" preferredStyle:  UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {        }]];
         [self presentViewController:alert animated:true completion:nil];
+    }else if([searchone isEqualToString:@"全部"]&&[searchtwo isEqualToString:@"全部"]){
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"請設定搜尋條件" message:@"搜尋條件建議設定全部以外的選項" preferredStyle:  UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {        }]];
+        [self presentViewController:alert animated:true completion:nil];
     }else{
-        UINavigationController *naviControler = self.tabBarController.viewControllers[0];
-        StoreListViewController *storeList =  naviControler.viewControllers[0];
-        searchcondition = [NSMutableArray new];
-        if ([searchone isEqualToString:@""] ) {
-            searchone = @"全部";
-        }
-        storeList.searchadds = searchone;
-        if ([searchtwo isEqualToString:@""] ) {
-            searchtwo = @"全部";
-        }
-        storeList.searchclass = searchtwo;
-        
-        if ([searchthree isEqualToString:@"人氣"] ) {
-            searchthree = @"2";
-        }else{
-            searchthree = @"1";
-        }
-        storeList.searchsequence = searchthree;
-        NSLog(@" 地區:%@   == 類別:%@    == 排序%@" ,searchone,searchtwo,searchthree);
         [storeList setSearchviewresults];
         
         [self.tabBarController setSelectedIndex:0];
         
-        
-        
     }
     
+
 }
 
 
