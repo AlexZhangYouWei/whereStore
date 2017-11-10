@@ -16,7 +16,7 @@
 #import <CoreLocation/CoreLocation.h>
 @import Firebase;
 @import FirebaseDatabase;
-@interface StoreListViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,MKMapViewDelegate,CLLocationManagerDelegate,searchDelegate>
+@interface StoreListViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,MKMapViewDelegate,CLLocationManagerDelegate>
 {
     CLLocationManager *locationManager; ; //定位控制器
     CLLocation *mylocation; //目前所在位置
@@ -44,7 +44,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSLog(@"Debug: %@", self);
     self.storelisttableview.dataSource = self;
     self.storelisttableview.delegate = self;
     _searchbar.delegate=self;
@@ -101,14 +101,11 @@
     UIButton *button =  [UIButton buttonWithType:UIButtonTypeCustom];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     [button addTarget:self action:@selector(chang) forControlEvents:UIControlEventTouchUpInside];
-
-    if ([_searchsequence isEqualToString:@"1"]) {
-        [button setTitle:@"排序" forState:UIControlStateNormal];
-        
-    }else{
-        [button setTitle:@"排序" forState:UIControlStateNormal];
-    }
-    [button setFrame:CGRectMake(0, 0, 30, 30)];
+    
+    [button setTitle:@" 排序:距離 " forState:UIControlStateNormal];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:8]];
+    [button setBackgroundColor:[UIColor colorWithRed:0/255.0 green:60/255.0 blue:100/255.0 alpha:1.0]];
+    [button setFrame:CGRectMake(0, 0, 60, 30)];
 }
 - (void)refresh:(UIRefreshControl *)refreshControl {
     // 重新撈資料
@@ -153,12 +150,6 @@
         
     }
 }
-
-
-
-
-
-
 //table cell的樣式
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     StoreListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"storeCell" forIndexPath:indexPath];
@@ -313,11 +304,13 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self.view endEditing:YES];
 }
+
 //進階搜尋
--(void)setSearchviewresults:(NSMutableArray *)value{
+-(void)setSearchviewresults{
     select = 3;
     _searchviewresults =[[NSMutableArray alloc]init];
-    for(Store *item in self.stores) {
+    NSLog(@"_searchadds :%@ %@   ==== stores:%@",_searchadds,_searchclass,_stores);
+    for(Store *item in _stores) {
         NSString *name = item.adds;
         NSString *name2 = item.storeclass;
         NSRange nameRange = [name rangeOfString:_searchadds options:NSCaseInsensitiveSearch];
@@ -343,13 +336,19 @@
 
         }];
         _searchsequence = @"1";
-        
+        UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
+        UIButton *button = item.customView;
+        [button setTitle:@"排序:評價" forState:UIControlStateNormal];
     }else {
         [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
             return obj1.distance > obj2.distance ? NSOrderedDescending : NSOrderedAscending;
         }];
         _searchsequence = @"2";
+        UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
+        UIButton *button = item.customView;
+        [button setTitle:@"排序:距離" forState:UIControlStateNormal];
     }
+  
 
     [self.storelisttableview reloadData];
     
@@ -357,6 +356,10 @@
 - (IBAction)seacher:(id)sender {
     
 }
+
+//-(void)dealloc {
+//    NSLog(@"_searchadds :%@ %@   ==== stores:%@",_searchadds,_searchclass,_stores);
+//}
 
 @end
 

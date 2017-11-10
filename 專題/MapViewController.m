@@ -70,7 +70,7 @@
     _theMapView.showsTraffic=YES;
     _theMapView.showsScale=YES;
     _theMapView.showsCompass=YES;
-
+    _theMapView.delegate = self;
 }
 
 //當GPS位置更新觸發事件
@@ -104,10 +104,10 @@
     {
         resultView = [[myMKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Store"];
     }
-    else
-    {
-        resultView.annotation = annotation;
-    }
+    
+    //resultView.image
+    resultView.annotation = annotation;
+    
     
     resultView.canShowCallout = YES;
     
@@ -115,7 +115,7 @@
     
     [rightButton addTarget:self action:@selector(buttonPrssed:) forControlEvents:UIControlEventTouchUpInside];
     
-    resultView.rightCalloutAccessoryView=rightButton;
+         resultView.rightCalloutAccessoryView=rightButton;
     
     
     

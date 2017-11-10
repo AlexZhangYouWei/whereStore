@@ -22,4 +22,6 @@
 @property(nonatomic)NSString *searchclass;
 @property(nonatomic)NSString *searchsequence;
 
+-(void)setSearchviewresults;
+
 @end

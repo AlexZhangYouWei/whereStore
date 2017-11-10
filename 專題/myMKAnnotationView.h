@@ -8,7 +8,7 @@
 
 #import <MapKit/MapKit.h>
 
-@interface myMKAnnotationView : MKAnnotationView
+@interface myMKAnnotationView : MKPinAnnotationView
 @property (nonatomic) CLLocationCoordinate2D coordinate;
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSString *subtitle;

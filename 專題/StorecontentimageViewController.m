@@ -11,6 +11,7 @@
 #import "StoreListTableViewCell.h"
 #import "StorecontentViewController.h"
 #import "Store.h"
+
 @import UIKit;
 @interface StorecontentimageViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *storecontentimageTableView;
@@ -23,6 +24,7 @@
     [super viewDidLoad];
     self.storecontentimageTableView.dataSource = self;
     self.storecontentimageTableView.delegate = self;
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,12 +35,25 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     StoreListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imagecell" forIndexPath:indexPath];
     NSURL * url = [NSURL URLWithString:self.imageurl];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    if (data == nil) {
-        cell.imageView.image = [UIImage imageNamed:@"noimage.png"];
-    }else{
-    cell.imageView.image =[UIImage imageWithData:data];
-    }
+    
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //下載圖片
+            NSData *data = [NSData dataWithContentsOfURL:url];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //放到view上
+            UITableViewCell *cell1 = [tableView cellForRowAtIndexPath:indexPath];
+            if ( cell1 ){
+                if (data == nil) {
+                    cell1.imageView.image = [UIImage imageNamed:@"noimage.png"];
+                }else{
+                    cell1.imageView.image =[UIImage imageWithData:data];
+                }
+                [cell1 setNeedsLayout];
+            }
+        });
+    });
+  
 
     return cell;
     

@@ -15,6 +15,7 @@
 #import <CoreLocation/CoreLocation.h>
 @interface StorecontentViewController ()<UITableViewDelegate,UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate,UIScrollViewDelegate >
 @property (weak, nonatomic) IBOutlet UIView *imageView;
+@property(nonatomic) NSOperationQueue *queue;
 
 @end
 
@@ -23,7 +24,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title=@"店家資訊";
-    
+    self.queue = [[NSOperationQueue alloc]init];
+    //最多同時間執行的作業個數
+    [self.queue setMaxConcurrentOperationCount:2];
     self.storecontentlistTableView.delegate = self;
     self.storecontentlistTableView.dataSource = self;
     [_storecontentlistTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
@@ -80,14 +83,13 @@
             _imageView.alpha =1.0;
             _storecontentlistTableView.alpha =0.0;
         }];
-}
+    }
 }
 #pragma mark -prepareForSegue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"imageView"]){
         StorecontentimageViewController *imageViewController = segue.destinationViewController;
         imageViewController.imageurl =self.content.image;
-        NSLog(@"imageurl:%@",self.content.image);
-}
+    }
 }
 @end
