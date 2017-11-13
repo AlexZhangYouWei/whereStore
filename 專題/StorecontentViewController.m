@@ -15,7 +15,6 @@
 #import <CoreLocation/CoreLocation.h>
 @interface StorecontentViewController ()<UITableViewDelegate,UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate,UIScrollViewDelegate >
 @property (weak, nonatomic) IBOutlet UIView *imageView;
-@property(nonatomic) NSOperationQueue *queue;
 
 @end
 
@@ -24,9 +23,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title=@"店家資訊";
-    self.queue = [[NSOperationQueue alloc]init];
-    //最多同時間執行的作業個數
-    [self.queue setMaxConcurrentOperationCount:2];
     self.storecontentlistTableView.delegate = self;
     self.storecontentlistTableView.dataSource = self;
     [_storecontentlistTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
@@ -58,7 +54,7 @@
             break;
         case 3:
             cell.nameLabel.text= @"營業時間";
-            cell.valueTextView.text=@"週一到週五";
+            cell.valueTextView.text=self.content.time;
             break;
         case 4:
             cell.nameLabel.text=@"瀏覽次數";

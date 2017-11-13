@@ -28,6 +28,8 @@
 @property(nonatomic) NSDate *massagetime;//留言時間
 @property(nonatomic) NSString*massage;//留言訊息
 @property(nonatomic) MKAnnotationView* annotation;
+@property(nonatomic) NSString*region;//搜尋地區
+@property(nonatomic) NSString*time;//營業時間
 //-(UIImage *)image;//從檔案載入圖檔
 //- (UIImage *)thumbnailImage;//產生縮圖
 

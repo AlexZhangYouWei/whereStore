@@ -69,6 +69,9 @@
             store.evaluate = [item objectForKey:@"evaluate"];
             store.offday = [item objectForKey:@"storetime"];
             store.storeid = [item objectForKey:@"storeid"];
+            store.region = [item objectForKey:@"region"];
+            store.time = [item objectForKey:@"time"];
+
             [self.stores addObject:store];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -315,32 +318,33 @@
         NSString *name2 = item.storeclass;
         NSRange nameRange = [name rangeOfString:_searchadds options:NSCaseInsensitiveSearch];
         NSRange nameRange2 = [name2 rangeOfString:_searchclass options:NSCaseInsensitiveSearch];
-        if  ([_searchadds isEqualToString:@"全部"]||[_searchclass isEqualToString:@"全部"]) {
+        
+        if ([_searchadds isEqualToString:@"全部"]||[_searchclass isEqualToString:@"全部"]) {
             if (nameRange.location != NSNotFound || nameRange2.location != NSNotFound) {
                 [_searchviewresults addObject:item];
-            }else {
-                if (nameRange.location != NSNotFound && nameRange2.location != NSNotFound) {
-                    [_searchviewresults addObject:item];
-                    
-                }
             }
+        }else if (nameRange.location != NSNotFound && nameRange2.location != NSNotFound) {
+                    [_searchviewresults addObject:item];
+                }
             UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
             UIButton *button = item.customView;
-            [button setTitle:@"清除" forState:UIControlStateNormal];
-        }
+            [button setTitle:@"清除搜尋結果" forState:UIControlStateNormal];
+        
     }
     [_storelisttableview reloadData];
 }
 -(void)chang{
-    if (_searchviewresults != nil) {
+    if (_searchviewresults.count != 0) {
         [_searchviewresults removeAllObjects];
+        NSLog(@"清除搜尋");
         select = 1;
         UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
         UIButton *button = item.customView;
         [button setTitle:@"排序:距離" forState:UIControlStateNormal];
         _searchsequence = @"1";
     } else if ([_searchsequence isEqualToString:@"2"]) {
-    
+        NSLog(@"評價");
+
         [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
             return [obj1.evaluate doubleValue] < [obj2.evaluate doubleValue]  ? NSOrderedDescending : NSOrderedAscending;
         }];
@@ -348,10 +352,11 @@
         UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
         UIButton *button = item.customView;
         [button setTitle:@"排序:評價" forState:UIControlStateNormal];
-    } else{
+    } else {
         [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
             return obj1.distance > obj2.distance ? NSOrderedDescending : NSOrderedAscending;
         }];
+        NSLog(@"距離");
         _searchsequence = @"2";
         UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
         UIButton *button = item.customView;
