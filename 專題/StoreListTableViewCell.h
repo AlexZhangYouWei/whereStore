@@ -15,7 +15,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *evaluatelabel;
 @property (strong, nonatomic) IBOutlet UILabel *statusLabel;
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView1;
 
 
 

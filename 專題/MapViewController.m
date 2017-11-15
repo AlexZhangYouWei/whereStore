@@ -10,6 +10,7 @@
 #import "Store.h"
 #import "StoreListTableViewCell.h"
 #import "StoreListViewController.h"
+#import "StorecontentViewController.h"
 #import "myMKAnnotationView.h"
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
@@ -33,6 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title =@"周邊餐廳";
+    self.theMapView.delegate=self;
     //詢問定位授權
     locationManager=[CLLocationManager new];
     if([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
@@ -95,33 +97,25 @@
 
 }
 //MKAnnotationView Button
-//- (MKAnnotationView*) mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-//    if(annotation == mapView.userLocation)
-//        return nil;
-//        myMKAnnotationView *resultView = (myMKAnnotationView*)[_theMapView dequeueReusableAnnotationViewWithIdentifier:@"Store"];
-//
-//    if(resultView==nil)
-//    {
-//        resultView = [[myMKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Store"];
-//    }
-//
-//    //resultView.image
-//    resultView.annotation = annotation;
-//
-//
-//    resultView.canShowCallout = YES;
-//
-//    UIButton *rightButton=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-//
-//    [rightButton addTarget:self action:@selector(buttonPrssed:) forControlEvents:UIControlEventTouchUpInside];
-//
-//         resultView.rightCalloutAccessoryView=rightButton;
-//
-//
-//
-//    return resultView;
-//
-//}
+- (MKAnnotationView*) mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    if(annotation == mapView.userLocation)
+        return nil;
+        myMKAnnotationView *resultView = (myMKAnnotationView*)[_theMapView dequeueReusableAnnotationViewWithIdentifier:@"Store"];
+    if(resultView==nil)
+    {
+        resultView = [[myMKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Store"];
+    }
+    resultView.annotation = annotation;
+    resultView.canShowCallout = YES;
+    UIButton *rightButton=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    [rightButton addTarget:self action:@selector(buttonPrssed:) forControlEvents:UIControlEventTouchUpInside];
+         resultView.rightCalloutAccessoryView=rightButton;
+
+
+
+    return resultView;
+
+}
 // 自行定義設定地圖標籤的函式
 
 -(void)maplabel{
@@ -157,7 +151,11 @@
         [_theMapView removeAnnotation:annotation];
     }
 }
-
+-(void)buttonPrssed{
+    StorecontentViewController *contentViewController =  [self.storyboard instantiateViewControllerWithIdentifier:@"storecontentview"];
+    [self.navigationController pushViewController:contentViewController animated:YES];
+//    [ self.navigationController.popToViewController:contentViewController animated:YES];
+}
 
 
 @end

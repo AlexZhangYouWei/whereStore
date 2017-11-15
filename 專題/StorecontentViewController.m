@@ -88,4 +88,5 @@
         imageViewController.imageurl =self.content.image;
     }
 }
+
 @end
