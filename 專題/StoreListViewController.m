@@ -105,7 +105,6 @@
     UIButton *button =  [UIButton buttonWithType:UIButtonTypeCustom];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     [button addTarget:self action:@selector(chang) forControlEvents:UIControlEventTouchUpInside];
-    
     [button setTitle:@" 排序:距離 " forState:UIControlStateNormal];
     [button.titleLabel setFont:[UIFont systemFontOfSize:8]];
     [button setBackgroundColor:[UIColor colorWithRed:0/255.0 green:60/255.0 blue:100/255.0 alpha:1.0]];
@@ -285,8 +284,6 @@
     }else if ([segue.identifier isEqualToString:@"allmap"]){
         MapViewController *mapViewController = segue.destinationViewController;
         mapViewController.mapstores =self.stores;
-    
-
     }
 }
 - (void)didReceiveMemoryWarning {
@@ -362,8 +359,6 @@
         UIButton *button = item.customView;
         [button setTitle:@"排序:距離" forState:UIControlStateNormal];
     }
-  
-
     [self.storelisttableview reloadData];
 }
 

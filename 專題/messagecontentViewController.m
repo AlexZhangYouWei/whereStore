@@ -55,10 +55,10 @@ NSInteger userSelect;
     toolBar.items = @[barButtonCancel, flexSpace, barButtonDone];
     _messagescoreTextField.inputView = mypickerView;
     _messagescoreTextField.inputAccessoryView = toolBar;
-    _messagescoreTextField.placeholder = @"1到5";
+    _messagescoreTextField.placeholder=@"滿分五分 請給分";
+    _messagenameTextField.placeholder=@"預設匿名";
 }
 //選到某個textField，觸發選擇
-
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
     _messagescoreTextField = textField;
     UIPickerView *pick = (UIPickerView*)textField.inputView;
@@ -67,6 +67,9 @@ NSInteger userSelect;
     [pick reloadAllComponents];
 }
 
+-(void)toolBarCanelClick:(id)sender {
+    [self.view endEditing:YES];
+}
 //內建的函式回傳UIPicker共有幾組選項
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 1;
@@ -96,7 +99,18 @@ NSInteger userSelect;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+// cancel鍵盤下收
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.view endEditing:YES];
+}
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+    [super touchesBegan:touches withEvent:event];
+}
+//滑動下拉 鍵盤下收
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.view endEditing:YES];
+}
 
 - (IBAction)enter:(id)sender {
     
@@ -110,9 +124,6 @@ NSInteger userSelect;
         NSLog(@"大名:%@ / 評分 : %@ /評語: %@",_messagename,_messagescore,_message);
         [self.navigationController popViewControllerAnimated:YES];
     }
-    
-    
-    
     
 }
 

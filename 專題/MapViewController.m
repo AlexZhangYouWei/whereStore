@@ -21,9 +21,8 @@
     CLLocationCoordinate2D pinCenter;
     BOOL firstLocationReceived;
     NSMutableArray *arry ;
-//    NSMutableArray<Store *> *mapstores;
-    
-    
+    BOOL open;
+    NSInteger tag;
 }
 @property (strong, nonatomic) IBOutlet MKMapView *theMapView;
 
@@ -52,11 +51,9 @@
     mylocation =[[CLLocation alloc]init];
     //開始更新定位資訊
     [locationManager startUpdatingLocation];
-    
     [self setupMapView];
     [self maplabel];
-    
-    
+    open =NO;
 }
 
 
@@ -68,7 +65,6 @@
     _theMapView.mapType = MKMapTypeStandard;
     _theMapView.scrollEnabled = YES;
     _theMapView.zoomEnabled = YES;
-    
     _theMapView.showsTraffic=YES;
     _theMapView.showsScale=YES;
     _theMapView.showsCompass=YES;
@@ -77,7 +73,6 @@
 
 //當GPS位置更新觸發事件
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
-    
     //加入現在經緯度
     mylocation = locations.lastObject;
     //縮放效果
@@ -86,7 +81,6 @@
     //縮放比例
     region.span.latitudeDelta=0.007;
     region.span.longitudeDelta=0.007;
-    
     //區域設定 ,動畫設定
     [_theMapView setRegion:region animated:NO];
     firstLocationReceived = YES;
@@ -94,7 +88,6 @@
     }
     [self maplabel];
     [self setupMapView];
-
 }
 //MKAnnotationView Button
 - (MKAnnotationView*) mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
@@ -109,15 +102,14 @@
     resultView.canShowCallout = YES;
     UIButton *rightButton=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     [rightButton addTarget:self action:@selector(buttonPrssed) forControlEvents:UIControlEventTouchUpInside];
+   rightButton.tag =tag +1;
+    NSLog(@"button.tag : %ld", (long)tag);
+    //[rightButton removeFromSuperview];
          resultView.rightCalloutAccessoryView=rightButton;
-
-
-
-    return resultView;
+        return resultView;
 
 }
 // 自行定義設定地圖標籤的函式
-
 -(void)maplabel{
     // 宣告陣列來存放標籤
     arry =[NSMutableArray new];
@@ -137,9 +129,6 @@
     }    // 將陣列中所有的標籤顯示在地圖上
     [_theMapView addAnnotations:arry];
 }
-
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -147,15 +136,21 @@
 -(void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     NSArray *array = _theMapView.annotations;
+    if (open ==YES) {
+        NSLog(@"先不清除");
+    }else{
     for (MKPointAnnotation *annotation in array) {
         [_theMapView removeAnnotation:annotation];
     }
+    }
 }
 -(void)buttonPrssed{
-    
+    open =YES;
     StorecontentViewController *contentViewController =  [self.storyboard instantiateViewControllerWithIdentifier:@"storecontentview"];
+//    NSInteger *index=[_mapstores indexOfObject:];
+    
     [self.navigationController pushViewController:contentViewController animated:YES];
-}
+  }
 
 
 @end

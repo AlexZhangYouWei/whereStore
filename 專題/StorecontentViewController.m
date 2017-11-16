@@ -38,6 +38,9 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StorecontentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+//    cell.accessoryType = UIButtonTypeCustom;
+//    cell.valueTextView.dataDetectorTypes = UIDataDetectorTypeNone;
+//    cell.valueTextView.userInteractionEnabled = NO;
     switch (indexPath.row) {
         case 0:
             cell.nameLabel.text = @"店家名稱";
@@ -52,6 +55,8 @@
             cell.nameLabel.text = @"電話";
             cell.tintColor=[UIColor blueColor];
             cell.valueTextView.text = self.content.tel;
+//            cell.valueTextView.userInteractionEnabled = YES;
+//            cell.valueTextView.dataDetectorTypes = UIDataDetectorTypePhoneNumber;
             break;
         case 3:
             cell.nameLabel.text= @"營業時間";

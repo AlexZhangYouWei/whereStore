@@ -173,7 +173,6 @@
         [self presentViewController:alert animated:true completion:nil];
     }else{
         [storeList setSearchviewresults];
-        
         [self.tabBarController setSelectedIndex:0];
         
     }

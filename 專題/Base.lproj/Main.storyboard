@@ -215,9 +215,8 @@
                                     <action selector="changed:" destination="gwd-PR-GUS" eventType="valueChanged" id="2gl-9g-yhu"/>
                                 </connections>
                             </segmentedControl>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="le0-1v-1k5">
-                                <rect key="frame" x="0.0" y="97" width="320" height="429"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="le0-1v-1k5">
+                                <rect key="frame" x="0.0" y="97" width="320" height="420"/>
                                 <connections>
                                     <segue destination="9aE-xt-Fmq" kind="embed" id="wCe-OY-YGN"/>
                                 </connections>
@@ -233,7 +232,7 @@
                                 <rect key="frame" x="0.0" y="97" width="320" height="471"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="56" id="XSd-dP-dAc" customClass="StorecontentTableViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="56" id="XSd-dP-dAc" customClass="StorecontentTableViewCell">
                                         <rect key="frame" x="0.0" y="28" width="320" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XSd-dP-dAc" id="1Da-IO-GGB">
@@ -280,12 +279,16 @@
                             <constraint firstItem="o8E-h7-Hdh" firstAttribute="top" secondItem="49i-WR-vcn" secondAttribute="top" id="BMg-S1-12x"/>
                             <constraint firstItem="6k7-a4-ei1" firstAttribute="top" secondItem="o8E-h7-Hdh" secondAttribute="bottom" constant="5" id="Ch9-HT-l0I"/>
                             <constraint firstItem="49i-WR-vcn" firstAttribute="bottom" secondItem="6k7-a4-ei1" secondAttribute="bottom" constant="2" id="LvO-2P-8nQ"/>
+                            <constraint firstItem="le0-1v-1k5" firstAttribute="trailing" secondItem="49i-WR-vcn" secondAttribute="trailing" id="MpV-Nr-kqc"/>
                             <constraint firstItem="flU-WS-3Ab" firstAttribute="trailing" secondItem="49i-WR-vcn" secondAttribute="trailing" id="OeQ-gh-ekp"/>
                             <constraint firstItem="o8E-h7-Hdh" firstAttribute="leading" secondItem="49i-WR-vcn" secondAttribute="leading" id="R3z-bh-8x2"/>
                             <constraint firstItem="6k7-a4-ei1" firstAttribute="leading" secondItem="49i-WR-vcn" secondAttribute="leading" id="XEp-Na-X7d"/>
                             <constraint firstItem="flU-WS-3Ab" firstAttribute="top" secondItem="o8E-h7-Hdh" secondAttribute="bottom" constant="5" id="ZWc-CG-bPj"/>
                             <constraint firstItem="o8E-h7-Hdh" firstAttribute="trailing" secondItem="49i-WR-vcn" secondAttribute="trailing" id="Zx1-Ft-rJ0"/>
                             <constraint firstItem="flU-WS-3Ab" firstAttribute="leading" secondItem="49i-WR-vcn" secondAttribute="leading" id="aPd-n3-NDI"/>
+                            <constraint firstItem="49i-WR-vcn" firstAttribute="bottom" secondItem="le0-1v-1k5" secondAttribute="bottom" constant="2" id="jDE-1e-VEq"/>
+                            <constraint firstItem="le0-1v-1k5" firstAttribute="top" secondItem="o8E-h7-Hdh" secondAttribute="bottom" constant="5" id="lpw-mO-wAH"/>
+                            <constraint firstItem="le0-1v-1k5" firstAttribute="leading" secondItem="49i-WR-vcn" secondAttribute="leading" id="nKE-V0-x4N"/>
                             <constraint firstItem="6k7-a4-ei1" firstAttribute="trailing" secondItem="49i-WR-vcn" secondAttribute="trailing" id="yCg-b4-okg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="49i-WR-vcn"/>
@@ -299,7 +302,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lK8-5b-jQL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2338" y="-562"/>
+            <point key="canvasLocation" x="2336.25" y="-563.02816901408448"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="Nkg-ki-1gh">
@@ -508,11 +511,11 @@
             <objects>
                 <viewController id="9aE-xt-Fmq" customClass="messageViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RCJ-ip-hTx">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="429"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="420"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="veW-UG-niV">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="369"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="360"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="nph-8r-aZR">
@@ -526,7 +529,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5Y-vU-yJI">
-                                <rect key="frame" x="16" y="377" width="288" height="52"/>
+                                <rect key="frame" x="16" y="368" width="288" height="52"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="WHC-e3-ftk"/>
                                 </constraints>
@@ -546,6 +549,7 @@
                             <constraint firstItem="w5Y-vU-yJI" firstAttribute="leading" secondItem="RCJ-ip-hTx" secondAttribute="leadingMargin" id="YvY-UI-ZN9"/>
                             <constraint firstItem="veW-UG-niV" firstAttribute="top" secondItem="RCJ-ip-hTx" secondAttribute="top" id="hQd-WD-SlF"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="TnI-yE-X1r"/>
                     </view>
                     <connections>
                         <outlet property="messageTableView" destination="veW-UG-niV" id="Rfq-AH-Ci4"/>
@@ -560,7 +564,7 @@
             <objects>
                 <viewController id="C2Z-Ag-Qnf" customClass="messagecontentViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pTW-bg-yYn">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="429"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="420"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kZR-Tl-NvR">
@@ -594,14 +598,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="a62-0Y-G9Z">
-                                <rect key="frame" x="105" y="171" width="180" height="150"/>
+                                <rect key="frame" x="105" y="171" width="180" height="141"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7w5-X4-lAc">
-                                <rect key="frame" x="73" y="355" width="201" height="30"/>
+                                <rect key="frame" x="73" y="346" width="201" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="enter:" destination="C2Z-Ag-Qnf" eventType="touchUpInside" id="YdE-Aw-f2i"/>
