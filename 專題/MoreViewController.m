@@ -27,19 +27,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-//查詢所有的物件狀況
-/*[[NSNotificationCenter defaultCenter]addObserverForName:(nullable NSNotificationName) object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-    
-}];*/
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)loginButton:(UIButton *)sender {
 }

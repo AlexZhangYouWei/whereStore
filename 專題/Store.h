@@ -30,8 +30,6 @@
 @property(nonatomic) MKAnnotationView* annotation;
 @property(nonatomic) NSString*region;//搜尋地區
 @property(nonatomic) NSString*time;//營業時間
-//-(UIImage *)image;//從檔案載入圖檔
-//- (UIImage *)thumbnailImage;//產生縮圖
 
 
 

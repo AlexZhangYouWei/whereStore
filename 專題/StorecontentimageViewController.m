@@ -17,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *storecontentimageTableView;
 
 @end
-
 @implementation StorecontentimageViewController
 
 - (void)viewDidLoad {

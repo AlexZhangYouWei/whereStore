@@ -1,0 +1,119 @@
+//
+//  messagecontentViewController.m
+//  專題
+//
+//  Created by user44 on 2017/11/15.
+//  Copyright © 2017年 user44. All rights reserved.
+//
+
+#import "messagecontentViewController.h"
+#import "Store.h"
+
+@interface messagecontentViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UITextFieldDelegate>{
+UIPickerView *mypickerView;
+NSArray *score;
+NSInteger userSelect;
+    UIToolbar *toolBar;//確認
+    UIToolbar *toolBar1;//取消
+}
+@property (weak, nonatomic) IBOutlet UILabel *messagenameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *messagescoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UITextView *messageTextView;
+@property (weak, nonatomic) IBOutlet UITextField *messagenameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *messagescoreTextField;
+
+@end
+
+@implementation messagecontentViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    mypickerView =[[UIPickerView alloc]init];
+    mypickerView.delegate=self;
+    mypickerView.dataSource=self;
+    userSelect = 0;
+    score=[[NSArray alloc]initWithObjects:@"1",@"2",@"3",@"4",@"5", nil];
+    self.messagenameLabel.text = @"大名";
+    self.messagescoreLabel.text = @"評分";
+    self.messageLabel.text = @"評語";
+    //創建UItoolbar(工具栏)以及设置属性，设置工具栏的frame
+    toolBar= [[UIToolbar alloc] initWithFrame:CGRectMake(0,0,320,44)];
+    [toolBar setBarStyle:UIBarStyleDefault];
+    
+    UIBarButtonItem *barButtonCancel = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(toolBarCanelClick:)];
+    toolBar1.items = @[barButtonCancel];
+    barButtonCancel.tintColor=[UIColor blackColor];
+    
+    //添加弹簧按钮
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    
+    UIBarButtonItem *barButtonDone = [[UIBarButtonItem alloc] initWithTitle:@"確定" style:UIBarButtonItemStyleDone target:self action:@selector(toolBarDoneClick:)];
+    toolBar.items = @[barButtonDone];
+    barButtonDone.tintColor=[UIColor blackColor];
+    
+    toolBar.items = @[barButtonCancel, flexSpace, barButtonDone];
+    _messagescoreTextField.inputView = mypickerView;
+    _messagescoreTextField.inputAccessoryView = toolBar;
+    _messagescoreTextField.placeholder = @"1到5";
+}
+//選到某個textField，觸發選擇
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    _messagescoreTextField = textField;
+    UIPickerView *pick = (UIPickerView*)textField.inputView;
+    userSelect = 0;
+    [pick selectRow:0 inComponent:0 animated:NO];
+    [pick reloadAllComponents];
+}
+
+//內建的函式回傳UIPicker共有幾組選項
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+//內建的函式回傳UIPicker的內容
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    
+    return score.count;
+}
+
+//內建函式印出字串在Picker上以免出現"?"
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    NSString *title = [score objectAtIndex:row];
+    return title;
+}
+
+//選擇UIPickView中的項目時會出發的內建函式
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    userSelect = row;
+}
+- (void)toolBarDoneClick:(id)sender{
+    _messagescoreTextField.text = score[userSelect];
+    [_messagescoreTextField resignFirstResponder];
+    _messagescore = [NSString stringWithFormat:@"%@",self.messagescoreTextField.text];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+- (IBAction)enter:(id)sender {
+    
+    if (_messagescore == nil || _messageTextView==nil ||_messagenameTextField ==nil ) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"有資料尚未填完" message:@"請把資料填寫完成" preferredStyle:  UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {        }]];
+        [self presentViewController:alert animated:true completion:nil];
+    }else{
+        _messagename = [NSString stringWithFormat:@"%@", _messagenameTextField.text];
+        _message = _messageTextView.text;
+        NSLog(@"大名:%@ / 評分 : %@ /評語: %@",_messagename,_messagescore,_message);
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    
+    
+    
+}
+
+@end

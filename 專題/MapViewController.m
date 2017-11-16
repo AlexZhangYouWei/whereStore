@@ -108,7 +108,7 @@
     resultView.annotation = annotation;
     resultView.canShowCallout = YES;
     UIButton *rightButton=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    [rightButton addTarget:self action:@selector(buttonPrssed:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton addTarget:self action:@selector(buttonPrssed) forControlEvents:UIControlEventTouchUpInside];
          resultView.rightCalloutAccessoryView=rightButton;
 
 
@@ -152,9 +152,9 @@
     }
 }
 -(void)buttonPrssed{
+    
     StorecontentViewController *contentViewController =  [self.storyboard instantiateViewControllerWithIdentifier:@"storecontentview"];
     [self.navigationController pushViewController:contentViewController animated:YES];
-//    [ self.navigationController.popToViewController:contentViewController animated:YES];
 }
 
 

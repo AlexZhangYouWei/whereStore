@@ -15,6 +15,7 @@
 #import <CoreLocation/CoreLocation.h>
 @interface StorecontentViewController ()<UITableViewDelegate,UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate,UIScrollViewDelegate >
 @property (weak, nonatomic) IBOutlet UIView *imageView;
+@property (weak, nonatomic) IBOutlet UIView *messageView;
 
 @end
 
@@ -33,7 +34,7 @@
 }
 #pragma mark -UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return 6;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StorecontentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
@@ -57,6 +58,10 @@
             cell.valueTextView.text=self.content.time;
             break;
         case 4:
+            cell.nameLabel.text=@"評價";
+            cell.valueTextView.text= [NSString stringWithFormat:@"%@ 星", self.content.evaluate];
+            break;
+        case 5:
             cell.nameLabel.text=@"瀏覽次數";
             cell.valueTextView.text= [NSString stringWithFormat:@"%@", self.content.clickrate];
             break;
@@ -72,12 +77,21 @@
         [UIView animateWithDuration:0.5 animations:^{
             _imageView.alpha =0.0;
             _storecontentlistTableView.alpha =1.0;
+            _messageView.alpha=0.0;
         }];
     }
-    else{
+    if(sender.selectedSegmentIndex==1){
         [UIView animateWithDuration:0.5 animations:^{
             _imageView.alpha =1.0;
             _storecontentlistTableView.alpha =0.0;
+            _messageView.alpha=0.0;
+        }];
+    }
+    if(sender.selectedSegmentIndex==2){
+        [UIView animateWithDuration:0.5 animations:^{
+            _imageView.alpha =0.0;
+            _storecontentlistTableView.alpha =0.0;
+            _messageView.alpha=1.0;
         }];
     }
 }

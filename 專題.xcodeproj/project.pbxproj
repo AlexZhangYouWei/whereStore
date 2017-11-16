@@ -24,6 +24,8 @@
 		1397865F1FB2F06D00D8379A /* StorecontentimageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1397865E1FB2F06D00D8379A /* StorecontentimageViewController.m */; };
 		13AE18251F98878F0087CF79 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AE18241F98878F0087CF79 /* MapViewController.m */; };
 		13BBB9DC1FAB272A00895AA0 /* myMKAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BBB9DB1FAB272A00895AA0 /* myMKAnnotationView.m */; };
+		13BEF8801FBC4FBB00408615 /* messageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BEF87F1FBC4FBB00408615 /* messageViewController.m */; };
+		13BEF8831FBC531C00408615 /* messagecontentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BEF8821FBC531C00408615 /* messagecontentViewController.m */; };
 		13C8D7A61F7B3F9F001A01D9 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8D7A11F7B3EC3001A01D9 /* FBSDKLoginKit.framework */; };
 		13C8D7A71F7B3F9F001A01D9 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8D7A21F7B3EC3001A01D9 /* FBSDKShareKit.framework */; };
 		13C8D7AA1F7B3FA0001A01D9 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8D7A81F7B3FA0001A01D9 /* FBSDKCoreKit.framework */; };
@@ -68,6 +70,10 @@
 		13BBB9D91FAB193100895AA0 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		13BBB9DA1FAB272A00895AA0 /* myMKAnnotationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = myMKAnnotationView.h; sourceTree = "<group>"; };
 		13BBB9DB1FAB272A00895AA0 /* myMKAnnotationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = myMKAnnotationView.m; sourceTree = "<group>"; };
+		13BEF87E1FBC4FBB00408615 /* messageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = messageViewController.h; sourceTree = "<group>"; };
+		13BEF87F1FBC4FBB00408615 /* messageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = messageViewController.m; sourceTree = "<group>"; };
+		13BEF8811FBC531C00408615 /* messagecontentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = messagecontentViewController.h; sourceTree = "<group>"; };
+		13BEF8821FBC531C00408615 /* messagecontentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = messagecontentViewController.m; sourceTree = "<group>"; };
 		13C8D7A11F7B3EC3001A01D9 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		13C8D7A21F7B3EC3001A01D9 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		13C8D7A31F7B3EC3001A01D9 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../../../Downloads/FacebookSDKs-iOS-4-2/Bolts.framework"; sourceTree = "<group>"; };
@@ -163,6 +169,10 @@
 				13BBB9DB1FAB272A00895AA0 /* myMKAnnotationView.m */,
 				1397865D1FB2F06D00D8379A /* StorecontentimageViewController.h */,
 				1397865E1FB2F06D00D8379A /* StorecontentimageViewController.m */,
+				13BEF87E1FBC4FBB00408615 /* messageViewController.h */,
+				13BEF87F1FBC4FBB00408615 /* messageViewController.m */,
+				13BEF8811FBC531C00408615 /* messagecontentViewController.h */,
+				13BEF8821FBC531C00408615 /* messagecontentViewController.m */,
 			);
 			path = "專題";
 			sourceTree = "<group>";
@@ -342,11 +352,13 @@
 			files = (
 				132233D41F8A7966006F127B /* StorecontentTableViewCell.m in Sources */,
 				1397865F1FB2F06D00D8379A /* StorecontentimageViewController.m in Sources */,
+				13BEF8801FBC4FBB00408615 /* messageViewController.m in Sources */,
 				136A92E91F7B3D9900A5879F /* MoreViewController.m in Sources */,
 				13117D321F85CBE20066E08E /* Store.m in Sources */,
 				13CACE7F1F8780A5008B49F1 /* StoreListViewController.m in Sources */,
 				136A92CD1F7B390800A5879F /* AppDelegate.m in Sources */,
 				136A92DE1F7B390800A5879F /* main.m in Sources */,
+				13BEF8831FBC531C00408615 /* messagecontentViewController.m in Sources */,
 				132233D11F8A768F006F127B /* StorecontentViewController.m in Sources */,
 				13D506AF1F94C7660082B485 /* StoreListTableViewCell.m in Sources */,
 				136A92D01F7B390800A5879F /* SearchViewController.m in Sources */,
