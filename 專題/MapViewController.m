@@ -22,7 +22,7 @@
     BOOL firstLocationReceived;
     NSMutableArray *arry ;
     BOOL open;
-    NSInteger tag;
+    NSString *test;
 }
 @property (strong, nonatomic) IBOutlet MKMapView *theMapView;
 
@@ -101,14 +101,18 @@
     resultView.annotation = annotation;
     resultView.canShowCallout = YES;
     UIButton *rightButton=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    [rightButton addTarget:self action:@selector(buttonPrssed) forControlEvents:UIControlEventTouchUpInside];
-   rightButton.tag =tag +1;
-    NSLog(@"button.tag : %ld", (long)tag);
-    //[rightButton removeFromSuperview];
+    [rightButton addTarget:self action:@selector(buttonPrssed:) forControlEvents:UIControlEventTouchUpInside];
+    rightButton.tag = [arry indexOfObject:annotation];
+//    NSString *aaaa =[NSString stringWithFormat:@"Button tag %ld",(long)rightButton.tag];
          resultView.rightCalloutAccessoryView=rightButton;
         return resultView;
 
 }
+
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
+    
+}
+
 // 自行定義設定地圖標籤的函式
 -(void)maplabel{
     // 宣告陣列來存放標籤
@@ -144,13 +148,11 @@
     }
     }
 }
--(void)buttonPrssed{
+-(void)buttonPrssed:(id)sender{
+    UIButton *button = sender;
     open =YES;
     StorecontentViewController *contentViewController =  [self.storyboard instantiateViewControllerWithIdentifier:@"storecontentview"];
-//    NSInteger *index=[_mapstores indexOfObject:];
-    
+    contentViewController.content = _mapstores [button.tag];
     [self.navigationController pushViewController:contentViewController animated:YES];
   }
-
-
 @end

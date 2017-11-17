@@ -101,7 +101,6 @@
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [_storelisttableview addSubview:refreshControl];
     [_storelisttableview setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
-    
     UIButton *button =  [UIButton buttonWithType:UIButtonTypeCustom];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     [button addTarget:self action:@selector(chang) forControlEvents:UIControlEventTouchUpInside];
@@ -211,6 +210,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 90;
 }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 4;
 }
@@ -275,7 +275,8 @@
         StorecontentViewController *storecontentviewcontroller = segue.destinationViewController;
         NSIndexPath *indexPath = self.storelisttableview.indexPathForSelectedRow;
         if (select ==1) {
-            storecontentviewcontroller.content =(Store *)_stores[indexPath.row];
+            Store *tmp = _stores[indexPath.row];
+            storecontentviewcontroller.content = tmp;
         }if (select ==2) {
             storecontentviewcontroller.content =(Store *)_searchresults[indexPath.row];
         }if (select ==3) {

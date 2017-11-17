@@ -9,7 +9,6 @@
 #import "messageViewController.h"
 
 @interface messageViewController ()
-//<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *messageTableView;
 
 @end
