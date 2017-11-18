@@ -55,6 +55,7 @@
         NSMutableDictionary *storeData =[NSMutableDictionary new];
         storeData = snapshot.value;
         _stores = [NSMutableArray new];
+        
         [self.stores removeAllObjects];
         for (NSDictionary *item in storeData){
             Store *store = [[Store alloc]init];
@@ -71,7 +72,7 @@
             store.storeid = [item objectForKey:@"storeid"];
             store.region = [item objectForKey:@"region"];
             store.time = [item objectForKey:@"time"];
-
+            store.messages= [item objectForKey:@"massage"];
             [self.stores addObject:store];
         }
         dispatch_async(dispatch_get_main_queue(), ^{

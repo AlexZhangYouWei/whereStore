@@ -8,6 +8,7 @@
 
 #import "messagecontentViewController.h"
 #import "Store.h"
+@import FirebaseDatabase;
 
 @interface messagecontentViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UITextFieldDelegate>{
 UIPickerView *mypickerView;
@@ -25,7 +26,10 @@ NSInteger userSelect;
 
 @end
 
-@implementation messagecontentViewController
+@implementation messagecontentViewController {
+    FIRDatabaseReference * channelRef;
+    FIRDatabaseHandle channelRefHandle;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -119,12 +123,25 @@ NSInteger userSelect;
         [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {        }]];
         [self presentViewController:alert animated:true completion:nil];
     }else{
-        _messagename = [NSString stringWithFormat:@"%@", _messagenameTextField.text];
+        if (self.messagename == nil) {
+            _messagename = @"匿名";
+        }else{
+            _messagename = [NSString stringWithFormat:@"%@", _messagenameTextField.text];
+        }
         _message = _messageTextView.text;
         NSLog(@"大名:%@ / 評分 : %@ /評語: %@",_messagename,_messagescore,_message);
-        [self.navigationController popViewControllerAnimated:YES];
     }
     
+    NSString *key =self.storeid;
+    channelRef = [[[[[[FIRDatabase database] reference] child:@"2"] child:@"data"] child:key]child:@"massage"];
+//    FIRDatabaseReference * addChannelRef = [channelRef childByAutoId];
+    NSMutableDictionary * channelItem = [NSMutableDictionary new];
+    [channelItem setObject:self.messagename forKey:@"name"];
+    [channelItem setObject:self.message forKey:@"text"];
+    [channelItem setObject:self.messagescore forKey:@"evaluate"];
+    
+    
+    [channelRef setValue:channelItem];
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
 @end

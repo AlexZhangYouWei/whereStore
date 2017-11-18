@@ -12,4 +12,5 @@
 @property NSString *messagename;//名稱
 @property NSString *messagescore;//評分
 @property NSString *message;//評語;
+@property NSString *storeid;
 @end

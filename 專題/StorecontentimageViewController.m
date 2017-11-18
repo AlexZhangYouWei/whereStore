@@ -24,7 +24,6 @@
     self.storecontentimageTableView.dataSource = self;
     self.storecontentimageTableView.delegate = self;
     
-    
 }
 
 - (void)didReceiveMemoryWarning {

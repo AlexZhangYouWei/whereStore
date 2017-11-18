@@ -10,6 +10,7 @@
 #import "StorecontentTableViewCell.h"
 #import "StoreListViewController.h"
 #import "StorecontentimageViewController.h"
+#import "messageViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
@@ -105,6 +106,10 @@
     if ([segue.identifier isEqualToString:@"imageView"]){
         StorecontentimageViewController *imageViewController = segue.destinationViewController;
         imageViewController.imageurl =self.content.image;
+    }else if ([segue.identifier isEqualToString:@"message"]){
+        messageViewController *messagevc = segue.destinationViewController;
+        messagevc.messagearray = self.content.messages;
+        messagevc.storeid = self.content.storeid;
     }
 }
 

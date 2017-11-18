@@ -13,7 +13,7 @@
 @import UIKit;
 
 @interface Store : NSObject<UIWebViewDelegate,NSLayoutManagerDelegate>
-@property(nonatomic) NSNumber *storeid;//商店ID
+@property(nonatomic) NSString *storeid;//商店ID
 @property(nonatomic) NSString *storename;//店名
 @property(nonatomic) NSString *adds; //地址
 @property(nonatomic) NSString *tel;//電話
@@ -25,8 +25,12 @@
 @property(nonatomic) double distance;//距離
 @property(nonatomic) NSNumber *clickrate;//點擊數
 @property(nonatomic) NSNumber *evaluate;// 評價
-@property(nonatomic) NSDate *massagetime;//留言時間
-@property(nonatomic) NSString*massage;//留言訊息
+@property(nonatomic) NSMutableArray *messages;//所有留言訊息
+@property(nonatomic) NSString *messagename;// 留言名字
+@property(nonatomic) NSDate *messagetime;// 留言時間
+@property(nonatomic) NSString *messageUUID;// 留言ID
+@property(nonatomic) NSNumber *messageevaluate;//留言評分
+@property(nonatomic) NSString *messagetext;//留言評語
 @property(nonatomic) MKAnnotationView* annotation;
 @property(nonatomic) NSString*region;//搜尋地區
 @property(nonatomic) NSString*time;//營業時間
