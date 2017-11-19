@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Store.h"
 @interface messageViewController : UIViewController
 @property NSString *message;//留言資訊
 @property NSDate *time;
 @property(nonatomic) NSMutableArray *messagearray;
-@property(nonatomic) NSMutableArray *allmessage;
+@property(nonatomic) NSMutableArray<Store*> *allmessage;
 @property(nonatomic) NSString * storeid;
 
 @end

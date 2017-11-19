@@ -8,6 +8,7 @@
 
 #import "messagecontentViewController.h"
 #import "Store.h"
+#import "messagecontentViewController.h"
 @import FirebaseDatabase;
 
 @interface messagecontentViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UITextFieldDelegate>{
@@ -33,6 +34,7 @@ NSInteger userSelect;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.idkey = [[NSString alloc] initWithFormat:@"%ld", (long)self.keyid];
     mypickerView =[[UIPickerView alloc]init];
     mypickerView.delegate=self;
     mypickerView.dataSource=self;
@@ -61,6 +63,7 @@ NSInteger userSelect;
     _messagescoreTextField.inputAccessoryView = toolBar;
     _messagescoreTextField.placeholder=@"滿分五分 請給分";
     _messagenameTextField.placeholder=@"預設匿名";
+    
 }
 //選到某個textField，觸發選擇
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
@@ -117,31 +120,34 @@ NSInteger userSelect;
 }
 
 - (IBAction)enter:(id)sender {
-    
-    if (_messagescore == nil || _messageTextView==nil ||_messagenameTextField ==nil ) {
+    _messagescore = self.messagescoreTextField.text;
+    if ([self.messagenameTextField.text  isEqual: @""]) {
+        _messagename = @"匿名";
+    }else{
+        _messagename = self.messagenameTextField.text;
+    }
+    _message = self.messageTextView.text;
+    if (_messagescore == nil || _messageTextView==nil) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"有資料尚未填完" message:@"請把資料填寫完成" preferredStyle:  UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {        }]];
         [self presentViewController:alert animated:true completion:nil];
     }else{
-        if (self.messagename == nil) {
-            _messagename = @"匿名";
-        }else{
-            _messagename = [NSString stringWithFormat:@"%@", _messagenameTextField.text];
-        }
-        _message = _messageTextView.text;
-        NSLog(@"大名:%@ / 評分 : %@ /評語: %@",_messagename,_messagescore,_message);
+           NSLog(@"大名:%@ / 評分 : %@ /評語: %@",_messagename,_messagescore,_message);
     }
-    
-    NSString *key =self.storeid;
-    channelRef = [[[[[[FIRDatabase database] reference] child:@"2"] child:@"data"] child:key]child:@"massage"];
-//    FIRDatabaseReference * addChannelRef = [channelRef childByAutoId];
+    NSString *key;
+    if([self.storeid isKindOfClass:[NSString class]]){
+        key = self.storeid;
+    }else{
+        key = [[NSString alloc] initWithFormat:@"%@", self.storeid];
+    };
+ channelRef = [[[[[[FIRDatabase database] reference] child:@"2"] child:@"data"] child:key]child:@"massage"];
+    FIRDatabaseReference * addChannelRef = [channelRef child:self.idkey];
     NSMutableDictionary * channelItem = [NSMutableDictionary new];
     [channelItem setObject:self.messagename forKey:@"name"];
     [channelItem setObject:self.message forKey:@"text"];
     [channelItem setObject:self.messagescore forKey:@"evaluate"];
-    
-    
-    [channelRef setValue:channelItem];
+    [addChannelRef setValue:channelItem];
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 @end

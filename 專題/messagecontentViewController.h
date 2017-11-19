@@ -13,4 +13,7 @@
 @property NSString *messagescore;//評分
 @property NSString *message;//評語;
 @property NSString *storeid;
+@property NSInteger keyid;
+@property NSString * idkey;
+
 @end

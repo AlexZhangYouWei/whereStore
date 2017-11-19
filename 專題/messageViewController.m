@@ -36,6 +36,7 @@
     self.messageTableView.delegate =self;
     self.messageTableView.dataSource = self;
     _allmessage = [NSMutableArray new];
+    self.ref =  [[[FIRDatabase database] reference] child:@"2/data"];
     for (NSDictionary *item in _messagearray){
         storemessage = [[Store alloc]init];
         storemessage.messageUUID=[item objectForKey:@"userid"];
@@ -45,11 +46,7 @@
         storemessage.messagename = [item objectForKey:@"name"];
         NSLog(@"Debug:%@",storemessage);
         [self.allmessage addObject:storemessage];
-    }
-        //  [userDefaults setBool:YES forKey:key];
-        //存至硬碟
-        //  [userDefaults synchronize];
-    
+     }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,10 +58,10 @@
     //设置背景颜色
     cell.contentView.backgroundColor=[UIColor colorWithRed:0.957 green:0.957 blue:0.957 alpha:0];
     cell.showsReorderControl= YES;
-    cell.messagenameLabel.text = storemessage.messagename ;
-    cell.messagedateLabel.text =[NSString stringWithFormat:@"%@", storemessage.messagetime] ;
-    cell.messagestoreLabel.text = [NSString stringWithFormat:@"評價: %@ 星",storemessage.messageevaluate];
-    cell.messagetextLabel.text = [NSString stringWithFormat:@"留言 : %@",storemessage.messagetext];
+    cell.messagenameLabel.text = [NSString stringWithFormat:@"大名:%@", self.allmessage[indexPath.row].messagename] ;
+    cell.messagedateLabel.text =[NSString stringWithFormat:@"時間:%@", self.allmessage[indexPath.row].messagetime] ;
+    cell.messagestoreLabel.text = [NSString stringWithFormat:@"評價: %@ 星",self.allmessage[indexPath.row].messageevaluate];
+    cell.messagetextLabel.text = [NSString stringWithFormat:@"留言 : %@",self.allmessage[indexPath.row].messagetext];
     return cell;
 }
 
@@ -82,6 +79,8 @@
     if ([segue.identifier isEqualToString:@"message"]){
         messagecontentViewController *messageconentVC = segue.destinationViewController;
         messageconentVC.storeid =self.storeid;
+        messageconentVC.keyid = self.messagearray.count;
     }
 }
+
 @end
