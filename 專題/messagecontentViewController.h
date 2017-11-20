@@ -14,6 +14,9 @@
 @property NSString *message;//評語;
 @property NSString *storeid;
 @property NSInteger keyid;
-@property NSString * idkey;
+@property NSString *idkey;
+@property NSDate *date;
+@property NSNumber *allstar;
+@property NSNumber *total;
 
 @end

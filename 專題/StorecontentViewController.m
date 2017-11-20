@@ -14,16 +14,31 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
-@interface StorecontentViewController ()<UITableViewDelegate,UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate,UIScrollViewDelegate >
+@import Firebase;
+@import FirebaseDatabase;
+@interface StorecontentViewController
+()<UITableViewDelegate,UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate,UIScrollViewDelegate >
 @property (weak, nonatomic) IBOutlet UIView *imageView;
 @property (weak, nonatomic) IBOutlet UIView *messageView;
 
 @end
 
-@implementation StorecontentViewController
+@implementation StorecontentViewController{
+    FIRDatabaseReference * ref;
+    FIRDatabaseHandle channelRefHandle;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSString *key;
+    if([self.content.storeid isKindOfClass:[NSString class]]){
+        key = self.content.storeid;
+    }else{
+        key = [[NSString alloc] initWithFormat:@"%@", self.content.storeid];
+    };
+    NSLog(@"瀏覽次數 %@",self.content.clickrate);
+    self.content.clickrate =@([self.content.clickrate intValue] + 1);
+    NSLog(@"更新瀏覽次數: %@",self.content.clickrate);
     self.navigationItem.title=@"店家資訊";
     self.storecontentlistTableView.delegate = self;
     self.storecontentlistTableView.dataSource = self;
@@ -39,9 +54,6 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StorecontentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-//    cell.accessoryType = UIButtonTypeCustom;
-//    cell.valueTextView.dataDetectorTypes = UIDataDetectorTypeNone;
-//    cell.valueTextView.userInteractionEnabled = NO;
     switch (indexPath.row) {
         case 0:
             cell.nameLabel.text = @"店家名稱";
@@ -56,12 +68,10 @@
             cell.nameLabel.text = @"電話";
             cell.tintColor=[UIColor blueColor];
             cell.valueTextView.text = self.content.tel;
-//            cell.valueTextView.userInteractionEnabled = YES;
-//            cell.valueTextView.dataDetectorTypes = UIDataDetectorTypePhoneNumber;
             break;
         case 3:
             cell.nameLabel.text= @"營業時間";
-            cell.valueTextView.text=self.content.time;
+            cell.valueTextView.text=self.content.businesshours;
             break;
         case 4:
             cell.nameLabel.text=@"評價";
@@ -110,6 +120,7 @@
         messageViewController *messagevc = segue.destinationViewController;
         messagevc.messagearray = self.content.messages;
         messagevc.storeid = self.content.storeid;
+        messagevc.allstar = self.content.allstar;
     }
 }
 

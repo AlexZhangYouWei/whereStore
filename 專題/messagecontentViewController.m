@@ -12,11 +12,12 @@
 @import FirebaseDatabase;
 
 @interface messagecontentViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UITextFieldDelegate>{
-UIPickerView *mypickerView;
-NSArray *score;
-NSInteger userSelect;
+    UIPickerView *mypickerView;
+    NSArray *score;
+    NSInteger userSelect;
     UIToolbar *toolBar;//確認
     UIToolbar *toolBar1;//取消
+    NSString *datastring;
 }
 @property (weak, nonatomic) IBOutlet UILabel *messagenameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messagescoreLabel;
@@ -34,6 +35,12 @@ NSInteger userSelect;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd aa:KK:mm"];
+    datastring = [dateFormatter stringFromDate:self.date];
+    NSLog(@"現在時間%@",datastring);
+    NSLog(@"總分 %@",_allstar);
     self.idkey = [[NSString alloc] initWithFormat:@"%ld", (long)self.keyid];
     mypickerView =[[UIPickerView alloc]init];
     mypickerView.delegate=self;
@@ -50,7 +57,6 @@ NSInteger userSelect;
     UIBarButtonItem *barButtonCancel = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(toolBarCanelClick:)];
     toolBar1.items = @[barButtonCancel];
     barButtonCancel.tintColor=[UIColor blackColor];
-    
     //添加弹簧按钮
     UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
@@ -63,6 +69,14 @@ NSInteger userSelect;
     _messagescoreTextField.inputAccessoryView = toolBar;
     _messagescoreTextField.placeholder=@"滿分五分 請給分";
     _messagenameTextField.placeholder=@"預設匿名";
+    
+    
+    
+    
+    NSLog(@"總分%@",self.allstar);
+    
+    
+    
     
 }
 //選到某個textField，觸發選擇
@@ -120,7 +134,18 @@ NSInteger userSelect;
 }
 
 - (IBAction)enter:(id)sender {
+    
     _messagescore = self.messagescoreTextField.text;
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumber *score = [numberFormatter numberFromString:_messagescore];
+    NSNumber *frequency = [numberFormatter numberFromString:_idkey];
+    frequency = @([frequency intValue] + 1);
+    self.total =[NSNumber numberWithFloat:([score floatValue] + [_allstar floatValue])];
+    NSLog(@"加總為:%@ 評分:%@  +  資料庫目前總分:%@",self.total,score,_allstar);
+    NSNumber *end = [NSNumber numberWithFloat:([self.total floatValue] / [frequency floatValue])];
+    NSLog(@"平均總分:%@ 目前加總:%@ 評比次數:%@" , end,self.total,frequency);
+    NSString *new = [NSString stringWithFormat:@"%1@", end];
     if ([self.messagenameTextField.text  isEqual: @""]) {
         _messagename = @"匿名";
     }else{
@@ -132,7 +157,7 @@ NSInteger userSelect;
         [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {        }]];
         [self presentViewController:alert animated:true completion:nil];
     }else{
-           NSLog(@"大名:%@ / 評分 : %@ /評語: %@",_messagename,_messagescore,_message);
+        NSLog(@"大名:%@ / 評分 : %@ /評語: %@",_messagename,_messagescore,_message);
     }
     NSString *key;
     if([self.storeid isKindOfClass:[NSString class]]){
@@ -140,14 +165,30 @@ NSInteger userSelect;
     }else{
         key = [[NSString alloc] initWithFormat:@"%@", self.storeid];
     };
- channelRef = [[[[[[FIRDatabase database] reference] child:@"2"] child:@"data"] child:key]child:@"massage"];
+    channelRef = [[[[[[FIRDatabase database] reference] child:@"2"] child:@"data"] child:key]child:@"massage"];
     FIRDatabaseReference * addChannelRef = [channelRef child:self.idkey];
+    
     NSMutableDictionary * channelItem = [NSMutableDictionary new];
     [channelItem setObject:self.messagename forKey:@"name"];
     [channelItem setObject:self.message forKey:@"text"];
     [channelItem setObject:self.messagescore forKey:@"evaluate"];
-    [addChannelRef setValue:channelItem];
+    [channelItem setObject:datastring forKey:@"date"];
+    [addChannelRef setValue:channelItem];{
+        channelRef = [[[[[FIRDatabase database] reference] child:@"2"] child:@"data"]child:key];
+        NSLog(@"channelRef:%@",channelRef);
+        NSDictionary *post = @{@"allstar": self.total,
+                               @"evaluate":new};
+        NSDictionary *childUpdates = @{[@"/2/data/key" stringByAppendingString:channelRef]: post,
+                                       [NSString stringWithFormat:@"/user-posts/%@/%@/", _allstar, new]: post};
+        NSLog(@"childUpdates:%@",childUpdates);
+        [channelRef updateChildValues:childUpdates];
+        
+        
+        
+    }
+    
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 @end

@@ -33,7 +33,9 @@
 @property(nonatomic) NSString *messagetext;//留言評語
 @property(nonatomic) MKAnnotationView* annotation;
 @property(nonatomic) NSString*region;//搜尋地區
-@property(nonatomic) NSString*time;//營業時間
+@property(nonatomic) NSString*businesshours;//營業時間
+@property(nonatomic) NSDate *date;
+@property(nonatomic) NSNumber *allstar;
 
 
 

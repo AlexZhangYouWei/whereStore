@@ -71,8 +71,10 @@
             store.offday = [item objectForKey:@"storetime"];
             store.storeid = [item objectForKey:@"storeid"];
             store.region = [item objectForKey:@"region"];
-            store.time = [item objectForKey:@"time"];
+            store.businesshours = [item objectForKey:@"time"];
             store.messages= [item objectForKey:@"massage"];
+            store.date = [item objectForKey:@"date"];
+            store.allstar =[item objectForKey:@"allstar"];
             [self.stores addObject:store];
         }
         dispatch_async(dispatch_get_main_queue(), ^{

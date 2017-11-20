@@ -33,20 +33,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+ 
+    
+    
+    NSString *key;
+    if([self.storeid isKindOfClass:[NSString class]]){
+        key = self.storeid;
+    }else{
+        key = [[NSString alloc] initWithFormat:@"%@", self.storeid];
+    };
+   self.ref = [[[[[FIRDatabase database] reference] child:@"2/data"]child:@"massage"] child:key];//查詢資料庫資料child:@"data"]
+    channelRefHandle =[self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
+ 
     self.messageTableView.delegate =self;
     self.messageTableView.dataSource = self;
     _allmessage = [NSMutableArray new];
-    self.ref =  [[[FIRDatabase database] reference] child:@"2/data"];
     for (NSDictionary *item in _messagearray){
         storemessage = [[Store alloc]init];
         storemessage.messageUUID=[item objectForKey:@"userid"];
-        storemessage.messagetime = [item objectForKey:@"time"];
+        storemessage.messagetime = [item objectForKey:@"date"];
         storemessage.messageevaluate =[item objectForKey:@"evaluate"];
         storemessage.messagetext =[item objectForKey:@"text"];
         storemessage.messagename = [item objectForKey:@"name"];
         NSLog(@"Debug:%@",storemessage);
         [self.allmessage addObject:storemessage];
      }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,6 +92,7 @@
         messagecontentViewController *messageconentVC = segue.destinationViewController;
         messageconentVC.storeid =self.storeid;
         messageconentVC.keyid = self.messagearray.count;
+        messageconentVC.allstar = self.allstar;
     }
 }
 

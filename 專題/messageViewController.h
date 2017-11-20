@@ -14,5 +14,5 @@
 @property(nonatomic) NSMutableArray *messagearray;
 @property(nonatomic) NSMutableArray<Store*> *allmessage;
 @property(nonatomic) NSString * storeid;
-
+@property(nonatomic) NSNumber *allstar;
 @end
