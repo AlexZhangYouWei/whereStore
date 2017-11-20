@@ -26,9 +26,10 @@
 @implementation StorecontentViewController{
     FIRDatabaseReference * ref;
     FIRDatabaseHandle channelRefHandle;
+     NSString *key;
 }
 -(void)updateclickrate{
-    NSString *key;
+   
     if([self.content.storeid isKindOfClass:[NSString class]]){
         key = self.content.storeid;
     }else{
@@ -47,6 +48,11 @@
     self.storecontentlistTableView.dataSource = self;
     [_storecontentlistTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     [self updateclickrate];
+  ref = [[[[FIRDatabase database] reference] child:@"2/data"]child:key];
+    channelRefHandle =[ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
+        
+    }];
+    [self.storecontentlistTableView reloadData];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

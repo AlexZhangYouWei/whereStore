@@ -41,7 +41,7 @@
     }else{
         key = [[NSString alloc] initWithFormat:@"%@", self.storeid];
     };
-   self.ref = [[[[[FIRDatabase database] reference] child:@"2/data"] child:key]child:@"massage"];
+    self.ref = [[[[[FIRDatabase database] reference] child:@"2/data"]child:key]child:@"massage"];
     channelRefHandle =[self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
         _allmessage = [NSMutableArray new];
     for (NSDictionary *item in _messagearray){
@@ -52,10 +52,13 @@
         storemessage.messagetext =[item objectForKey:@"text"];
         storemessage.messagename = [item objectForKey:@"name"];
         [self.allmessage addObject:storemessage];
+        
      }
+    
         [self.messageTableView reloadData];
     }];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
