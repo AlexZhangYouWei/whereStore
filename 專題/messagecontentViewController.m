@@ -39,8 +39,6 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd aa:KK:mm"];
     datastring = [dateFormatter stringFromDate:self.date];
-    NSLog(@"現在時間%@",datastring);
-    NSLog(@"總分 %@",_allstar);
     self.idkey = [[NSString alloc] initWithFormat:@"%ld", (long)self.keyid];
     mypickerView =[[UIPickerView alloc]init];
     mypickerView.delegate=self;
@@ -69,15 +67,6 @@
     _messagescoreTextField.inputAccessoryView = toolBar;
     _messagescoreTextField.placeholder=@"滿分五分 請給分";
     _messagenameTextField.placeholder=@"預設匿名";
-    
-    
-    
-    
-    NSLog(@"總分%@",self.allstar);
-    
-    
-    
-    
 }
 //選到某個textField，觸發選擇
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
@@ -145,7 +134,8 @@
     NSLog(@"加總為:%@ 評分:%@  +  資料庫目前總分:%@",self.total,score,_allstar);
     NSNumber *end = [NSNumber numberWithFloat:([self.total floatValue] / [frequency floatValue])];
     NSLog(@"平均總分:%@ 目前加總:%@ 評比次數:%@" , end,self.total,frequency);
-    NSString *new = [NSString stringWithFormat:@"%1@", end];
+    double badend = [end doubleValue];
+    NSString *new = [NSString stringWithFormat:@"%.1f", badend];
     if ([self.messagenameTextField.text  isEqual: @""]) {
         _messagename = @"匿名";
     }else{
@@ -178,13 +168,8 @@
         NSLog(@"channelRef:%@",channelRef);
         NSDictionary *post = @{@"allstar": self.total,
                                @"evaluate":new};
-        NSDictionary *childUpdates = @{[@"/2/data/key" stringByAppendingString:channelRef]: post,
-                                       [NSString stringWithFormat:@"/user-posts/%@/%@/", _allstar, new]: post};
-        NSLog(@"childUpdates:%@",childUpdates);
-        [channelRef updateChildValues:childUpdates];
-        
-        
-        
+        [channelRef updateChildValues:post];
+ 
     }
     
     [self.navigationController popViewControllerAnimated:YES];

@@ -45,7 +45,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"Debug: %@", self);
     self.storelisttableview.dataSource = self;
     self.storelisttableview.delegate = self;
     _searchbar.delegate=self;

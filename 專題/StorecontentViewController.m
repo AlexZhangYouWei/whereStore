@@ -27,22 +27,26 @@
     FIRDatabaseReference * ref;
     FIRDatabaseHandle channelRefHandle;
 }
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
+-(void)updateclickrate{
     NSString *key;
     if([self.content.storeid isKindOfClass:[NSString class]]){
         key = self.content.storeid;
     }else{
         key = [[NSString alloc] initWithFormat:@"%@", self.content.storeid];
     };
-    NSLog(@"瀏覽次數 %@",self.content.clickrate);
     self.content.clickrate =@([self.content.clickrate intValue] + 1);
-    NSLog(@"更新瀏覽次數: %@",self.content.clickrate);
+    ref = [[[[[FIRDatabase database] reference] child:@"2"] child:@"data"]child:key];
+    NSDictionary *post = @{@"Clickrate":self.content.clickrate};
+    [ref updateChildValues:post];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
     self.navigationItem.title=@"店家資訊";
     self.storecontentlistTableView.delegate = self;
     self.storecontentlistTableView.dataSource = self;
     [_storecontentlistTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    [self updateclickrate];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

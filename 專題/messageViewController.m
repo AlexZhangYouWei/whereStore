@@ -33,21 +33,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
- 
-    
-    
+    self.messageTableView.delegate =self;
+    self.messageTableView.dataSource = self;
     NSString *key;
     if([self.storeid isKindOfClass:[NSString class]]){
         key = self.storeid;
     }else{
         key = [[NSString alloc] initWithFormat:@"%@", self.storeid];
     };
-   self.ref = [[[[[FIRDatabase database] reference] child:@"2/data"]child:@"massage"] child:key];//查詢資料庫資料child:@"data"]
+   self.ref = [[[[[FIRDatabase database] reference] child:@"2/data"] child:key]child:@"massage"];
     channelRefHandle =[self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
- 
-    self.messageTableView.delegate =self;
-    self.messageTableView.dataSource = self;
-    _allmessage = [NSMutableArray new];
+        _allmessage = [NSMutableArray new];
     for (NSDictionary *item in _messagearray){
         storemessage = [[Store alloc]init];
         storemessage.messageUUID=[item objectForKey:@"userid"];
@@ -55,9 +51,9 @@
         storemessage.messageevaluate =[item objectForKey:@"evaluate"];
         storemessage.messagetext =[item objectForKey:@"text"];
         storemessage.messagename = [item objectForKey:@"name"];
-        NSLog(@"Debug:%@",storemessage);
         [self.allmessage addObject:storemessage];
      }
+        [self.messageTableView reloadData];
     }];
 }
 
