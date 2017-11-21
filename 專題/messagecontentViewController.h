@@ -18,5 +18,6 @@
 @property NSDate *date;
 @property NSNumber *allstar;
 @property NSNumber *total;
+@property (nonatomic) NSString *uuidName;
 
 @end

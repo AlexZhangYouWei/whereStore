@@ -35,6 +35,7 @@
     [super viewDidLoad];
     self.messageTableView.delegate =self;
     self.messageTableView.dataSource = self;
+    self.allmessage = [NSMutableArray new];
     NSString *key;
     if([self.storeid isKindOfClass:[NSString class]]){
         key = self.storeid;
@@ -43,8 +44,10 @@
     };
     self.ref = [[[[[FIRDatabase database] reference] child:@"2/data"]child:key]child:@"massage"];
     channelRefHandle =[self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
-        _allmessage = [NSMutableArray new];
-    for (NSDictionary *item in _messagearray){
+        NSMutableDictionary *storeData =[NSMutableDictionary new];
+         storeData = snapshot.value;
+        [self.allmessage removeAllObjects];
+    for (NSDictionary *item in storeData){
         storemessage = [[Store alloc]init];
         storemessage.messageUUID=[item objectForKey:@"userid"];
         storemessage.messagetime = [item objectForKey:@"date"];
@@ -52,10 +55,10 @@
         storemessage.messagetext =[item objectForKey:@"text"];
         storemessage.messagename = [item objectForKey:@"name"];
         [self.allmessage addObject:storemessage];
-        
+
      }
-    
         [self.messageTableView reloadData];
+
     }];
 }
 
@@ -80,7 +83,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.messagearray.count;
+    return self.allmessage.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 120;

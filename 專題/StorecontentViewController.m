@@ -14,6 +14,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "Data.h"
 @import Firebase;
 @import FirebaseDatabase;
 @interface StorecontentViewController
@@ -26,10 +27,14 @@
 @implementation StorecontentViewController{
     FIRDatabaseReference * ref;
     FIRDatabaseHandle channelRefHandle;
-     NSString *key;
+    NSString *key;
+    NSUserDefaults *userDefaults ;
+    NSString *save ;
+    
+    
 }
 -(void)updateclickrate{
-   
+    
     if([self.content.storeid isKindOfClass:[NSString class]]){
         key = self.content.storeid;
     }else{
@@ -40,15 +45,22 @@
     NSDictionary *post = @{@"Clickrate":self.content.clickrate};
     [ref updateChildValues:post];
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title=@"店家資訊";
     self.storecontentlistTableView.delegate = self;
     self.storecontentlistTableView.dataSource = self;
     [_storecontentlistTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    save = @"save";
+    userDefaults = [NSUserDefaults standardUserDefaults];
+    self.mylovies= [[NSMutableDictionary alloc] initWithDictionary:[userDefaults dictionaryForKey:save]];
+    if (self.mylovies == nil) {
+        self.mylovies= [NSMutableDictionary new];
+        [userDefaults setObject:self.mylovies forKey:save];
+    }
+    [userDefaults synchronize];
     [self updateclickrate];
-  ref = [[[[FIRDatabase database] reference] child:@"2/data"]child:key];
+    ref = [[[[FIRDatabase database] reference] child:@"2/data"]child:key];
     channelRefHandle =[ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
         
     }];
@@ -132,6 +144,17 @@
         messagevc.storeid = self.content.storeid;
         messagevc.allstar = self.content.allstar;
     }
+}
+- (IBAction)mylove:(id)sender {
+    save = @"save";
+    if ([self.mylovies objectForKey:self.content.storeid]) {
+        [self.mylovies removeObjectForKey:self.content.storeid];
+        NSLog(@"先清除:%@",self.mylovies);
+    } else {
+        [self.mylovies setObject:self.content.storeid forKey:self.content.storeid];
+        NSLog(@"加入最愛:%@",self.mylovies);
+    }
+    [userDefaults setObject:self.mylovies forKey:save];
 }
 
 @end

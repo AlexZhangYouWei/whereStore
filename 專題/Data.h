@@ -11,4 +11,5 @@
 @interface Data : NSObject
 @property NSArray *stors;
 @property NSString *store;
+@property(nonatomic) NSMutableArray *mylovies;
 @end

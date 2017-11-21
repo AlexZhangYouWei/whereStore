@@ -9,6 +9,7 @@
 #import "messagecontentViewController.h"
 #import "Store.h"
 #import "messagecontentViewController.h"
+#import "Data.h"
 @import FirebaseDatabase;
 
 @interface messagecontentViewController ()<UIPickerViewDataSource, UIPickerViewDelegate,UITextFieldDelegate>{
@@ -32,6 +33,9 @@
     FIRDatabaseReference * channelRef;
     FIRDatabaseHandle channelRefHandle;
 }
+-(void)uuid{
+  
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,6 +47,15 @@
     mypickerView =[[UIPickerView alloc]init];
     mypickerView.delegate=self;
     mypickerView.dataSource=self;
+    NSString *key = @"Uuid";
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self.uuidName = [userDefaults stringForKey:key];
+    if (self.uuidName == nil) {
+        self.uuidName = [[NSUUID UUID]UUIDString];
+        [userDefaults setObject:self.uuidName forKey:key];
+    }
+    //存至硬碟
+    [userDefaults synchronize];
     userSelect = 0;
     score=[[NSArray alloc]initWithObjects:@"1",@"2",@"3",@"4",@"5", nil];
     self.messagenameLabel.text = @"大名";
@@ -163,6 +176,7 @@
     [channelItem setObject:self.message forKey:@"text"];
     [channelItem setObject:self.messagescore forKey:@"evaluate"];
     [channelItem setObject:datastring forKey:@"date"];
+    [channelItem setObject:self.uuidName forKey:@"uuid"];
     [addChannelRef setValue:channelItem];{
         channelRef = [[[[[FIRDatabase database] reference] child:@"2"] child:@"data"]child:key];
         NSLog(@"channelRef:%@",channelRef);

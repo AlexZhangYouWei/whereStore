@@ -14,4 +14,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *storecontentlistTableView;
 @property (weak, nonatomic) IBOutlet UIView *StorecontentimageView;
 @property(nonatomic) Store *content;
+@property(nonatomic) NSMutableDictionary *mylovies;
+@property(nonatomic) NSString *lovekey;
 @end

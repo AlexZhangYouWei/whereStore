@@ -24,6 +24,7 @@
                     <connections>
                         <segue destination="yNz-ye-7yU" kind="relationship" relationship="viewControllers" id="zcC-bx-zON"/>
                         <segue destination="3LJ-Ud-wB8" kind="relationship" relationship="viewControllers" id="qFo-2T-QeR"/>
+                        <segue destination="wbX-Xq-YzQ" kind="relationship" relationship="viewControllers" id="KVG-2U-mzD"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -293,7 +294,21 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="49i-WR-vcn"/>
                     </view>
-                    <navigationItem key="navigationItem" id="VBB-hq-ye8"/>
+                    <navigationItem key="navigationItem" id="VBB-hq-ye8">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="piq-RR-rYK">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Oip-LN-2rI">
+                                <rect key="frame" x="258" y="7" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="mylove:" destination="gwd-PR-GUS" eventType="touchUpInside" id="rPe-RW-M6F"/>
+                                </connections>
+                            </button>
+                            <connections>
+                                <action selector="love:" destination="gwd-PR-GUS" id="iTi-52-YOO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="6k7-a4-ei1" id="OIl-3b-8On"/>
                         <outlet property="messageView" destination="le0-1v-1k5" id="ean-6y-RF3"/>
@@ -432,6 +447,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IfL-jP-Otj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="321" y="-745"/>
+        </scene>
+        <!--收藏-->
+        <scene sceneID="Y6S-oI-JSl">
+            <objects>
+                <tableViewController id="wbX-Xq-YzQ" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="m7G-Hx-E4z">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="6XM-eu-G5e">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6XM-eu-G5e" id="EQI-lc-zkM">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="wbX-Xq-YzQ" id="sZb-xf-HWP"/>
+                            <outlet property="delegate" destination="wbX-Xq-YzQ" id="QOR-el-ArN"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="收藏" id="hEA-v1-tKc"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dqs-Jk-g17" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="527" y="977"/>
         </scene>
         <!--餐廳搜尋-->
         <scene sceneID="M0t-1M-dKk">

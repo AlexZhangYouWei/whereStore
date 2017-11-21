@@ -12,6 +12,7 @@
 #import "StoreListTableViewCell.h"
 #import "MapViewController.h"
 #import "SearchViewController.h"
+#import "AppDelegate.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 @import Firebase;
@@ -48,6 +49,10 @@
     self.storelisttableview.dataSource = self;
     self.storelisttableview.delegate = self;
     _searchbar.delegate=self;
+    
+  
+    
+
     select = 1;
     ref = [[[FIRDatabase database] reference] child:@"2/data"];//查詢資料庫資料child:@"data"]
     channelRefHandle =[ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
