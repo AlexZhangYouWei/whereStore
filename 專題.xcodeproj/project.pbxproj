@@ -23,6 +23,7 @@
 		136A92E91F7B3D9900A5879F /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A92E81F7B3D9900A5879F /* MoreViewController.m */; };
 		1397865F1FB2F06D00D8379A /* StorecontentimageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1397865E1FB2F06D00D8379A /* StorecontentimageViewController.m */; };
 		13AE18251F98878F0087CF79 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AE18241F98878F0087CF79 /* MapViewController.m */; };
+		13B70C011FC43F5F00049288 /* collect collect collectTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B70C001FC43F5F00049288 /* collect collect collectTableViewController.m */; };
 		13BBB9DC1FAB272A00895AA0 /* myMKAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BBB9DB1FAB272A00895AA0 /* myMKAnnotationView.m */; };
 		13BEF8801FBC4FBB00408615 /* messageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BEF87F1FBC4FBB00408615 /* messageViewController.m */; };
 		13BEF8831FBC531C00408615 /* messagecontentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BEF8821FBC531C00408615 /* messagecontentViewController.m */; };
@@ -68,6 +69,8 @@
 		1397865E1FB2F06D00D8379A /* StorecontentimageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StorecontentimageViewController.m; sourceTree = "<group>"; };
 		13AE18231F98878F0087CF79 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		13AE18241F98878F0087CF79 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		13B70BFF1FC43F5F00049288 /* collect collect collectTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "collect collect collectTableViewController.h"; sourceTree = "<group>"; };
+		13B70C001FC43F5F00049288 /* collect collect collectTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "collect collect collectTableViewController.m"; sourceTree = "<group>"; };
 		13BBB9D91FAB193100895AA0 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		13BBB9DA1FAB272A00895AA0 /* myMKAnnotationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = myMKAnnotationView.h; sourceTree = "<group>"; };
 		13BBB9DB1FAB272A00895AA0 /* myMKAnnotationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = myMKAnnotationView.m; sourceTree = "<group>"; };
@@ -151,6 +154,8 @@
 				136A92CE1F7B390800A5879F /* SearchViewController.h */,
 				136A92CF1F7B390800A5879F /* SearchViewController.m */,
 				136A92D41F7B390800A5879F /* Main.storyboard */,
+				13B70BFF1FC43F5F00049288 /* collect collect collectTableViewController.h */,
+				13B70C001FC43F5F00049288 /* collect collect collectTableViewController.m */,
 				136A92DD1F7B390800A5879F /* main.m */,
 				136A92E71F7B3D9900A5879F /* MoreViewController.h */,
 				136A92E81F7B3D9900A5879F /* MoreViewController.m */,
@@ -370,6 +375,7 @@
 				136A92D01F7B390800A5879F /* SearchViewController.m in Sources */,
 				13078B111F8F65BF00A81318 /* Data.m in Sources */,
 				13AE18251F98878F0087CF79 /* MapViewController.m in Sources */,
+				13B70C011FC43F5F00049288 /* collect collect collectTableViewController.m in Sources */,
 				13BBB9DC1FAB272A00895AA0 /* myMKAnnotationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
