@@ -34,12 +34,11 @@
    
 }
 -(void)viewDidAppear:(BOOL)animated{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *userDefaulties = [NSUserDefaults standardUserDefaults];
     NSString *save = @"save";
-    alllove= [[NSMutableDictionary alloc] initWithDictionary:[userDefaults dictionaryForKey:save]];
-    NSLog(@"%@",alllove);
-    
-    ref = [[[[FIRDatabase database] reference] child:@"2"]child:@"data"];//查詢資料庫資料child:@"data"]
+    alllove= [[NSMutableDictionary alloc] initWithDictionary:[userDefaulties dictionaryForKey:save]];
+    NSLog(@"alllove%@",alllove);
+    ref = [[[[FIRDatabase database] reference] child:@"2"]child:@"data"];
     channelRefHandle =[ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
         NSMutableDictionary *storeData =[NSMutableDictionary new];
         storeData = snapshot.value;
@@ -64,6 +63,7 @@
             store.messages= [item objectForKey:@"massage"];
             store.date = [item objectForKey:@"date"];
             store.allstar =[item objectForKey:@"allstar"];
+            store.grade = [item objectForKey:@"grade"];
             for (NSString *item in [alllove allKeys]){
                 value= alllove[item];
                 if ([value isEqualToString:store.storeid]){

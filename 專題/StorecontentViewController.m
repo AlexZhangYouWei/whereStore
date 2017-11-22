@@ -21,6 +21,7 @@
 ()<UITableViewDelegate,UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate,UIScrollViewDelegate >
 @property (weak, nonatomic) IBOutlet UIView *imageView;
 @property (weak, nonatomic) IBOutlet UIView *messageView;
+@property (nonatomic) NSString *nameid;
 
 @end
 
@@ -30,7 +31,8 @@
     NSString *key;
     NSUserDefaults *userDefaults ;
     NSString *save ;
-    
+    NSUserDefaults *mylove ;
+
     
 }
 -(void)updateclickrate{
@@ -51,20 +53,30 @@
     self.storecontentlistTableView.delegate = self;
     self.storecontentlistTableView.dataSource = self;
     [_storecontentlistTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    NSString *key = @"Uuid";
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self.nameid = [userDefaults stringForKey:key];
+    if (self.nameid == nil) {
+        self.nameid = [[NSUUID UUID]UUIDString];
+        [userDefaults setObject:self.nameid forKey:key];
+    }
+    [userDefaults synchronize];
     save = @"save";
-    userDefaults = [NSUserDefaults standardUserDefaults];
+    mylove = [NSUserDefaults standardUserDefaults];
     self.mylovies= [[NSMutableDictionary alloc] initWithDictionary:[userDefaults dictionaryForKey:save]];
     if (self.mylovies == nil) {
         self.mylovies= [NSMutableDictionary new];
-        [userDefaults setObject:self.mylovies forKey:save];
+        [mylove setObject:self.mylovies forKey:save];
     }
-    [userDefaults synchronize];
+    [mylove synchronize];
     [self updateclickrate];
     ref = [[[[FIRDatabase database] reference] child:@"2/data"]child:key];
     channelRefHandle =[ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
         
     }];
     [self.storecontentlistTableView reloadData];
+    [self GA3];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -145,7 +157,16 @@
         messagevc.allstar = self.content.allstar;
     }
 }
+-(void)GA3{
+    ref = [[[[[FIRDatabase database] reference] child:@"user"] child:self.nameid]child:@"seestore" ];
+    FIRDatabaseReference * addChannelRef = [ref childByAutoId];
+    NSMutableDictionary * channelItem = [NSMutableDictionary new];
+    [channelItem setObject:self.content.grade forKey:@"grade"];
+    [channelItem setObject:self.content.storename forKey:@"storename"];
+    [addChannelRef setValue:channelItem];
+}
 - (IBAction)mylove:(id)sender {
+    
     save = @"save";
     if ([self.mylovies objectForKey:self.content.storeid]) {
         [self.mylovies removeObjectForKey:self.content.storeid];
@@ -154,8 +175,8 @@
         [self.mylovies setObject:self.content.storeid forKey:self.content.storeid];
         NSLog(@"加入最愛:%@",self.mylovies);
     }
-    [userDefaults setObject:self.mylovies forKey:save];
-        NSLog(@"本機資料%@",userDefaults);
+    [mylove setObject:self.mylovies forKey:save];
+        NSLog(@"本機資料%@",mylove);
 }
 
 @end

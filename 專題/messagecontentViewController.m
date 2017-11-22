@@ -19,6 +19,8 @@
     UIToolbar *toolBar;//確認
     UIToolbar *toolBar1;//取消
     NSString *datastring;
+    NSString *key;
+
 }
 @property (weak, nonatomic) IBOutlet UILabel *messagenameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messagescoreLabel;
@@ -138,7 +140,7 @@
 - (IBAction)enter:(id)sender {
     
     _messagescore = self.messagescoreTextField.text;
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc]init];
     [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     NSNumber *score = [numberFormatter numberFromString:_messagescore];
     NSNumber *frequency = [numberFormatter numberFromString:_idkey];
@@ -162,7 +164,6 @@
     }else{
         NSLog(@"大名:%@ / 評分 : %@ /評語: %@",_messagename,_messagescore,_message);
     }
-    NSString *key;
     if([self.storeid isKindOfClass:[NSString class]]){
         key = self.storeid;
     }else{
@@ -185,9 +186,20 @@
         [channelRef updateChildValues:post];
  
     }
-    
+    [self GA4];
     [self.navigationController popViewControllerAnimated:YES];
     
 }
-
+-(void)GA4{
+    channelRef = [[[[[FIRDatabase database] reference] child:@"user"] child:self.uuidName]child:@"message" ];
+    //存放的名稱
+    FIRDatabaseReference * addChannelRef = [channelRef childByAutoId];
+    NSMutableDictionary * channelItem = [NSMutableDictionary new];
+    [channelItem setObject:self.messagename forKey:@"name"];
+    [channelItem setObject:self.message forKey:@"text"];
+    [channelItem setObject:self.messagescore forKey:@"evaluate"];
+    [channelItem setObject:datastring forKey:@"date"];
+    [channelItem setObject:key forKey:@"storeID"];
+    [addChannelRef setValue:channelItem];
+}
 @end

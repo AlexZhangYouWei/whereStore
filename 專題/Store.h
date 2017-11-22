@@ -36,6 +36,7 @@
 @property(nonatomic) NSString*businesshours;//營業時間
 @property(nonatomic) NSDate *date;
 @property(nonatomic) NSNumber *allstar;
+@property(nonatomic) NSString *grade;
 
 
 

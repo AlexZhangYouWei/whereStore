@@ -31,9 +31,9 @@
     
 }
 @property (strong, nonatomic) IBOutlet UISearchBar *searchbar;
-
-
-
+@property (nonatomic) NSString *nameid;
+@property (nonatomic) NSDate *date;
+@property (nonatomic) NSString *datastring;
 
 @end
 
@@ -49,40 +49,14 @@
     self.storelisttableview.dataSource = self;
     self.storelisttableview.delegate = self;
     _searchbar.delegate=self;
-
-    select = 1;
-    ref = [[[FIRDatabase database] reference] child:@"2/data"];//查詢資料庫資料child:@"data"]
-    channelRefHandle =[ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
-        NSMutableDictionary *storeData =[NSMutableDictionary new];
-        storeData = snapshot.value;
-        _stores = [NSMutableArray new];
-        
-        [self.stores removeAllObjects];
-        for (NSDictionary *item in storeData){
-            Store *store = [[Store alloc]init];
-            store.storename=[item objectForKey:@"name"];
-            store.tel = [item objectForKey:@"tel"];
-            store.adds =[item objectForKey:@"adds"];
-            store.latitude =[item objectForKey:@"latitude"];
-            store.image = [item objectForKey:@"image"];
-            store.clickrate =[item objectForKey:@"Clickrate"];
-            store.longitude=[item objectForKey:@"longitude"];
-            store.storeclass=[item objectForKey:@"storeclass"];
-            store.evaluate = [item objectForKey:@"evaluate"];
-            store.offday = [item objectForKey:@"storetime"];
-            store.storeid = [item objectForKey:@"storeid"];
-            store.region = [item objectForKey:@"region"];
-            store.businesshours = [item objectForKey:@"time"];
-            store.messages= [item objectForKey:@"massage"];
-            store.date = [item objectForKey:@"date"];
-            store.allstar =[item objectForKey:@"allstar"];
-            [self.stores addObject:store];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self distanceFromLocation];
-            [self.storelisttableview reloadData];
-        });
-    }];
+    NSString *key = @"Uuid";
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self.nameid = [userDefaults stringForKey:key];
+    if (self.nameid == nil) {
+        self.nameid = [[NSUUID UUID]UUIDString];
+        [userDefaults setObject:self.nameid forKey:key];
+    }
+    [userDefaults synchronize];
     //詢問定位授權
     locationManager=[CLLocationManager new];
     if([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
@@ -112,6 +86,40 @@
     [button.titleLabel setFont:[UIFont systemFontOfSize:8]];
     [button setBackgroundColor:[UIColor colorWithRed:0/255.0 green:60/255.0 blue:100/255.0 alpha:1.0]];
     [button setFrame:CGRectMake(0, 0, 60, 30)];
+    select = 1;
+    ref = [[[FIRDatabase database] reference] child:@"2/data"];
+    channelRefHandle =[ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot){
+        NSMutableDictionary *storeData =[NSMutableDictionary new];
+        storeData = snapshot.value;
+        _stores = [NSMutableArray new];
+        
+        [self.stores removeAllObjects];
+        for (NSDictionary *item in storeData){
+            Store *store = [[Store alloc]init];
+            store.storename=[item objectForKey:@"name"];
+            store.tel = [item objectForKey:@"tel"];
+            store.adds =[item objectForKey:@"adds"];
+            store.latitude =[item objectForKey:@"latitude"];
+            store.image = [item objectForKey:@"image"];
+            store.clickrate =[item objectForKey:@"Clickrate"];
+            store.longitude=[item objectForKey:@"longitude"];
+            store.storeclass=[item objectForKey:@"storeclass"];
+            store.evaluate = [item objectForKey:@"evaluate"];
+            store.offday = [item objectForKey:@"storetime"];
+            store.storeid = [item objectForKey:@"storeid"];
+            store.region = [item objectForKey:@"region"];
+            store.businesshours = [item objectForKey:@"time"];
+            store.messages= [item objectForKey:@"massage"];
+            store.date = [item objectForKey:@"date"];
+            store.allstar =[item objectForKey:@"allstar"];
+            store.grade = [item objectForKey:@"grade"];
+            [self.stores addObject:store];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self distanceFromLocation];
+            [self.storelisttableview reloadData];
+        });
+    }];
 }
 - (void)refresh:(UIRefreshControl *)refreshControl {
     // 重新撈資料
@@ -128,6 +136,7 @@
     }
     [self.storelisttableview reloadData];
     [self distanceFromLocation];
+
     
 }
 //兩點距離的計算 並重新排序
@@ -140,6 +149,11 @@
         data.distance = distance;
     }
     [self sortUsingComparator];
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        [self GA];
+    });
+
 }
 -(void)sortUsingComparator{
     
@@ -209,6 +223,7 @@
     
     
     return cell;
+    
 }
 //cell的高度
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -285,6 +300,7 @@
             storecontentviewcontroller.content =(Store *)_searchresults[indexPath.row];
         }if (select ==3) {
             storecontentviewcontroller.content =(Store *)_searchviewresults[indexPath.row];
+
         }
     }else if ([segue.identifier isEqualToString:@"allmap"]){
         MapViewController *mapViewController = segue.destinationViewController;
@@ -334,6 +350,7 @@
         
     }
     [_storelisttableview reloadData];
+    [self GA2];
 }
 -(void)chang{
     if (_searchviewresults.count != 0) {
@@ -365,6 +382,30 @@
         [button setTitle:@"排序:距離" forState:UIControlStateNormal];
     }
     [self.storelisttableview reloadData];
+}
+-(void)GA{
+    self.date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd aa:HH:mm"];
+    _datastring = [dateFormatter stringFromDate:self.date];
+    NSLog(@" 裝置名稱 :%@ 時間 %@" ,self.nameid,_datastring );
+    ref = [[[[[FIRDatabase database] reference] child:@"user"] child:self.nameid]child:@"opentime" ];
+    //存放的名稱
+    FIRDatabaseReference * addChannelRef = [ref childByAutoId];
+    NSMutableDictionary * channelItem = [NSMutableDictionary new];
+    NSString *aaa = [NSString stringWithFormat:@"%.6f , %.6f",mylocation.coordinate.latitude,mylocation.coordinate.longitude];
+    [channelItem setObject:_datastring forKey:@"time"];
+    [channelItem setObject:aaa forKey:@"location"];
+    [addChannelRef setValue:channelItem];
+}
+-(void)GA2{
+    ref = [[[[[FIRDatabase database] reference] child:@"user"] child:self.nameid]child:@"search" ];
+    //存放的名稱
+    FIRDatabaseReference * addChannelRef = [ref childByAutoId];
+    NSMutableDictionary * channelItem = [NSMutableDictionary new];
+    [channelItem setObject:_searchadds forKey:@"adds"];
+    [channelItem setObject:_searchclass forKey:@"class"];
+    [addChannelRef setValue:channelItem];
 }
 
 - (IBAction)seacher:(id)sender {
