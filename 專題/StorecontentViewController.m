@@ -155,6 +155,7 @@
         NSLog(@"加入最愛:%@",self.mylovies);
     }
     [userDefaults setObject:self.mylovies forKey:save];
+        NSLog(@"本機資料%@",userDefaults);
 }
 
 @end

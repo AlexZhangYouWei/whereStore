@@ -49,9 +49,6 @@
     self.storelisttableview.dataSource = self;
     self.storelisttableview.delegate = self;
     _searchbar.delegate=self;
-    
-  
-    
 
     select = 1;
     ref = [[[FIRDatabase database] reference] child:@"2/data"];//查詢資料庫資料child:@"data"]
