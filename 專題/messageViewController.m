@@ -74,7 +74,7 @@
     cell.showsReorderControl= YES;
     cell.messagenameLabel.text = [NSString stringWithFormat:@"大名:%@", self.allmessage[indexPath.row].messagename] ;
     cell.messagedateLabel.text =[NSString stringWithFormat:@"時間:%@", self.allmessage[indexPath.row].messagetime] ;
-    cell.messagestoreLabel.text = [NSString stringWithFormat:@"評價: %@ 星",self.allmessage[indexPath.row].messageevaluate];
+    cell.messagestoreLabel.text = [NSString stringWithFormat:@"評價：%@ ☆",self.allmessage[indexPath.row].messageevaluate];
     cell.messagetextLabel.text = [NSString stringWithFormat:@"留言 : %@",self.allmessage[indexPath.row].messagetext];
     return cell;
 }

@@ -127,7 +127,7 @@
             break;
         case 4:
             cell.nameLabel.text=@"評價";
-            cell.valueTextView.text= [NSString stringWithFormat:@"%@ 星", self.content.evaluate];
+            cell.valueTextView.text= [NSString stringWithFormat:@"%@ ☆", self.content.evaluate];
             break;
         case 5:
             cell.nameLabel.text=@"瀏覽次數";
@@ -135,15 +135,29 @@
             break;
         case 6:
             cell.nameLabel.text= @"平均消費";
-            cell.valueTextView.text= [NSString stringWithFormat:@"$:%@", self.content.grade];
+            cell.valueTextView.text= [NSString stringWithFormat:@"$ %@", self.content.grade];
 
     }
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //先算手機螢幕的寬度
+    if(indexPath.row == 1 || indexPath.row == 3){
+        NSInteger viewWidth = self.view.frame.size.width;
+        viewWidth -= 176;
+        viewWidth /= 15;//label的字體大小
+        NSInteger height = [self.content.adds length] / viewWidth;
+        return 40 + height * 15;
+        
+        
+    }
+
     return 60;
+    
 }
+
+
 - (IBAction)changed:(UISegmentedControl *)sender {
     if (sender.selectedSegmentIndex==0) {
         [UIView animateWithDuration:0.5 animations:^{

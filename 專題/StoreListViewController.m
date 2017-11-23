@@ -34,7 +34,7 @@
 @property (nonatomic) NSString *nameid;
 @property (nonatomic) NSDate *date;
 @property (nonatomic) NSString *datastring;
-
+@property (nonatomic) NSString *take;
 @end
 
 @implementation StoreListViewController{
@@ -48,6 +48,7 @@
     [super viewDidLoad];
     self.storelisttableview.dataSource = self;
     self.storelisttableview.delegate = self;
+    self.navigationItem.title = @"附近餐廳";
     _searchbar.delegate=self;
     NSString *key = @"Uuid";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -82,9 +83,9 @@
     UIButton *button =  [UIButton buttonWithType:UIButtonTypeCustom];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     [button addTarget:self action:@selector(chang) forControlEvents:UIControlEventTouchUpInside];
-    [button setTitle:@" 排序:距離 " forState:UIControlStateNormal];
+    UIImage *btnImage = [UIImage imageNamed:@"003-distance"];
+    [button setImage:btnImage forState:UIControlStateNormal];
     [button.titleLabel setFont:[UIFont systemFontOfSize:8]];
-    [button setBackgroundColor:[UIColor colorWithRed:0/255.0 green:60/255.0 blue:100/255.0 alpha:1.0]];
     [button setFrame:CGRectMake(0, 0, 60, 30)];
     select = 1;
     ref = [[[FIRDatabase database] reference] child:@"2/data"];
@@ -344,9 +345,11 @@
         }else if (nameRange.location != NSNotFound && nameRange2.location != NSNotFound) {
                     [_searchviewresults addObject:item];
                 }
-            UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
-            UIButton *button = item.customView;
-            [button setTitle:@"清除搜尋結果" forState:UIControlStateNormal];
+        
+        UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
+        UIButton *button = item.customView;
+        UIImage *btnImage = [UIImage imageNamed:@"001-rubbish-bin"];
+        [button setImage:btnImage forState:UIControlStateNormal];
         
     }
     [_storelisttableview reloadData];
@@ -357,10 +360,12 @@
         [_searchviewresults removeAllObjects];
         NSLog(@"清除搜尋");
         select = 1;
+        _searchsequence = @"1";
         UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
         UIButton *button = item.customView;
-        [button setTitle:@"排序:距離" forState:UIControlStateNormal];
-        _searchsequence = @"1";
+        UIImage *btnImage = [UIImage imageNamed:@"003-distance"];
+        [button setImage:btnImage forState:UIControlStateNormal];
+        [self toastMessage3];
     } else if ([_searchsequence isEqualToString:@"2"]) {
         NSLog(@"評價");
 
@@ -370,7 +375,10 @@
         _searchsequence = @"1";
         UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
         UIButton *button = item.customView;
-        [button setTitle:@"排序:評價" forState:UIControlStateNormal];
+        UIImage *btnImage = [UIImage imageNamed:@"002-star"];
+        [button setImage:btnImage forState:UIControlStateNormal];
+        [self toastMessage2];
+
     } else {
         [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
             return obj1.distance > obj2.distance ? NSOrderedDescending : NSOrderedAscending;
@@ -379,7 +387,10 @@
         _searchsequence = @"2";
         UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
         UIButton *button = item.customView;
-        [button setTitle:@"排序:距離" forState:UIControlStateNormal];
+        UIImage *btnImage = [UIImage imageNamed:@"003-distance"];
+        [button setImage:btnImage forState:UIControlStateNormal];
+        [self toastMessage];
+
     }
     [self.storelisttableview reloadData];
 }
@@ -407,7 +418,33 @@
     [channelItem setObject:_searchclass forKey:@"class"];
     [addChannelRef setValue:channelItem];
 }
-
+-(void)toastMessage {
+    self.take = @"已切換排序:距離";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:self.take preferredStyle:UIAlertControllerStyleAlert];   // 置中Alert、置底ActionSheet
+    [self presentViewController:alert animated:YES completion:nil];
+    int duration =0.8; // 指定停留秒數
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    });
+}
+-(void)toastMessage2 {
+    self.take = @"已切換排序:評價";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:self.take preferredStyle:UIAlertControllerStyleAlert];   // 置中Alert、置底ActionSheet
+    [self presentViewController:alert animated:YES completion:nil];
+    int duration =0.8; // 指定停留秒數
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    });
+}
+-(void)toastMessage3 {
+    self.take = @"已清除搜尋結果";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:self.take preferredStyle:UIAlertControllerStyleAlert];   // 置中Alert、置底ActionSheet
+    [self presentViewController:alert animated:YES completion:nil];
+    int duration =0.8; // 指定停留秒數
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    });
+}
 - (IBAction)seacher:(id)sender {
     
 }

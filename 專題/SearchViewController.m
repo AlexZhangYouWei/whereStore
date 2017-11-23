@@ -38,6 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"進階搜尋";
     mypickerView =[[UIPickerView alloc]init];
     mypickerView.delegate=self;
     mypickerView.dataSource=self;
@@ -173,8 +174,11 @@
         [self presentViewController:alert animated:true completion:nil];
     }else{
         [storeList setSearchviewresults];
+
         [self.tabBarController setSelectedIndex:0];
-        
+        NSLog(@"%@", [self.tabBarController viewControllers]);
+        UINavigationController *vc = [self.tabBarController viewControllers][0];
+        [vc popViewControllerAnimated:YES];
     }
     
 

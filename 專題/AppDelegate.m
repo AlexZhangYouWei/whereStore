@@ -17,8 +17,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [FIRApp configure];
-    UINavigationBar.appearance.barTintColor = [UIColor colorWithRed:0/255.0 green:70/255.0 blue:120/255.0 alpha:0.3];
-    UINavigationBar.appearance.tintColor = [UIColor whiteColor];
+    UINavigationBar.appearance.barTintColor = [UIColor colorWithRed:160/255.0 green:180/255.0 blue:255/255.0 alpha:1.0];
+//    UINavigationBar.appearance.tintColor = [UIColor whiteColor];
     
 //    UITableViewCell.appearance.backgroundColor = [UIColor blackColor];
     UITableViewCell.appearance.tintColor=[UIColor whiteColor];

@@ -150,6 +150,7 @@
 		136A92CA1F7B390800A5879F /* 專題 */ = {
 			isa = PBXGroup;
 			children = (
+				136A92D41F7B390800A5879F /* Main.storyboard */,
 				130BFFDE1FA1E5A900FA3A2E /* GoogleService-Info.plist */,
 				136A92D91F7B390800A5879F /* LaunchScreen.storyboard */,
 				136A92DC1F7B390800A5879F /* Info.plist */,
@@ -162,7 +163,6 @@
 				136A92CC1F7B390800A5879F /* AppDelegate.m */,
 				136A92CE1F7B390800A5879F /* SearchViewController.h */,
 				136A92CF1F7B390800A5879F /* SearchViewController.m */,
-				136A92D41F7B390800A5879F /* Main.storyboard */,
 				136A92DD1F7B390800A5879F /* main.m */,
 				136A92E71F7B3D9900A5879F /* MoreViewController.h */,
 				136A92E81F7B3D9900A5879F /* MoreViewController.m */,

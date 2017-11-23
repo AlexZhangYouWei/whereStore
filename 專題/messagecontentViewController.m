@@ -41,6 +41,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"留言板";
     self.view.backgroundColor = [UIColor orangeColor];
     self.date = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -83,6 +84,7 @@
     _messagescoreTextField.inputAccessoryView = toolBar;
     _messagescoreTextField.placeholder=@"滿分五分 請給分";
     _messagenameTextField.placeholder=@"預設匿名";
+    
 }
 //選到某個textField，觸發選擇
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
