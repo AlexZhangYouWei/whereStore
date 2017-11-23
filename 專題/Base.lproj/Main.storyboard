@@ -294,21 +294,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="49i-WR-vcn"/>
                     </view>
-                    <navigationItem key="navigationItem" id="VBB-hq-ye8">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="piq-RR-rYK">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Oip-LN-2rI">
-                                <rect key="frame" x="258" y="7" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="收藏"/>
-                                <connections>
-                                    <action selector="mylove:" destination="gwd-PR-GUS" eventType="touchUpInside" id="rPe-RW-M6F"/>
-                                </connections>
-                            </button>
-                            <connections>
-                                <action selector="love:" destination="gwd-PR-GUS" id="iTi-52-YOO"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="VBB-hq-ye8"/>
                     <connections>
                         <outlet property="imageView" destination="6k7-a4-ei1" id="OIl-3b-8On"/>
                         <outlet property="messageView" destination="le0-1v-1k5" id="ean-6y-RF3"/>
@@ -648,7 +634,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="a62-0Y-G9Z">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a62-0Y-G9Z">
                                 <rect key="frame" x="105" y="171" width="180" height="126"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -700,7 +686,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cmI-mL-k7L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5642" y="673"/>
+            <point key="canvasLocation" x="5641.875" y="672.88732394366195"/>
         </scene>
         <!--收藏-->
         <scene sceneID="sUV-WG-4I6">

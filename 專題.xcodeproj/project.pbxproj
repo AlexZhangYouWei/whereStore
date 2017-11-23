@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		130299521F90B91E001F63DA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130299511F90B91D001F63DA /* MapKit.framework */; };
 		130299541F90B92F001F63DA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130299531F90B92F001F63DA /* CoreLocation.framework */; };
+		1306D7E71FC66CB70058C9B7 /* health-care.png in Resources */ = {isa = PBXBuildFile; fileRef = 1306D7E61FC66CB20058C9B7 /* health-care.png */; };
+		1306D7E81FC66CB90058C9B7 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = 1306D7E51FC66CB10058C9B7 /* like.png */; };
 		13078B111F8F65BF00A81318 /* Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 13078B101F8F65BF00A81318 /* Data.m */; };
 		130BFFDF1FA1EC1200FA3A2E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 130BFFDE1FA1E5A900FA3A2E /* GoogleService-Info.plist */; };
 		13117D321F85CBE20066E08E /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 13117D311F85CBE20066E08E /* Store.m */; };
@@ -43,6 +45,8 @@
 /* Begin PBXFileReference section */
 		130299511F90B91D001F63DA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		130299531F90B92F001F63DA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		1306D7E51FC66CB10058C9B7 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
+		1306D7E61FC66CB20058C9B7 /* health-care.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "health-care.png"; sourceTree = "<group>"; };
 		13078B0F1F8F65BF00A81318 /* Data.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
 		13078B101F8F65BF00A81318 /* Data.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Data.m; sourceTree = "<group>"; };
 		130BFFDE1FA1E5A900FA3A2E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 				136A92DC1F7B390800A5879F /* Info.plist */,
 				13BBB9D91FAB193100895AA0 /* placeholder.png */,
 				13CDD42F1FB43456009C4886 /* noimage.png */,
+				1306D7E61FC66CB20058C9B7 /* health-care.png */,
+				1306D7E51FC66CB10058C9B7 /* like.png */,
 				136A92D71F7B390800A5879F /* Assets.xcassets */,
 				136A92CB1F7B390800A5879F /* AppDelegate.h */,
 				136A92CC1F7B390800A5879F /* AppDelegate.m */,
@@ -304,7 +310,9 @@
 			files = (
 				13CDD4301FB436EB009C4886 /* noimage.png in Resources */,
 				136A92DB1F7B390800A5879F /* LaunchScreen.storyboard in Resources */,
+				1306D7E71FC66CB70058C9B7 /* health-care.png in Resources */,
 				130BFFDF1FA1EC1200FA3A2E /* GoogleService-Info.plist in Resources */,
+				1306D7E81FC66CB90058C9B7 /* like.png in Resources */,
 				136A92D81F7B390800A5879F /* Assets.xcassets in Resources */,
 				136A92D61F7B390800A5879F /* Main.storyboard in Resources */,
 			);

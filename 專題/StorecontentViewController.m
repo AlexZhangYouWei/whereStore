@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIView *imageView;
 @property (weak, nonatomic) IBOutlet UIView *messageView;
 @property (nonatomic) NSString *nameid;
-
+@property (nonatomic,strong) NSString *message;   // 提示訊息
 @end
 
 @implementation StorecontentViewController{
@@ -33,8 +33,9 @@
     NSString *save ;
     NSUserDefaults *mylove ;
 
-    
+    bool aaaaaa;
 }
+
 -(void)updateclickrate{
     
     if([self.content.storeid isKindOfClass:[NSString class]]){
@@ -52,7 +53,24 @@
     self.navigationItem.title=@"店家資訊";
     self.storecontentlistTableView.delegate = self;
     self.storecontentlistTableView.dataSource = self;
+    [self aaaa];
     [_storecontentlistTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    UIButton *button =  [UIButton buttonWithType:UIButtonTypeCustom];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    if (aaaaaa == YES) {
+        UIBarButtonItem *item =  self.navigationItem.rightBarButtonItem;
+        UIButton *button = item.customView;
+        UIImage *btnImage = [UIImage imageNamed:@"health-care.png"];
+        [button setImage:btnImage forState:UIControlStateNormal];
+    }else if(aaaaaa ==NO){
+        UIBarButtonItem *item =  self.navigationItem.rightBarButtonItem;
+        UIButton *button = item.customView;
+        UIImage *btnImage = [UIImage imageNamed:@"like.png"];
+        [button setImage:btnImage forState:UIControlStateNormal];
+    }
+    [button addTarget:self action:@selector(change) forControlEvents:UIControlEventTouchUpInside];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:8]];
+    [button setFrame:CGRectMake(0, 0, 60, 30)];
     NSString *key = @"Uuid";
 
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -84,7 +102,7 @@
 }
 #pragma mark -UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 6;
+    return 7;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StorecontentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
@@ -115,6 +133,10 @@
             cell.nameLabel.text=@"瀏覽次數";
             cell.valueTextView.text= [NSString stringWithFormat:@"%@", self.content.clickrate];
             break;
+        case 6:
+            cell.nameLabel.text= @"平均消費";
+            cell.valueTextView.text= [NSString stringWithFormat:@"$:%@", self.content.grade];
+
     }
     return cell;
 }
@@ -165,18 +187,45 @@
     [channelItem setObject:self.content.storename forKey:@"storename"];
     [addChannelRef setValue:channelItem];
 }
-- (IBAction)mylove:(id)sender {
-    
+    -(void)change{
     save = @"save";
     if ([self.mylovies objectForKey:self.content.storeid]) {
         [self.mylovies removeObjectForKey:self.content.storeid];
+        UIBarButtonItem *item =  self.navigationItem.rightBarButtonItem;
+        UIButton *button = item.customView;
+        UIImage *btnImage = [UIImage imageNamed:@"health-care.png"];
+        [button setImage:btnImage forState:UIControlStateNormal];
+        self.message= @"取消收藏";
+        [self toastMessage];
         NSLog(@"先清除:%@",self.mylovies);
     } else {
         [self.mylovies setObject:self.content.storeid forKey:self.content.storeid];
+        UIBarButtonItem *item =  self.navigationItem.rightBarButtonItem;
+        UIButton *button = item.customView;
+        UIImage *btnImage = [UIImage imageNamed:@"like.png"];
+        [button setImage:btnImage forState:UIControlStateNormal];
+        self.message= @"加入收藏";
+        [self toastMessage];
         NSLog(@"加入最愛:%@",self.mylovies);
     }
     [mylove setObject:self.mylovies forKey:save];
         NSLog(@"本機資料%@",mylove);
 }
-
+-(void)aaaa{
+    if ([self.mylovies objectForKey:self.content.storeid]) {
+        aaaaaa = YES;
+        NSLog(@"先清除:%@",self.mylovies);
+    } else {
+        aaaaaa = NO;
+              NSLog(@"加入最愛:%@",self.mylovies);
+    }
+}
+-(void)toastMessage {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:self.message preferredStyle:UIAlertControllerStyleAlert];   // 置中Alert、置底ActionSheet
+    [self presentViewController:alert animated:YES completion:nil];
+    int duration =0.5; // 指定停留秒數
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    });
+}
 @end
