@@ -120,6 +120,7 @@
             [self distanceFromLocation];
             [self.storelisttableview reloadData];
         });
+        _searchsequence = @"1";
     }];
 }
 - (void)refresh:(UIRefreshControl *)refreshControl {
@@ -345,15 +346,20 @@
         }else if (nameRange.location != NSNotFound && nameRange2.location != NSNotFound) {
                     [_searchviewresults addObject:item];
                 }
-        
+    }
+    if (_searchviewresults.count == 0) {
+        [_searchviewresults removeAllObjects];
+        [self oneoneone];
+        select = 1;
+        [self.storelisttableview reloadData];
+    }else{
         UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
         UIButton *button = item.customView;
         UIImage *btnImage = [UIImage imageNamed:@"001-rubbish-bin"];
         [button setImage:btnImage forState:UIControlStateNormal];
-        
-    }
     [_storelisttableview reloadData];
     [self GA2];
+    }
 }
 -(void)chang{
     if (_searchviewresults.count != 0) {
@@ -365,32 +371,35 @@
         UIButton *button = item.customView;
         UIImage *btnImage = [UIImage imageNamed:@"003-distance"];
         [button setImage:btnImage forState:UIControlStateNormal];
+        [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
+            return obj1.distance > obj2.distance ? NSOrderedDescending : NSOrderedAscending;
+        }];
         [self toastMessage3];
     } else if ([_searchsequence isEqualToString:@"2"]) {
-        NSLog(@"評價");
-
-        [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
-            return [obj1.evaluate doubleValue] < [obj2.evaluate doubleValue]  ? NSOrderedDescending : NSOrderedAscending;
-        }];
-        _searchsequence = @"1";
-        UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
-        UIButton *button = item.customView;
-        UIImage *btnImage = [UIImage imageNamed:@"002-star"];
-        [button setImage:btnImage forState:UIControlStateNormal];
-        [self toastMessage2];
-
-    } else {
+      
         [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
             return obj1.distance > obj2.distance ? NSOrderedDescending : NSOrderedAscending;
         }];
         NSLog(@"距離");
-        _searchsequence = @"2";
+        _searchsequence = @"1";
         UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
         UIButton *button = item.customView;
         UIImage *btnImage = [UIImage imageNamed:@"003-distance"];
         [button setImage:btnImage forState:UIControlStateNormal];
         [self toastMessage];
 
+    } else if ([_searchsequence isEqualToString:@"1"]){
+        NSLog(@"評價");
+        
+        [self.stores sortUsingComparator:^NSComparisonResult(Store* obj1, Store* obj2) {
+            return [obj1.evaluate doubleValue] < [obj2.evaluate doubleValue]  ? NSOrderedDescending : NSOrderedAscending;
+        }];
+        _searchsequence = @"2";
+        UIBarButtonItem *item =  self.navigationItem.leftBarButtonItem;
+        UIButton *button = item.customView;
+        UIImage *btnImage = [UIImage imageNamed:@"002-star"];
+        [button setImage:btnImage forState:UIControlStateNormal];
+        [self toastMessage2];
     }
     [self.storelisttableview reloadData];
 }
@@ -441,6 +450,15 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:self.take preferredStyle:UIAlertControllerStyleAlert];   // 置中Alert、置底ActionSheet
     [self presentViewController:alert animated:YES completion:nil];
     int duration =0.8; // 指定停留秒數
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    });
+}
+-(void)oneoneone{
+    self.take = @"沒有符合條件店家";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:self.take preferredStyle:UIAlertControllerStyleAlert];   // 置中Alert、置底ActionSheet
+    [self presentViewController:alert animated:YES completion:nil];
+    int duration =1.0; // 指定停留秒數
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [alert dismissViewControllerAnimated:YES completion:nil];
     });
